@@ -94,7 +94,7 @@
 - 본 repository를 clone한 이후 본인 이름으로 branch를 생성 후 작업
   - ex. git checkout -b `choyeon2e`
 - 과제 수행 후 본인 브랜치에 push
-- develop 브랜치에 Pull Request
+- 레포에 설정되어있는 PR 템플릿에 맞춰서 마감기한 내에 develop 브랜치로 Pull Request를 날려주세요!
 
 <hr><br>
 
