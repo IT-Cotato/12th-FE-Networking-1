@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { themes, type ThemeName } from "./styles/theme";
-
+import "./index.css";
 interface Movie {
   id: number;
   title: string;
@@ -47,7 +47,7 @@ function App() {
 
   const filteredMovies = useMemo(() => {
     return movies.filter((movie) =>
-      movie.title.toLowerCase().includes(searchTerm.toLowerCase())
+      movie.title.toLowerCase().includes(searchTerm.toLowerCase()),
     );
   }, [movies, searchTerm]);
 
