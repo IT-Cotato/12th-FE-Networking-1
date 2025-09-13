@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { themes, type ThemeName } from "./styles/theme";
 import "./index.css";
+import { useThemeStore } from "./store/themeStore";
 interface Movie {
   id: number;
   title: string;
@@ -11,7 +12,8 @@ interface Movie {
 }
 
 function App() {
-  const [themeName, setThemeName] = useState<ThemeName>("light");
+  const { themeName, toggleTheme } = useThemeStore();
+
   const [movies, setMovies] = useState<Movie[]>([]);
   const [newTitle, setNewTitle] = useState<string>("");
   const [newDirector, setNewDirector] = useState<string>("");
@@ -119,7 +121,7 @@ function App() {
       >
         <h1 style={{ margin: 0 }}>코테이토 영화관</h1>
         <button
-          onClick={() => setThemeName(themeName === "light" ? "dark" : "light")}
+          onClick={toggleTheme}
           style={{
             padding: "8px 16px",
             cursor: "pointer",
