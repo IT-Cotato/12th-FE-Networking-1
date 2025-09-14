@@ -2,10 +2,10 @@ import React, { useState, useEffect, useMemo } from "react";
 import { themes, type ThemeName } from "./styles/theme";
 import "./index.css";
 
-import Button from "./components/ui/button";
+import Button from "@/components/ui/button";
 
-import Input from "./components/ui/input";
-import Header from "./components/header";
+import Input from "@/components/ui/input";
+import Header from "@/components/header";
 interface Movie {
   id: number;
   title: string;

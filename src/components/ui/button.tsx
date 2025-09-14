@@ -1,5 +1,5 @@
 import type { ButtonHTMLAttributes } from "react";
-import type { ThemeName } from "../../styles/theme";
+import type { ThemeName } from "@/styles/theme";
 
 export default function Button({
   className,

@@ -1,4 +1,4 @@
-import useDarkMode from "../hooks/use-dark-mode";
+import useDarkMode from "@/hooks/use-dark-mode";
 import Button from "./ui/button";
 
 export default function DarkModeToggle() {
