@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo } from "react";
 import { themes, type ThemeName } from "./styles/theme";
 import "./index.css";
 import { useThemeStore } from "./store/themeStore";
+import Button from "./components/ui/button";
 interface Movie {
   id: number;
   title: string;
@@ -120,19 +121,10 @@ function App() {
         }}
       >
         <h1 style={{ margin: 0 }}>코테이토 영화관</h1>
-        <button
-          onClick={toggleTheme}
-          style={{
-            padding: "8px 16px",
-            cursor: "pointer",
-            background: currentTheme.buttonBg,
-            color: currentTheme.buttonText,
-            border: "none",
-            borderRadius: "8px",
-          }}
-        >
+
+        <Button onClick={toggleTheme}>
           {themeName === "light" ? "🌙 다크모드" : "☀️ 라이트모드"}
-        </button>
+        </Button>
       </header>
       {error && (
         <div
@@ -231,19 +223,7 @@ function App() {
               width: "100px",
             }}
           />
-          <button
-            type="submit"
-            style={{
-              padding: "8px 16px",
-              backgroundColor: currentTheme.buttonBg,
-              color: currentTheme.buttonText,
-              border: "none",
-              borderRadius: "8px",
-              cursor: "pointer",
-            }}
-          >
-            추가
-          </button>
+          <Button type="submit">추가</Button>
         </form>
       </div>
       <div
