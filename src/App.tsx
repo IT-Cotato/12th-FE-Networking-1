@@ -3,9 +3,9 @@ import { themes, type ThemeName } from "./styles/theme";
 import "./index.css";
 
 import Button from "./components/ui/button";
-import DarkModeToggle from "./components/dark-mode-toggle";
-import useDarkMode from "./hooks/use-dark-mode";
+
 import Input from "./components/ui/input";
+import Header from "./components/header";
 interface Movie {
   id: number;
   title: string;
@@ -108,22 +108,7 @@ function App() {
         transition: "all 0.2s ease",
       }}
     >
-      <header
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginBottom: "24px",
-          padding: "16px",
-          backgroundColor: currentTheme.componentBg,
-          borderRadius: "12px",
-          border: `1px solid ${currentTheme.border}`,
-        }}
-      >
-        <h1 style={{ margin: 0 }}>코테이토 영화관</h1>
-
-        <DarkModeToggle />
-      </header>
+      <Header />
       {error && (
         <div
           style={{
