@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { themes, type ThemeName } from "./styles/theme";
 import "./index.css";
-import { useThemeStore } from "./store/themeStore";
+
 import Button from "./components/ui/button";
+import DarkModeToggle from "./components/dark-mode-toggle";
+import useDarkMode from "./hooks/use-dark-mode";
 interface Movie {
   id: number;
   title: string;
@@ -13,8 +15,6 @@ interface Movie {
 }
 
 function App() {
-  const { themeName, toggleTheme } = useThemeStore();
-
   const [movies, setMovies] = useState<Movie[]>([]);
   const [newTitle, setNewTitle] = useState<string>("");
   const [newDirector, setNewDirector] = useState<string>("");
@@ -24,8 +24,7 @@ function App() {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-
-  const currentTheme = themes[themeName];
+  const currentTheme = themes["light"];
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -122,9 +121,7 @@ function App() {
       >
         <h1 style={{ margin: 0 }}>코테이토 영화관</h1>
 
-        <Button onClick={toggleTheme}>
-          {themeName === "light" ? "🌙 다크모드" : "☀️ 라이트모드"}
-        </Button>
+        <DarkModeToggle />
       </header>
       {error && (
         <div
