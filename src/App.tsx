@@ -5,6 +5,7 @@ import "./index.css";
 import Button from "./components/ui/button";
 import DarkModeToggle from "./components/dark-mode-toggle";
 import useDarkMode from "./hooks/use-dark-mode";
+import Input from "./components/ui/input";
 interface Movie {
   id: number;
   title: string;
@@ -150,60 +151,32 @@ function App() {
           onSubmit={handleAddMovie}
           style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}
         >
-          <input
+          <Input
             type="text"
             placeholder="제목"
             value={newTitle}
             onChange={(e) => setNewTitle(e.target.value)}
-            style={{
-              padding: "8px",
-              borderRadius: "8px",
-              border: `1px solid ${currentTheme.border}`,
-              backgroundColor: currentTheme.inputBg,
-              color: currentTheme.text,
-            }}
           />
-          <input
+          <Input
             type="text"
             placeholder="감독"
             value={newDirector}
             onChange={(e) => setNewDirector(e.target.value)}
-            style={{
-              padding: "8px",
-              borderRadius: "8px",
-              border: `1px solid ${currentTheme.border}`,
-              backgroundColor: currentTheme.inputBg,
-              color: currentTheme.text,
-            }}
           />
-          <input
+          <Input
             type="number"
             placeholder="연도"
             value={newYear}
             onChange={(e) => setNewYear(Number(e.target.value))}
-            style={{
-              padding: "8px",
-              borderRadius: "8px",
-              border: `1px solid ${currentTheme.border}`,
-              backgroundColor: currentTheme.inputBg,
-              color: currentTheme.text,
-              width: "80px",
-            }}
+            className="w-20"
           />
-          <input
+          <Input
             type="text"
             placeholder="장르"
             value={newGenre}
             onChange={(e) => setNewGenre(e.target.value)}
-            style={{
-              padding: "8px",
-              borderRadius: "8px",
-              border: `1px solid ${currentTheme.border}`,
-              backgroundColor: currentTheme.inputBg,
-              color: currentTheme.text,
-            }}
           />
-          <input
+          <Input
             type="number"
             placeholder="평점"
             value={newRating}
@@ -211,14 +184,7 @@ function App() {
               const val = Number(e.target.value);
               if (val >= 0 && val <= 10) setNewRating(val);
             }}
-            style={{
-              padding: "8px",
-              borderRadius: "8px",
-              border: `1px solid ${currentTheme.border}`,
-              backgroundColor: currentTheme.inputBg,
-              color: currentTheme.text,
-              width: "100px",
-            }}
+            className="w-[100px]"
           />
           <Button type="submit">추가</Button>
         </form>
@@ -232,20 +198,12 @@ function App() {
         }}
       >
         <h2>영화 목록</h2>
-        <input
+        <Input
           type="text"
           placeholder="검색..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          style={{
-            padding: "8px",
-            borderRadius: "8px",
-            border: `1px solid ${currentTheme.border}`,
-            backgroundColor: currentTheme.inputBg,
-            color: currentTheme.text,
-            marginBottom: "16px",
-            width: "100%",
-          }}
+          className="mb-4 w-full"
         />
         {isLoading ? (
           <div>로딩 중...</div>
