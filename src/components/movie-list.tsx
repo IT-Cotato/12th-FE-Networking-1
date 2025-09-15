@@ -15,11 +15,9 @@ export default function MovieList() {
     queryFn: fetchMovies,
   });
 
-  const filteredMovies = useMemo(() => {
-    return movies.filter((movie) =>
-      movie.title.toLowerCase().includes(searchTerm.toLowerCase()),
-    );
-  }, [movies, searchTerm]);
+  const filteredMovies = movies.filter((movie) =>
+    movie.title.toLowerCase().includes(searchTerm.toLowerCase()),
+  );
 
   return (
     <div className="p-5 rounded-xl bg-white dark:bg-deep-gray border border-gray dark:border-dark-gray">
