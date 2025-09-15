@@ -11,19 +11,20 @@ interface Movie {
 }
 
 function App() {
-  const [themeName, setThemeName] = useState<ThemeName>("light");
-  const [movies, setMovies] = useState<Movie[]>([]);
-  const [newTitle, setNewTitle] = useState<string>("");
+  const [themeName, setThemeName] = useState<ThemeName>("light"); // 다크모드 상태 관리
+  const [movies, setMovies] = useState<Movie[]>([]); // 전체 영화 목록 상태
+  const [newTitle, setNewTitle] = useState<string>(""); // 아래 5개는 새 영화 추가에 대한 상태
   const [newDirector, setNewDirector] = useState<string>("");
   const [newYear, setNewYear] = useState<number | "">("");
   const [newGenre, setNewGenre] = useState<string>("");
   const [newRating, setNewRating] = useState<number | "">("");
-  const [searchTerm, setSearchTerm] = useState<string>("");
-  const [error, setError] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [searchTerm, setSearchTerm] = useState<string>(""); // 영화 검색 상태
+  const [error, setError] = useState<string | null>(null); // 에러 상태
+  const [isLoading, setIsLoading] = useState<boolean>(false); // 로딩중 여부의 상태
 
   const currentTheme = themes[themeName];
 
+  // 영화 목록을 불러오는 hook
   useEffect(() => {
     const fetchMovies = async () => {
       setIsLoading(true);
@@ -45,12 +46,14 @@ function App() {
     fetchMovies();
   }, []);
 
+  // 검색 시 필터링 해주는 hook
   const filteredMovies = useMemo(() => {
     return movies.filter((movie) =>
       movie.title.toLowerCase().includes(searchTerm.toLowerCase())
     );
   }, [movies, searchTerm]);
 
+  // 영화 추가버튼 클릭시 작동하는 핸들러
   const handleAddMovie = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!newTitle || !newDirector || !newYear || !newGenre || !newRating) {
@@ -58,6 +61,7 @@ function App() {
       return;
     }
 
+    // 새 영화 추가 시 불러오는 형식
     const newMovie = {
       title: newTitle,
       director: newDirector,
@@ -66,6 +70,7 @@ function App() {
       rating: Number(newRating),
     };
 
+    // 영화 추가에 대한 정보 전송 시 작동하는 hook
     try {
       setIsLoading(true);
       const res = await fetch("/api/movies", {
@@ -96,6 +101,7 @@ function App() {
   };
 
   return (
+    // 전체를 div 태그로 감싸서 스타일링
     <div
       style={{
         background: currentTheme.background,
@@ -105,6 +111,7 @@ function App() {
         transition: "all 0.2s ease",
       }}
     >
+      {/* 상단 제목과 다크모드를 담당하는 헤더 스타일링 */}
       <header
         style={{
           display: "flex",
@@ -118,6 +125,7 @@ function App() {
         }}
       >
         <h1 style={{ margin: 0 }}>코테이토 영화관</h1>
+        {/* 다크모드 설정 버튼*/}
         <button
           onClick={() => setThemeName(themeName === "light" ? "dark" : "light")}
           style={{
@@ -145,6 +153,7 @@ function App() {
           {error}
         </div>
       )}
+      {/* 영화 페이지 두번째 목록을 담당하는 부분 */}
       <div
         style={{
           marginBottom: "24px",
@@ -159,6 +168,7 @@ function App() {
           onSubmit={handleAddMovie}
           style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}
         >
+          {/* 영화를 추가하는 기능을 담당하는 부분 */}
           <input
             type="text"
             placeholder="제목"
@@ -252,6 +262,7 @@ function App() {
           border: `1px solid ${currentTheme.border}`,
         }}
       >
+        {/* 영화 추가한 부분에 대해서 목록으로 나타내는 부분*/}
         <h2>영화 목록</h2>
         <input
           type="text"
