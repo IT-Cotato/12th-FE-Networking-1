@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo } from "react";
 import { themes, type ThemeName } from "./styles/theme";
 import Header from "./components/Header";
 import MovieForm from "./components/MovieForm";
+import SearchBar from "./components/SearchBar";
 
 interface Movie {
   id: number;
@@ -144,20 +145,10 @@ function App() {
         }}
       >
         <h2>영화 목록</h2>
-        <input
-          type="text"
-          placeholder="검색..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          style={{
-            padding: "8px",
-            borderRadius: "8px",
-            border: `1px solid ${currentTheme.border}`,
-            backgroundColor: currentTheme.inputBg,
-            color: currentTheme.text,
-            marginBottom: "16px",
-            width: "100%",
-          }}
+        <SearchBar
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
+          currentTheme={currentTheme}
         />
         {isLoading ? (
           <div>로딩 중...</div>

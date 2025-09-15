@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useMemo } from "react";
-import { themes, type ThemeName } from "../styles/theme";
+import React from "react";
+import { themes } from "../styles/theme";
 
 interface MovieFormProps {
   currentTheme: typeof themes.light;
