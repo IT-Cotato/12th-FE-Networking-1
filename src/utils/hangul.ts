@@ -87,6 +87,29 @@ const JONG = [
   "ㅎ",
 ];
 
+const JUNG_MAP: { [key: string]: string } = {
+  ㅘ: "ㅗㅏ",
+  ㅙ: "ㅗㅐ",
+  ㅚ: "ㅗㅣ",
+  ㅝ: "ㅜㅓ",
+  ㅞ: "ㅜㅔ",
+  ㅟ: "ㅜㅣ",
+  ㅢ: "ㅡㅣ",
+};
+const JONG_MAP: { [key: string]: string } = {
+  ㄳ: "ㄱㅅ",
+  ㄵ: "ㄴㅈ",
+  ㄶ: "ㄴㅎ",
+  ㄺ: "ㄹㄱ",
+  ㄻ: "ㄹㅁ",
+  ㄼ: "ㄹㅂ",
+  ㄽ: "ㄹㅅ",
+  ㄾ: "ㄹㅌ",
+  ㄿ: "ㄹㅍ",
+  ㅀ: "ㄹㅎ",
+  ㅄ: "ㅂㅅ",
+};
+
 const HANGUL_CONSONANTS_START = 0x3131;
 const HANGUL_CONSONANTS_END = 0x314e;
 
@@ -105,33 +128,32 @@ const HANGUL_OFFSET = 0xac00;
  */
 export function decomposeHangul(str: string): string {
   let result = "";
-  // 입력된 문자열을 한 글자씩 순회합니다.
   for (const char of str) {
     const code = char.charCodeAt(0);
-    // 현재 글자의 유니코드 값이 한글 범위('가' ~ '힣')에 있는지 확인합니다.
-    if (code >= 0xac00 && code <= 0xd7a3) {
-      // 한글 유니코드 계산을 위해 시작점('가')과의 거리(index)를 구합니다.
-      const index = code - 0xac00;
-      // 수학 공식을 이용해 초성, 중성, 종성의 인덱스를 각각 계산합니다.
-      // (전체 인덱스를 588(21*28)로 나눈 몫이 초성 인덱스)
-      const cho = Math.floor(index / 588);
-      // (전체 인덱스를 588로 나눈 나머지를 28로 나눈 몫이 중성 인덱스)
-      const jung = Math.floor((index % 588) / 28);
-      // (전체 인덱스를 28로 나눈 나머지가 종성 인덱스)
-      const jong = index % 28;
 
-      // 계산된 인덱스를 이용해 CHO, JUNG 배열에서 실제 자음/모음을 찾아 결과에 추가합니다.
-      result += CHO[cho] + JUNG[jung];
-      // 종성(받침)은 없는 글자도 있으므로, 종성 인덱스가 0보다 클 때만 추가합니다.
-      if (jong > 0) result += JONG[jong];
+    if (code >= 0xac00 && code <= 0xd7a3) {
+      const index = code - 0xac00;
+      const cho = CHO[Math.floor(index / 588)];
+      const jung = JUNG[Math.floor((index % 588) / 28)];
+      const jong = JONG[index % 28];
+
+      // 1. 초성을 결과에 추가합니다.
+      result += cho;
+
+      // 2. 중성이 복합 모음인지 확인하고, 그렇다면 분해해서 추가합니다.
+      result += JUNG_MAP[jung] || jung;
+
+      // 3. 종성이 복합 받침인지 확인하고, 그렇다면 분해해서 추가합니다.
+      if (jong) {
+        result += JONG_MAP[jong] || jong;
+      }
     } else {
-      // 한글이 아닌 경우(영어, 숫자, 공백 등)는 원본 글자를 그대로 결과에 추가합니다.
+      // 한글이 아니면 원본 글자를 그대로 추가합니다.
       result += char;
     }
   }
   return result;
 }
-
 /**
  * [함수 2] getChosung: 한글 문자열에서 초성(첫 자음)만 추출합니다.
  *
@@ -169,56 +191,73 @@ export function getChosung(str: string): string {
  * 자소 분해된 검색어를 기반으로, 한글 입력의 모든 중간 과정을 커버할 수 있는
  * 동적인 정규식 패턴을 만들어냅니다.
  */
-export function createHangulHighlighterRegex(search: string): RegExp {
-  const cleanSearch = search.trim().replace(/\s/g, "");
-  if (!cleanSearch) return new RegExp("a^", "g");
 
-  let pattern = "";
-  // 1. 정리된 원본 검색어를 한 글자씩 순회합니다.
-  for (const char of cleanSearch) {
-    const code = char.charCodeAt(0);
+export function findHighlightIndices(
+  text: string,
+  searchTerm: string,
+): { startIndex: number; endIndex: number } | null {
+  const cleanSearchTerm = searchTerm.trim();
+  if (!cleanSearchTerm) return null;
 
-    if (code >= HANGUL_OFFSET && code <= 0xd7a3) {
-      // CASE 1: '가', '좀', '무' 처럼 완성된 한글 글자인 경우
-      const jong = (code - HANGUL_OFFSET) % 28;
-      if (jong === 0) {
-        // 1-A: 받침이 없는 글자 ('무') -> '무'로 시작하는 모든 글자 범위
-        const start = char;
-        const end = String.fromCharCode(code + JONG.length - 1);
-        pattern += `[${start}-${end}]`;
-      } else {
-        // 1-B: 받침이 있는 글자 ('좀') -> 정확히 그 글자만 매칭
-        pattern += char;
+  // --- 👇 여기가 수정된 핵심 로직입니다 ---
+  // 1. 텍스트와 검색어에서 모두 공백을 제거한 뒤, 자소 단위로 분해합니다. (필터링 로직과 동일)
+  const decomposedText = decomposeHangul(text.replace(/\s/g, ""));
+  const decomposedSearch = decomposeHangul(cleanSearchTerm.replace(/\s/g, ""));
+
+  const matchIndex = decomposedText
+    .toLowerCase()
+    .indexOf(decomposedSearch.toLowerCase());
+
+  if (matchIndex === -1) return null;
+
+  // 2. 이제 공백이 제거된 텍스트에서의 인덱스를, 공백이 있는 원본 텍스트의 인덱스로 변환합니다.
+  const mapToOriginalIndex = (spaceLessIndex: number): number => {
+    let originalIdx = 0;
+    let spaceLessIdx = 0;
+    while (originalIdx < text.length && spaceLessIdx < spaceLessIndex) {
+      if (text[originalIdx] !== " ") {
+        spaceLessIdx++;
       }
-    } else if (
-      code >= HANGUL_CONSONANTS_START &&
-      code <= HANGUL_CONSONANTS_END
-    ) {
-      // CASE 2: 'ㅂ' 처럼 단독으로 입력된 한글 자음(자모)인 경우
-      const choIndex = CHO.indexOf(char);
-      if (choIndex !== -1) {
-        // 해당 자음으로 시작하는 모든 한글 글자의 범위를 찾습니다. (예: [바-밯])
-        const start = String.fromCharCode(0xac00 + choIndex * 588);
-        const end = String.fromCharCode(start.charCodeAt(0) + 587);
-        pattern += `[${start}-${end}]`;
-      } else {
-        // 쌍자음 등 CHO에 없는 자모는 글자 그대로 매칭
-        pattern += char;
-      }
-    } else {
-      // CASE 3: 'f', '1' 처럼 한글이 아닌 문자인 경우
-      pattern += char.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      originalIdx++;
     }
-    // 각 패턴 유닛 사이에 공백을 허용합니다.
-    pattern += "\\s*";
+    // 루프가 끝난 후에도 공백을 건너뛰어야 할 수 있으므로 추가 처리
+    while (originalIdx < text.length && text[originalIdx] === " ") {
+      originalIdx++;
+    }
+    return originalIdx;
+  };
+
+  // 3. 분해된 문자열의 시작/끝 위치를 공백 없는 원본 문자열의 인덱스로 변환합니다.
+  let startSpaceLessIndex = -1;
+  let endSpaceLessIndex = -1;
+  let currentDecomposedLength = 0;
+
+  const textWithoutSpaces = text.replace(/\s/g, "");
+  for (let i = 0; i < textWithoutSpaces.length; i++) {
+    if (startSpaceLessIndex === -1 && currentDecomposedLength >= matchIndex) {
+      startSpaceLessIndex = i;
+    }
+
+    const charDecomposedLength = decomposeHangul(textWithoutSpaces[i]).length;
+    if (
+      endSpaceLessIndex === -1 &&
+      currentDecomposedLength + charDecomposedLength >
+        matchIndex + decomposedSearch.length
+    ) {
+      endSpaceLessIndex = i;
+      break;
+    }
+    currentDecomposedLength += charDecomposedLength;
+    if (i === textWithoutSpaces.length - 1 && endSpaceLessIndex === -1) {
+      endSpaceLessIndex = i + 1;
+    }
   }
 
-  try {
-    return new RegExp(`(${pattern.slice(0, -3)})`, "gi");
-  } catch (e) {
-    return new RegExp(
-      `(${cleanSearch.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")})`,
-      "gi",
-    );
-  }
+  if (startSpaceLessIndex === -1) return null;
+
+  // 4. 최종적으로 원본 텍스트의 실제 시작/끝 인덱스를 계산합니다.
+  const startIndex = mapToOriginalIndex(startSpaceLessIndex);
+  const endIndex = mapToOriginalIndex(endSpaceLessIndex);
+
+  return { startIndex, endIndex };
 }
