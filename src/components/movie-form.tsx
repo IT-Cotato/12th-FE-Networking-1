@@ -4,7 +4,7 @@ import { addMovie } from "@/api";
 import { type NewMovie } from "@/types/movie";
 import Input from "./ui/input";
 import Button from "./ui/button";
-import StarRating from "./star-rating";
+import StarRating from "./ui/star-rating";
 
 const INITIAL_STATE: NewMovie = {
   title: "",
