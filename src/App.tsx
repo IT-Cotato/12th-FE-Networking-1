@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { themes, type ThemeName } from "./styles/theme";
 import Header from "./components/Header";
-import MovieForm from "./components/MovieForm";
-import SearchBar from "./components/SearchBar";
-import MovieList from "./components/MovieList";
-import ErrorMessage from "./components/ErrorMessage";
-import LoadingMessage from "./components/LoadingMessage";
-import EmptyMessage from "./components/EmptyMessage";
+import MovieForm from "./components/movies/MovieForm";
+import SearchBar from "./components/movies/SearchBar";
+import MovieList from "./components/movies/MovieList";
+import ErrorMessage from "./components/messages/ErrorMessage";
+import LoadingMessage from "./components/messages/LoadingMessage";
+import EmptyMessage from "./components/messages/EmptyMessage";
 
 interface Movie {
   id: number;
