@@ -4,6 +4,7 @@ import Header from "./components/Header";
 import MovieForm from "./components/MovieForm";
 import SearchBar from "./components/SearchBar";
 import MovieList from "./components/MovieList";
+import ErrorMessage from "./components/ErrorMessage";
 
 interface Movie {
   id: number;
@@ -110,19 +111,8 @@ function App() {
       }}
     >
       <Header themeName={themeName} setThemeName={setThemeName} />
-      {error && (
-        <div
-          style={{
-            backgroundColor: currentTheme.errorBg,
-            color: currentTheme.errorText,
-            padding: "12px",
-            borderRadius: "8px",
-            marginBottom: "20px",
-          }}
-        >
-          {error}
-        </div>
-      )}
+      {error && <ErrorMessage message={error} currentTheme={currentTheme} />}
+
       <MovieForm
         currentTheme={currentTheme}
         newTitle={newTitle}
