@@ -87,6 +87,9 @@ const JONG = [
   "ㅎ",
 ];
 
+const HANGUL_CONSONANTS_START = 0x3131;
+const HANGUL_CONSONANTS_END = 0x314e;
+
 // 한글 유니코드의 시작점인 '가'의 코드 포인트입니다. 이 값을 기준으로 계산이 시작됩니다.
 const HANGUL_OFFSET = 0xac00;
 
@@ -167,67 +170,52 @@ export function getChosung(str: string): string {
  * 동적인 정규식 패턴을 만들어냅니다.
  */
 export function createHangulHighlighterRegex(search: string): RegExp {
-  // 1. 검색어의 양쪽 공백과 내부 공백을 모두 제거합니다.
   const cleanSearch = search.trim().replace(/\s/g, "");
-  if (!cleanSearch) return new RegExp("a^", "g"); // 빈 검색어는 아무것도 찾지 않는 정규식 반환
+  if (!cleanSearch) return new RegExp("a^", "g");
 
-  // 2. 정리된 검색어를 자소 단위로 분해합니다. (예: '좀ㅂ' -> 'ㅈㅗㅁㅂ')
-  const decomposed = decomposeHangul(cleanSearch);
   let pattern = "";
-  let i = 0; // 분해된 검색어의 인덱스
+  // 1. 정리된 원본 검색어를 한 글자씩 순회합니다.
+  for (const char of cleanSearch) {
+    const code = char.charCodeAt(0);
 
-  // 3. 분해된 검색어를 순회하며 정규식 패턴을 조합합니다.
-  while (i < decomposed.length) {
-    const cho = decomposed[i]; // 현재 처리할 초성
-    const choIndex = CHO.indexOf(cho);
-
-    if (choIndex === -1) {
-      // 3-1. 현재 문자가 초성 리스트에 없으면(영어, 숫자 등), 특수문자를 이스케이프 처리하여 패턴에 추가합니다.
-      pattern += cho.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-      i++;
-    } else {
-      // 3-2. 현재 문자가 초성일 경우, 다음 글자가 중성인지 확인하여 음절 조합을 시작합니다.
-      const jung = i + 1 < decomposed.length ? decomposed[i + 1] : null;
-      const jungIndex = jung ? JUNG.indexOf(jung) : -1;
-
-      if (jungIndex === -1) {
-        // 3-2-A. 초성만 단독으로 있는 경우 (예: '좀ㅂ' 에서의 'ㅂ' 또는 'ㄱ' 단독 검색)
-        // 해당 자음으로 시작하는 모든 한글의 유니코드 범위를 패턴으로 만듭니다. (예: [ㄱ가-깋])
+    if (code >= HANGUL_OFFSET && code <= 0xd7a3) {
+      // CASE 1: '가', '좀', '무' 처럼 완성된 한글 글자인 경우
+      const jong = (code - HANGUL_OFFSET) % 28;
+      if (jong === 0) {
+        // 1-A: 받침이 없는 글자 ('무') -> '무'로 시작하는 모든 글자 범위
+        const start = char;
+        const end = String.fromCharCode(code + JONG.length - 1);
+        pattern += `[${start}-${end}]`;
+      } else {
+        // 1-B: 받침이 있는 글자 ('좀') -> 정확히 그 글자만 매칭
+        pattern += char;
+      }
+    } else if (
+      code >= HANGUL_CONSONANTS_START &&
+      code <= HANGUL_CONSONANTS_END
+    ) {
+      // CASE 2: 'ㅂ' 처럼 단독으로 입력된 한글 자음(자모)인 경우
+      const choIndex = CHO.indexOf(char);
+      if (choIndex !== -1) {
+        // 해당 자음으로 시작하는 모든 한글 글자의 범위를 찾습니다. (예: [바-밯])
         const start = String.fromCharCode(0xac00 + choIndex * 588);
         const end = String.fromCharCode(start.charCodeAt(0) + 587);
-        pattern += `[${cho}${start}-${end}]`;
-        i++;
+        pattern += `[${start}-${end}]`;
       } else {
-        // 3-2-B. 초성 + 중성이 결합되는 경우
-        const jong = i + 2 < decomposed.length ? decomposed[i + 2] : null;
-        const jongIndex = jong ? JONG.indexOf(jong) : -1;
-
-        if (jongIndex === -1 || jongIndex === 0) {
-          // 받침이 없는 글자 (예: '조', '비'). '조'로 시작하는 모든 글자('조', '족', '존'...)를 찾도록
-          // 유니코드 범위를 패턴으로 만듭니다. (예: [조-좣])
-          const startCode = 0xac00 + choIndex * 588 + jungIndex * 28;
-          const start = String.fromCharCode(startCode);
-          const end = String.fromCharCode(startCode + JONG.length - 1);
-          pattern += `[${start}-${end}]`;
-          i += 2; // 초성, 중성을 처리했으므로 인덱스를 2칸 이동
-        } else {
-          // 받침까지 완성된 글자 (예: '좀', '딸'). 정확히 해당 글자만 찾도록 패턴을 만듭니다.
-          const charCode = 0xac00 + choIndex * 588 + jungIndex * 28 + jongIndex;
-          pattern += String.fromCharCode(charCode);
-          i += 3; // 초성, 중성, 종성을 처리했으므로 인덱스를 3칸 이동
-        }
+        // 쌍자음 등 CHO에 없는 자모는 글자 그대로 매칭
+        pattern += char;
       }
+    } else {
+      // CASE 3: 'f', '1' 처럼 한글이 아닌 문자인 경우
+      pattern += char.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
     }
-    // 각 패턴 유닛(글자) 사이에 공백이 0개 이상 들어갈 수 있도록 '\\s*'를 추가합니다. (띄어쓰기 무시)
+    // 각 패턴 유닛 사이에 공백을 허용합니다.
     pattern += "\\s*";
   }
 
   try {
-    // 4. 완성된 패턴의 마지막에 붙은 불필요한 '\\s*'를 제거하고, 정규식 객체를 생성하여 반환합니다.
-    // 'g'는 전역 검색, 'i'는 대소문자 무시 옵션입니다.
     return new RegExp(`(${pattern.slice(0, -3)})`, "gi");
   } catch (e) {
-    // 5. 혹시라도 잘못된 패턴으로 에러가 발생하면, 안전하게 일반 텍스트 검색으로 대체합니다.
     return new RegExp(
       `(${cleanSearch.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")})`,
       "gi",
