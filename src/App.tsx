@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { themes, type ThemeName } from "./styles/theme";
 import Header from "./components/Header";
+import ErrorBox from "./components/ErrorBox";
 
 interface Movie {
   id: number;
@@ -120,19 +121,7 @@ function App() {
         }
         currentTheme={currentTheme}
       />
-      {error && (
-        <div
-          style={{
-            backgroundColor: currentTheme.errorBg,
-            color: currentTheme.errorText,
-            padding: "12px",
-            borderRadius: "8px",
-            marginBottom: "20px",
-          }}
-        >
-          {error}
-        </div>
-      )}
+      <ErrorBox error={error} currentTheme={currentTheme} />
       {/* 영화 페이지 두번째 목록을 담당하는 부분 */}
       <div
         style={{
