@@ -16,33 +16,16 @@ interface Movie {
 }
 
 function App() {
-  const [error, setError] = useState<string | null>(null);
   const currentTheme = themes["light"];
 
   return (
     <div
-      style={{
-        background: currentTheme.background,
-        color: currentTheme.text,
-        minHeight: "100vh",
-        padding: "20px",
-        transition: "all 0.2s ease",
-      }}
+      className="bg-light-background dark:bg-dark-background 
+      text-black dark:text-white min-h-screen p-5
+      transition-all duration-200 ease-in-out 
+      "
     >
       <Header />
-      {error && (
-        <div
-          style={{
-            backgroundColor: currentTheme.errorBg,
-            color: currentTheme.errorText,
-            padding: "12px",
-            borderRadius: "8px",
-            marginBottom: "20px",
-          }}
-        >
-          {error}
-        </div>
-      )}
       <MovieForm />
       <MovieList />
     </div>
