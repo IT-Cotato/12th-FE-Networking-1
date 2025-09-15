@@ -19,7 +19,7 @@ export default function StarRating({ value, onChange }: StarRatingProps) {
   };
 
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex items-center gap-2 select-none">
       <span>별점 : </span>
       <div className="flex">
         {Array.from({ length: 5 }, (_, i) => {
@@ -44,7 +44,9 @@ export default function StarRating({ value, onChange }: StarRatingProps) {
         })}
       </div>
 
-      <span className="font-bold text-lg w-10 text-center">{value}</span>
+      <span className="font-bold text-lg w-10 text-center select-none">
+        {value}
+      </span>
     </div>
   );
 }
