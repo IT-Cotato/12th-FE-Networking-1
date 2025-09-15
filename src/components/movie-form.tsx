@@ -4,13 +4,14 @@ import { addMovie } from "@/api";
 import { type NewMovie } from "@/types/movie";
 import Input from "./ui/input";
 import Button from "./ui/button";
+import StarRating from "./star-rating";
 
 const INITIAL_STATE: NewMovie = {
   title: "",
   director: "",
-  year: 2024,
+  year: 2025,
   genre: "",
-  rating: 5,
+  rating: 0,
 };
 
 export default function MovieForm() {
@@ -31,6 +32,10 @@ export default function MovieForm() {
       ...prev,
       [name]: type === "number" ? Number(value) : value,
     }));
+  };
+
+  const handleRatingChange = (newRating: number) => {
+    setFormData((prev) => ({ ...prev, rating: newRating }));
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -78,17 +83,8 @@ export default function MovieForm() {
           value={formData.genre}
           onChange={handleChange}
         />
-        <Input
-          name="rating"
-          type="number"
-          placeholder="평점"
-          className="w-28"
-          min="0"
-          max="10"
-          step="0.1"
-          value={formData.rating}
-          onChange={handleChange}
-        />
+
+        <StarRating onChange={handleRatingChange} value={formData.rating} />
         <Button type="submit" disabled={isPending}>
           {isPending ? "추가 중..." : "추가"}
         </Button>
