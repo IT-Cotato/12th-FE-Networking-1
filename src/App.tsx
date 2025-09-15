@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { themes, type ThemeName } from "./styles/theme";
+import Header from "./components/Header";
 
 interface Movie {
   id: number;
@@ -20,7 +21,7 @@ function App() {
   const [newRating, setNewRating] = useState<number | "">("");
   const [searchTerm, setSearchTerm] = useState<string>(""); // 영화 검색 상태
   const [error, setError] = useState<string | null>(null); // 에러 상태
-  const [isLoading, setIsLoading] = useState<boolean>(false); // 로딩중 여부의 상태
+  const [isLoading, setIsLoading] = useState<boolean>(false); // 로딩
 
   const currentTheme = themes[themeName];
 
@@ -112,34 +113,13 @@ function App() {
       }}
     >
       {/* 상단 제목과 다크모드를 담당하는 헤더 스타일링 */}
-      <header
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginBottom: "24px",
-          padding: "16px",
-          backgroundColor: currentTheme.componentBg,
-          borderRadius: "12px",
-          border: `1px solid ${currentTheme.border}`,
-        }}
-      >
-        <h1 style={{ margin: 0 }}>코테이토 영화관</h1>
-        {/* 다크모드 설정 버튼*/}
-        <button
-          onClick={() => setThemeName(themeName === "light" ? "dark" : "light")}
-          style={{
-            padding: "8px 16px",
-            cursor: "pointer",
-            background: currentTheme.buttonBg,
-            color: currentTheme.buttonText,
-            border: "none",
-            borderRadius: "8px",
-          }}
-        >
-          {themeName === "light" ? "🌙 다크모드" : "☀️ 라이트모드"}
-        </button>
-      </header>
+      <Header
+        themeName={themeName}
+        toggleTheme={() =>
+          setThemeName((prev) => (prev === "light" ? "dark" : "light"))
+        }
+        currentTheme={currentTheme}
+      />
       {error && (
         <div
           style={{
