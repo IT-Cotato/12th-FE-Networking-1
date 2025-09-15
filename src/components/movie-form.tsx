@@ -18,7 +18,7 @@ export default function MovieForm() {
   const queryClient = useQueryClient();
   const [formData, setFormData] = useState<NewMovie>(INITIAL_STATE);
   const [formError, setFormError] = useState<string | null>(null);
-  const [shake, setShake] = useState(false); // 🔥 애니메이션 제어용
+  const [shake, setShake] = useState(false);
 
   const { mutate, isPending, error } = useMutation({
     mutationFn: addMovie,
@@ -52,8 +52,8 @@ export default function MovieForm() {
 
     if (isInvalid) {
       setFormError("모든 필드를 입력해주세요.");
-      setShake(false); // 먼저 껐다가
-      requestAnimationFrame(() => setShake(true)); // 다음 프레임에서 다시 켜줌 → 매번 실행됨
+      setShake(false);
+      requestAnimationFrame(() => setShake(true));
       return;
     }
 
