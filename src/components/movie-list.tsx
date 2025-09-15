@@ -4,7 +4,7 @@ import { fetchMovies } from "@/api";
 import Input from "./ui/input";
 import MovieListItem from "./movie-list-item";
 import { type Movie } from "@/types/movie";
-import { decomposeHangul } from "@/utils/hangul";
+import { decomposeHangul, getChosung, CHO } from "@/utils/hangul";
 
 export default function MovieList() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -23,6 +23,14 @@ export default function MovieList() {
     }
     const processedSearchTerm = searchTerm.toLowerCase().replace(/\s/g, "");
     const lowerCaseSearchTerm = processedSearchTerm.toLowerCase();
+
+    if (processedSearchTerm.length === 1 && CHO.includes(processedSearchTerm)) {
+      // 2. 그렇다면, 영화 제목의 초성하고만 비교합니다.
+      return movies.filter((movie) => {
+        const titleChosung = getChosung(movie.title.toLowerCase());
+        return titleChosung.includes(processedSearchTerm);
+      });
+    }
 
     return movies.filter((movie) => {
       const processedTitle = movie.title.toLowerCase().replace(/\s/g, "");
@@ -56,7 +64,11 @@ export default function MovieList() {
       ) : (
         <div className="flex flex-col gap-2">
           {filteredMovies.map((movie) => (
-            <MovieListItem key={movie.id} movie={movie} />
+            <MovieListItem
+              searchTerm={searchTerm}
+              key={movie.id}
+              movie={movie}
+            />
           ))}
         </div>
       )}
