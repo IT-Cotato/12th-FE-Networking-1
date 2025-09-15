@@ -5,6 +5,7 @@ import MovieForm from "./components/MovieForm";
 import SearchBar from "./components/SearchBar";
 import MovieList from "./components/MovieList";
 import ErrorMessage from "./components/ErrorMessage";
+import LoadingMessage from "./components/LoadingMessage";
 
 interface Movie {
   id: number;
@@ -142,7 +143,7 @@ function App() {
           currentTheme={currentTheme}
         />
         {isLoading ? (
-          <div>로딩 중...</div>
+          <LoadingMessage currentTheme={currentTheme} />
         ) : filteredMovies.length === 0 ? (
           <div>영화가 없습니다</div>
         ) : (
