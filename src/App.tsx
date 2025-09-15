@@ -3,6 +3,7 @@ import { themes, type ThemeName } from "./styles/theme";
 import Header from "./components/Header";
 import MovieForm from "./components/MovieForm";
 import SearchBar from "./components/SearchBar";
+import MovieList from "./components/MovieList";
 
 interface Movie {
   id: number;
@@ -155,27 +156,7 @@ function App() {
         ) : filteredMovies.length === 0 ? (
           <div>영화가 없습니다</div>
         ) : (
-          <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-            {filteredMovies.map((movie) => (
-              <div
-                key={movie.id}
-                style={{
-                  padding: "12px",
-                  borderRadius: "8px",
-                  backgroundColor: currentTheme.hoverBg,
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "4px",
-                }}
-              >
-                <span>
-                  {movie.title} ({movie.year}) - {movie.director}
-                </span>
-                <span>장르: {movie.genre}</span>
-                <span>⭐: {movie.rating}</span>
-              </div>
-            ))}
-          </div>
+          <MovieList movies={filteredMovies} currentTheme={currentTheme} />
         )}
       </div>
     </div>
