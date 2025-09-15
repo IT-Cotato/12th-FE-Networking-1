@@ -21,11 +21,12 @@ export default function MovieList() {
     if (!searchTerm) {
       return movies;
     }
-
-    const lowerCaseSearchTerm = searchTerm.toLowerCase();
+    const processedSearchTerm = searchTerm.toLowerCase().replace(/\s/g, "");
+    const lowerCaseSearchTerm = processedSearchTerm.toLowerCase();
 
     return movies.filter((movie) => {
-      const lowerCaseTitle = movie.title.toLowerCase();
+      const processedTitle = movie.title.toLowerCase().replace(/\s/g, "");
+      const lowerCaseTitle = processedTitle.toLowerCase();
       const decomposedTitle = decomposeHangul(lowerCaseTitle);
       const decomposedSearchTerm = decomposeHangul(lowerCaseSearchTerm);
       if (decomposedTitle.includes(decomposedSearchTerm)) {
