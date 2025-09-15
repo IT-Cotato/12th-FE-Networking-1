@@ -4,7 +4,7 @@ import { fetchMovies } from "@/api";
 import Input from "./ui/input";
 import MovieListItem from "./movie-list-item";
 import { type Movie } from "@/types/movie";
-import { decomposeHangul, getChosung, CHO } from "@/utils/hangul";
+import { filterMovies } from "@/utils/filter-movies";
 
 export default function MovieList() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -17,33 +17,10 @@ export default function MovieList() {
     queryFn: fetchMovies,
   });
 
-  const filteredMovies = useMemo(() => {
-    if (!searchTerm) {
-      return movies;
-    }
-    const processedSearchTerm = searchTerm.toLowerCase().replace(/\s/g, "");
-    const lowerCaseSearchTerm = processedSearchTerm.toLowerCase();
-
-    if (processedSearchTerm.length === 1 && CHO.includes(processedSearchTerm)) {
-      // 2. 그렇다면, 영화 제목의 초성하고만 비교합니다.
-      return movies.filter((movie) => {
-        const titleChosung = getChosung(movie.title.toLowerCase());
-        return titleChosung.includes(processedSearchTerm);
-      });
-    }
-
-    return movies.filter((movie) => {
-      const processedTitle = movie.title.toLowerCase().replace(/\s/g, "");
-      const lowerCaseTitle = processedTitle.toLowerCase();
-      const decomposedTitle = decomposeHangul(lowerCaseTitle);
-      const decomposedSearchTerm = decomposeHangul(lowerCaseSearchTerm);
-      if (decomposedTitle.includes(decomposedSearchTerm)) {
-        return true;
-      }
-
-      return false;
-    });
-  }, [movies, searchTerm]);
+  const filteredMovies = useMemo(
+    () => filterMovies(movies, searchTerm),
+    [movies, searchTerm],
+  );
 
   return (
     <div className="p-5 rounded-xl bg-white dark:bg-deep-gray border border-gray dark:border-dark-gray">
