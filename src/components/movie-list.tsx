@@ -2,6 +2,7 @@ import { useState, useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { fetchMovies } from "@/api";
 import Input from "./ui/input";
+import MovieListItem from "./movie-list-item";
 
 export default function MovieList() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -39,16 +40,7 @@ export default function MovieList() {
       ) : (
         <div className="flex flex-col gap-2">
           {filteredMovies.map((movie) => (
-            <div
-              key={movie.id}
-              className="p-3 rounded-lg bg-light-gray dark:bg-dark-gray flex flex-col gap-1"
-            >
-              <span className="font-bold">
-                {movie.title} ({movie.year}) - {movie.director}
-              </span>
-              <span>장르: {movie.genre}</span>
-              <span className="text-purple">⭐: {movie.rating}</span>
-            </div>
+            <MovieListItem movie={movie} />
           ))}
         </div>
       )}
