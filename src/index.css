@@ -1,0 +1,39 @@
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-white: #ffffff;
+  --color-black: #1a1a1a;
+  --color-light-gray: #f3f4f6;
+  --color-gray: #e5e7eb;
+  --color-dark-gray: #3a3a3a;
+  --color-deep-gray: #2a2a2a;
+  --color-red: #dc2626;
+  --color-light-red: #fef2f2;
+  --color-pink: #fca5a5;
+  --color-purple: #8b5cf6;
+  --color-dark-background: #1a1a1a;
+  --color-light-background: #fafafa;
+
+  --animate-shake: shake 0.5s ease-in-out;
+
+  @keyframes shake {
+    10%,
+    90% {
+      transform: translateX(-1px);
+    }
+    20%,
+    80% {
+      transform: translateX(2px);
+    }
+    30%,
+    50%,
+    70% {
+      transform: translateX(-4px);
+    }
+    40%,
+    60% {
+      transform: translateX(4px);
+    }
+  }
+}
