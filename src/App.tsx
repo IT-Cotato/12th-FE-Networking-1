@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { themes, type ThemeName } from "./styles/theme";
+import Header from "./components/Header";
 
 interface Movie {
   id: number;
@@ -105,19 +106,11 @@ function App() {
         transition: "all 0.2s ease",
       }}
     >
-      <header
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginBottom: "24px",
-          padding: "16px",
-          backgroundColor: currentTheme.componentBg,
-          borderRadius: "12px",
-          border: `1px solid ${currentTheme.border}`,
-        }}
+      <Header
+        currentTheme={currentTheme}
+        flexRowJustifyContent="end"
+        title="코테이토 영화관"
       >
-        <h1 style={{ margin: 0 }}>코테이토 영화관</h1>
         <button
           onClick={() => setThemeName(themeName === "light" ? "dark" : "light")}
           style={{
@@ -131,7 +124,8 @@ function App() {
         >
           {themeName === "light" ? "🌙 다크모드" : "☀️ 라이트모드"}
         </button>
-      </header>
+      </Header>
+
       {error && (
         <div
           style={{
