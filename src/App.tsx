@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { themes, type ThemeName } from "@/styles/theme";
+import { useThemeStore } from "@/store/theme";
+
 
 import Header from "./components/Header";
 import MovieForm from "./components/MovieForm";
@@ -10,7 +12,10 @@ import { useMovies } from "./hooks/useMovies";
 
 function App() {
   // 테마 상태
-  const [themeName, setThemeName] = useState<ThemeName>("light");
+  //const [themeName, setThemeName] = useState<ThemeName>("light");
+
+  const themeName = useThemeStore((s) => s.themeName);
+  const toggle = useThemeStore((s) => s.toggle);
   const theme = themes[themeName];
 
   // 영화 상태 (커스텀 훅)
@@ -30,13 +35,7 @@ function App() {
       }}
     >
       {/* 헤더 */}
-      <Header
-        theme={theme}
-        themeName={themeName}
-        onToggleTheme={() =>
-          setThemeName(themeName === "light" ? "dark" : "light")
-        }
-      />
+      <Header theme={theme} themeName={themeName} onToggleTheme={toggle} />
 
       {/* 에러 메시지 */}
       {error && (
