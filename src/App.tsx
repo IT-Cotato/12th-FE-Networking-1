@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState } from "react";
 import { themes, type ThemeName } from "./styles/theme";
 import Header from "./components/Header";
 import MovieForm from "./components/movies/MovieForm";
@@ -9,20 +9,14 @@ import LoadingMessage from "./components/messages/LoadingMessage";
 import EmptyMessage from "./components/messages/EmptyMessage";
 import { useMovies } from "./hooks/useMovies";
 import { useMovieForm } from "./hooks/useMovieForm";
+import { useMovieSearch } from "./hooks/useMovieSearch";
 
 function App() {
   const [themeName, setThemeName] = useState<ThemeName>("light");
   const { movies, setMovies, error, isLoading } = useMovies();
   const movieForm = useMovieForm(setMovies);
-  const [searchTerm, setSearchTerm] = useState<string>("");
-
+  const { searchTerm, setSearchTerm, filteredMovies } = useMovieSearch(movies);
   const currentTheme = themes[themeName];
-
-  const filteredMovies = useMemo(() => {
-    return movies.filter((movie) =>
-      movie.title.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-  }, [movies, searchTerm]);
 
   return (
     <div
