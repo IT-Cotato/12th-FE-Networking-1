@@ -62,7 +62,7 @@ export const handlers = [
     if (movieIndex === -1)
       return HttpResponse.json(
         { message: "영화를 찾을 수 없음" },
-        { status: 404 }
+        { status: 404 },
       );
 
     const updates = (await request.json()) as Partial<Movie>;
