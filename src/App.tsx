@@ -7,15 +7,7 @@ import MovieList from "./components/movies/MovieList";
 import ErrorMessage from "./components/messages/ErrorMessage";
 import LoadingMessage from "./components/messages/LoadingMessage";
 import EmptyMessage from "./components/messages/EmptyMessage";
-
-interface Movie {
-  id: number;
-  title: string;
-  director: string;
-  year: number;
-  genre: string;
-  rating: number;
-}
+import type { Movie } from "./types/movie";
 
 function App() {
   const [themeName, setThemeName] = useState<ThemeName>("light");

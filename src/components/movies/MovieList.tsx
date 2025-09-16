@@ -1,14 +1,6 @@
 import React from "react";
 import { themes } from "../../styles/theme";
-
-interface Movie {
-  id: number;
-  title: string;
-  director: string;
-  year: number;
-  genre: string;
-  rating: number;
-}
+import type { Movie } from "../../types/movie";
 
 interface MovieListProps {
   movies: Movie[];
