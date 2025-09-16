@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect } from "react";
 import type { Movie } from "../types/movie";
 
 export function useMovies() {
