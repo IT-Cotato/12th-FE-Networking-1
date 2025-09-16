@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { themes, type ThemeName } from "./styles/theme";
 import Header from "./components/Header";
+import ThemeButton from "./components/ThemeButton";
 
 interface Movie {
   id: number;
@@ -12,7 +13,6 @@ interface Movie {
 }
 
 function App() {
-  const [themeName, setThemeName] = useState<ThemeName>("light");
   const [movies, setMovies] = useState<Movie[]>([]);
   const [newTitle, setNewTitle] = useState<string>("");
   const [newDirector, setNewDirector] = useState<string>("");
@@ -23,7 +23,7 @@ function App() {
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const currentTheme = themes[themeName];
+  const currentTheme = themes["light"];
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -111,19 +111,7 @@ function App() {
         flexRowJustifyContent="end"
         title="코테이토 영화관"
       >
-        <button
-          onClick={() => setThemeName(themeName === "light" ? "dark" : "light")}
-          style={{
-            padding: "8px 16px",
-            cursor: "pointer",
-            background: currentTheme.buttonBg,
-            color: currentTheme.buttonText,
-            border: "none",
-            borderRadius: "8px",
-          }}
-        >
-          {themeName === "light" ? "🌙 다크모드" : "☀️ 라이트모드"}
-        </button>
+        <ThemeButton currentTheme={currentTheme} />
       </Header>
 
       {error && (
