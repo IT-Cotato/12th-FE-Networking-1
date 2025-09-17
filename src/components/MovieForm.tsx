@@ -12,7 +12,7 @@ const MIN_YEAR = 1800;
 const MAX_YEAR = 2100;
 
 export default function MovieForm({ theme, onAdd }: Props) {
-  // ✅ 커스텀 훅 사용: 폼 상태/검증/제출 핸들러를 훅이 관리
+  //커스텀 훅 사용: 폼 상태/검증/제출 핸들러를 훅이 관리
   const { fields, setters, error, setError, handleSubmit } = useMovieForm(onAdd);
 
   const inputStyle: React.CSSProperties = {

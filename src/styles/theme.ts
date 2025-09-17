@@ -13,6 +13,7 @@ export interface Theme {
   hoverBg: string;
   errorBg: string;
   errorText: string;
+  accent: string;
 }
 
 export const themes: Record<ThemeName, Theme> = {
@@ -27,6 +28,7 @@ export const themes: Record<ThemeName, Theme> = {
     hoverBg: palette.lightGray,
     errorBg: palette.lightRed,
     errorText: palette.red,
+    accent: palette.purple, 
   },
   dark: {
     background: palette.darkBackground,
@@ -39,5 +41,6 @@ export const themes: Record<ThemeName, Theme> = {
     hoverBg: palette.darkGray,
     errorBg: palette.deepGray,
     errorText: palette.pink,
+    accent: palette.purple, 
   },
 };

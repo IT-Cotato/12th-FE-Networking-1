@@ -10,7 +10,7 @@ export type SearchBarProps = {
 function SearchBar({ theme, value, onChange }: SearchBarProps) {
   return (
     <input
-      placeholder="검색..."
+      placeholder="검색"
       value={value}
       onChange={(e) => onChange(e.target.value)}
       style={{
