@@ -1,0 +1,47 @@
+import React from "react";
+import type { Movie } from "../types/movie";
+
+interface MovieListProps {
+  isDark:boolean;
+  movies: Movie[];
+  searchTerm: string;
+  onSearch: (value: string) => void;
+  isLoading: boolean;
+}
+
+const MovieList: React.FC<MovieListProps> = ({ isDark, movies, searchTerm, onSearch, isLoading }) => {
+  return (
+    <div className="p-6 bg-lightBackground text-black dark:bg-darkBackground dark:text-white transition-all duration-200">
+      <h2 className="text-xl font-bold mb-4 text-black dark:text-white">영화 목록</h2>
+      <input
+        type="text"
+        placeholder="검색..."
+        value={searchTerm}
+        onChange={(e) => onSearch(e.target.value)}
+        className="w-full mb-4 p-2 rounded border border-gray dark:border-darkGray bg-white dark:bg-darkGray text-black dark:text-white"
+      />
+      {isLoading ? (
+        <div className="text-black dark:text-white">로딩 중...</div>
+      ) : movies.length === 0 ? (
+        <div className="text-black dark:text-white">영화가 없습니다</div>
+      ) : (
+        <div className="flex flex-col gap-3">
+          {movies.map((movie) => (
+            <div
+              key={movie.id}
+              className="p-4 rounded bg-lightGray dark:bg-darkGray flex flex-col gap-1"
+            >
+              <span className="font-semibold text-black dark:text-white">
+                {movie.title} ({movie.year}) - {movie.director}
+              </span>
+              <span className="text-black dark:text-white">장르: {movie.genre}</span>
+              <span className="text-yellowPoint font-bold">⭐ {movie.rating}</span>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default MovieList;
