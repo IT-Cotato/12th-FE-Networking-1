@@ -23,9 +23,7 @@ function App() {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const { theme } = useTheme();
-
-  const currentTheme = themes[theme];
+  const { currentTheme } = useTheme();
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -108,12 +106,8 @@ function App() {
         transition: "all 0.2s ease",
       }}
     >
-      <Header
-        currentTheme={currentTheme}
-        flexRowJustifyContent="end"
-        title="코테이토 영화관"
-      >
-        <ThemeButton currentTheme={currentTheme} />
+      <Header flexRowJustifyContent="end" title="코테이토 영화관">
+        <ThemeButton />
       </Header>
 
       {error && (

@@ -1,8 +1,8 @@
 import type { ReactNode } from "react";
 import type { Theme } from "../styles/theme";
+import { useTheme } from "../hooks/useTheme";
 
 interface HeaderProps {
-  currentTheme: Theme;
   flexRowJustifyContent: "start" | "end";
   title: string;
   children?: ReactNode;
@@ -10,18 +10,18 @@ interface HeaderProps {
 
 /**
  *
- * @param currentTheme interface Theme 형태의 색상 모드 객체이다.
  * @param flexRowJustifyContent children의 start 또는 end 정렬을 결정한다. 기본값은 end이다.
  * @param title Header 컴포넌트에 나타낼 제목이다.
  * @param children nullable이며 Header 컴포넌트 제목 우측에 위치하는 자식 컴포넌트이다.
  * @returns Header 컴포넌트
  */
 const Header = ({
-  currentTheme,
   flexRowJustifyContent = "end",
   title,
   children,
 }: HeaderProps) => {
+  const { currentTheme } = useTheme();
+
   return (
     <header
       style={{

@@ -1,5 +1,5 @@
 import { useState, type ReactNode } from "react";
-import type { ThemeName } from "../styles/theme";
+import { themes, type ThemeName } from "../styles/theme";
 import { ThemeContext } from "./ThemeContext";
 
 interface ThemeProviderProps {
@@ -13,7 +13,9 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
     setTheme((prev) => (prev === "light" ? "dark" : "light"));
   };
 
-  const contextValue = { theme, toggleTheme };
+  const currentTheme = themes[theme];
+
+  const contextValue = { currentTheme, theme, toggleTheme };
 
   return (
     <ThemeContext.Provider value={contextValue}>

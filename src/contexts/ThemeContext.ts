@@ -1,7 +1,8 @@
 import React from "react";
-import type { ThemeName } from "../styles/theme";
+import type { Theme, ThemeName } from "../styles/theme";
 
 interface ThemeContextType {
+  currentTheme: Theme;
   theme: ThemeName;
   toggleTheme: (value: ThemeName) => void;
 }
