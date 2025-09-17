@@ -7,7 +7,6 @@
     "module": "ESNext",
     "skipLibCheck": true,
 
-    /* Bundler mode */
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
     "verbatimModuleSyntax": true,
@@ -15,7 +14,10 @@
     "noEmit": true,
     "jsx": "react-jsx",
 
-    /* Linting */
+    "baseUrl": ".",
+    "paths": { "@/*": ["src/*"] },
+    "types": ["node", "vite/client"],
+
     "strict": true,
     "noUnusedLocals": false,
     "noUnusedParameters": false,
@@ -23,5 +25,6 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
   },
-  "include": ["src"]
+  "include": ["src", "vite.config.ts"]
 }
+
