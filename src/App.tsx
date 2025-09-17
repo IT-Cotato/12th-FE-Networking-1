@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo } from "react";
 import { themes, type ThemeName } from "./styles/theme";
 import Header from "./components/Header";
 import ErrorBox from "./components/ErrorBox";
+import MovieForm from "./components/MovieForm";
 
 interface Movie {
   id: number;
@@ -123,106 +124,20 @@ function App() {
       />
       <ErrorBox error={error} currentTheme={currentTheme} />
       {/* 영화 페이지 두번째 목록을 담당하는 부분 */}
-      <div
-        style={{
-          marginBottom: "24px",
-          padding: "20px",
-          borderRadius: "12px",
-          backgroundColor: currentTheme.componentBg,
-          border: `1px solid ${currentTheme.border}`,
-        }}
-      >
-        <h2>영화 추가</h2>
-        <form
-          onSubmit={handleAddMovie}
-          style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}
-        >
-          {/* 영화를 추가하는 기능을 담당하는 부분 */}
-          <input
-            type="text"
-            placeholder="제목"
-            value={newTitle}
-            onChange={(e) => setNewTitle(e.target.value)}
-            style={{
-              padding: "8px",
-              borderRadius: "8px",
-              border: `1px solid ${currentTheme.border}`,
-              backgroundColor: currentTheme.inputBg,
-              color: currentTheme.text,
-            }}
-          />
-          <input
-            type="text"
-            placeholder="감독"
-            value={newDirector}
-            onChange={(e) => setNewDirector(e.target.value)}
-            style={{
-              padding: "8px",
-              borderRadius: "8px",
-              border: `1px solid ${currentTheme.border}`,
-              backgroundColor: currentTheme.inputBg,
-              color: currentTheme.text,
-            }}
-          />
-          <input
-            type="number"
-            placeholder="연도"
-            value={newYear}
-            onChange={(e) => setNewYear(Number(e.target.value))}
-            style={{
-              padding: "8px",
-              borderRadius: "8px",
-              border: `1px solid ${currentTheme.border}`,
-              backgroundColor: currentTheme.inputBg,
-              color: currentTheme.text,
-              width: "80px",
-            }}
-          />
-          <input
-            type="text"
-            placeholder="장르"
-            value={newGenre}
-            onChange={(e) => setNewGenre(e.target.value)}
-            style={{
-              padding: "8px",
-              borderRadius: "8px",
-              border: `1px solid ${currentTheme.border}`,
-              backgroundColor: currentTheme.inputBg,
-              color: currentTheme.text,
-            }}
-          />
-          <input
-            type="number"
-            placeholder="평점"
-            value={newRating}
-            onChange={(e) => {
-              const val = Number(e.target.value);
-              if (val >= 0 && val <= 10) setNewRating(val);
-            }}
-            style={{
-              padding: "8px",
-              borderRadius: "8px",
-              border: `1px solid ${currentTheme.border}`,
-              backgroundColor: currentTheme.inputBg,
-              color: currentTheme.text,
-              width: "100px",
-            }}
-          />
-          <button
-            type="submit"
-            style={{
-              padding: "8px 16px",
-              backgroundColor: currentTheme.buttonBg,
-              color: currentTheme.buttonText,
-              border: "none",
-              borderRadius: "8px",
-              cursor: "pointer",
-            }}
-          >
-            추가
-          </button>
-        </form>
-      </div>
+      <MovieForm
+        newTitle={newTitle}
+        newDirector={newDirector}
+        newYear={newYear}
+        newGenre={newGenre}
+        newRating={newRating}
+        setNewTitle={setNewTitle}
+        setNewDirector={setNewDirector}
+        setNewYear={setNewYear}
+        setNewGenre={setNewGenre}
+        setNewRating={setNewRating}
+        onSubmit={handleAddMovie}
+        currentTheme={currentTheme}
+      />
       <div
         style={{
           padding: "20px",
