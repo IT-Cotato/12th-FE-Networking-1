@@ -1,7 +1,7 @@
 import type { Theme } from "../styles/theme";
 import { useTheme } from "../hooks/useTheme";
 
-interface ThemeButtonState {
+interface ThemeButtonProps {
   currentTheme: Theme;
 }
 
@@ -10,7 +10,7 @@ interface ThemeButtonState {
  * @param currentTheme interface Theme 형태의 색상 모드 객체이다.
  * @returns ThemeButton 컴포넌트
  */
-const ThemeButton = ({ currentTheme }: ThemeButtonState) => {
+const ThemeButton = ({ currentTheme }: ThemeButtonProps) => {
   const { theme, toggleTheme } = useTheme();
 
   return (
