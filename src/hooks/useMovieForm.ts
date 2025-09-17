@@ -1,4 +1,3 @@
-// src/hooks/useMovieForm.ts
 import { useState } from "react";
 import type { NewMovie } from "./useMovies";
 

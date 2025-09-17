@@ -20,6 +20,7 @@ function SearchBar({ theme, value, onChange }: SearchBarProps) {
         background: theme.inputBg,
         color: theme.text,
         width: "100%",
+        boxSizing: "border-box",
         marginBottom: 16,
       }}
     />

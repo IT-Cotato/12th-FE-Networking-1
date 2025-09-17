@@ -1,6 +1,4 @@
 import React from "react";
-// import type { Theme, ThemeName } from "../styles/theme";
-// import useMovies from "../hooks/useMovies";
 import styled from "styled-components";
 import type { Theme, ThemeName } from "@/styles/theme";
 
@@ -23,37 +21,6 @@ const Btn = styled.button<{ $theme: Theme }>`
   background: ${(p) => p.$theme.buttonBg}; color: ${(p) => p.$theme.buttonText};
 `;
 
-// function Header({ theme, themeName, onToggleTheme }: HeaderProps) {
-//   return (
-//     <header
-//       style={{
-//         display: "flex",
-//         justifyContent: "space-between",
-//         alignItems: "center",
-//         marginBottom: 24,
-//         padding: 16,
-//         background: theme.componentBg,
-//         borderRadius: 12,
-//         border: `1px solid ${theme.border}`,
-//       }}
-//     >
-//       <h1 style={{ margin: 0 }}>코테이토 영화관</h1>
-//       <button
-//         onClick={onToggleTheme}
-//         style={{
-//           padding: "8px 16px",
-//           cursor: "pointer",
-//           background: theme.buttonBg,
-//           color: theme.buttonText,
-//           border: "none",
-//           borderRadius: 8,
-//         }}
-//       >
-//         {themeName === "light" ? "🌙 다크모드" : "☀️ 라이트모드"}
-//       </button>
-//     </header>
-//   );
-// }
 export default function Header({ theme, themeName, onToggleTheme }: Props) {
   return (
     <Wrap $theme={theme}>
@@ -65,5 +32,4 @@ export default function Header({ theme, themeName, onToggleTheme }: Props) {
   );
 }
 
-//export default Header;
 
