@@ -3,6 +3,7 @@ import { themes } from "./styles/theme";
 import Header from "./components/Header";
 import ThemeButton from "./components/ThemeButton";
 import { useTheme } from "./hooks/useTheme";
+import InputField from "./components/InputField";
 
 interface Movie {
   id: number;
@@ -137,75 +138,40 @@ function App() {
           onSubmit={handleAddMovie}
           style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}
         >
-          <input
-            type="text"
+          <InputField
+            inputType="text"
             placeholder="제목"
             value={newTitle}
             onChange={(e) => setNewTitle(e.target.value)}
-            style={{
-              padding: "8px",
-              borderRadius: "8px",
-              border: `1px solid ${currentTheme.border}`,
-              backgroundColor: currentTheme.inputBg,
-              color: currentTheme.text,
-            }}
           />
-          <input
-            type="text"
+          <InputField
+            inputType="text"
             placeholder="감독"
             value={newDirector}
             onChange={(e) => setNewDirector(e.target.value)}
-            style={{
-              padding: "8px",
-              borderRadius: "8px",
-              border: `1px solid ${currentTheme.border}`,
-              backgroundColor: currentTheme.inputBg,
-              color: currentTheme.text,
-            }}
           />
-          <input
-            type="number"
+          <InputField
+            inputType="number"
             placeholder="연도"
             value={newYear}
             onChange={(e) => setNewYear(Number(e.target.value))}
-            style={{
-              padding: "8px",
-              borderRadius: "8px",
-              border: `1px solid ${currentTheme.border}`,
-              backgroundColor: currentTheme.inputBg,
-              color: currentTheme.text,
-              width: "80px",
-            }}
+            style={{ width: "80px" }}
           />
-          <input
-            type="text"
+          <InputField
+            inputType="text"
             placeholder="장르"
             value={newGenre}
             onChange={(e) => setNewGenre(e.target.value)}
-            style={{
-              padding: "8px",
-              borderRadius: "8px",
-              border: `1px solid ${currentTheme.border}`,
-              backgroundColor: currentTheme.inputBg,
-              color: currentTheme.text,
-            }}
           />
-          <input
-            type="number"
+          <InputField
+            inputType="number"
             placeholder="평점"
             value={newRating}
             onChange={(e) => {
               const val = Number(e.target.value);
               if (val >= 0 && val <= 10) setNewRating(val);
             }}
-            style={{
-              padding: "8px",
-              borderRadius: "8px",
-              border: `1px solid ${currentTheme.border}`,
-              backgroundColor: currentTheme.inputBg,
-              color: currentTheme.text,
-              width: "100px",
-            }}
+            style={{ width: "100px" }}
           />
           <button
             type="submit"
