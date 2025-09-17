@@ -1,21 +1,17 @@
+// src/components/messages/EmptyMessage.tsx
 import React from "react";
-import { themes } from "../../styles/theme";
+import styled from "styled-components";
 
-interface EmptyMessageProps {
-  currentTheme: typeof themes.light;
-}
+const EmptyContainer = styled.div`
+  background-color: ${({ theme }) => theme.componentBg};
+  color: ${({ theme }) => theme.text};
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+`;
 
-const EmptyMessage: React.FC<EmptyMessageProps> = ({ currentTheme }) => (
-  <div
-    style={{
-      backgroundColor: currentTheme.componentBg,
-      color: currentTheme.text,
-      padding: "12px",
-      borderRadius: "8px",
-      marginBottom: "20px",
-    }}
-  >
-    영화가 없습니다
-  </div>
-);
+const EmptyMessage: React.FC = () => {
+  return <EmptyContainer>영화가 없습니다</EmptyContainer>;
+};
+
 export default EmptyMessage;

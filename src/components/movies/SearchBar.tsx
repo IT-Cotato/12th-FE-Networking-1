@@ -1,32 +1,30 @@
+// src/components/movies/SearchBar.tsx
 import React from "react";
-import { themes } from "../../styles/theme";
+import styled from "styled-components";
 
 interface SearchBarProps {
   searchTerm: string;
   setSearchTerm: React.Dispatch<React.SetStateAction<string>>;
-  currentTheme: typeof themes.light;
 }
 
-const SearchBar: React.FC<SearchBarProps> = ({
-  searchTerm,
-  setSearchTerm,
-  currentTheme,
-}) => {
+// 스타일드 인풋
+const Input = styled.input`
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid ${({ theme }) => theme.border};
+  background-color: ${({ theme }) => theme.inputBg};
+  color: ${({ theme }) => theme.text};
+  margin-bottom: 16px;
+  width: 100%;
+`;
+
+const SearchBar: React.FC<SearchBarProps> = ({ searchTerm, setSearchTerm }) => {
   return (
-    <input
+    <Input
       type="text"
       placeholder="검색..."
       value={searchTerm}
       onChange={(e) => setSearchTerm(e.target.value)}
-      style={{
-        padding: "8px",
-        borderRadius: "8px",
-        border: `1px solid ${currentTheme.border}`,
-        backgroundColor: currentTheme.inputBg,
-        color: currentTheme.text,
-        marginBottom: "16px",
-        width: "100%",
-      }}
     />
   );
 };

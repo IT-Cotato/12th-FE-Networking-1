@@ -1,35 +1,42 @@
+// src/components/movies/MovieList.tsx
 import React from "react";
-import { themes } from "../../styles/theme";
+import styled from "styled-components";
 import type { Movie } from "../../types/movie";
 
 interface MovieListProps {
   movies: Movie[];
-  currentTheme: typeof themes.light;
 }
 
-const MovieList: React.FC<MovieListProps> = ({ movies, currentTheme }) => {
+// 컨테이너
+const ListContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+`;
+
+// 각 영화 카드
+const MovieCard = styled.div`
+  padding: 12px;
+  border-radius: 8px;
+  background-color: ${({ theme }) => theme.hoverBg};
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+`;
+
+const MovieList: React.FC<MovieListProps> = ({ movies }) => {
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+    <ListContainer>
       {movies.map((movie) => (
-        <div
-          key={movie.id}
-          style={{
-            padding: "12px",
-            borderRadius: "8px",
-            backgroundColor: currentTheme.hoverBg,
-            display: "flex",
-            flexDirection: "column",
-            gap: "4px",
-          }}
-        >
+        <MovieCard key={movie.id}>
           <span>
             {movie.title} ({movie.year}) - {movie.director}
           </span>
           <span>장르: {movie.genre}</span>
           <span>⭐: {movie.rating}</span>
-        </div>
+        </MovieCard>
       ))}
-    </div>
+    </ListContainer>
   );
 };
 

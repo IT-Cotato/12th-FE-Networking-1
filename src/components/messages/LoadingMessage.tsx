@@ -1,21 +1,17 @@
+// src/components/messages/LoadingMessage.tsx
 import React from "react";
-import { themes } from "../../styles/theme";
+import styled from "styled-components";
 
-interface LoadingMessageProps {
-  currentTheme: typeof themes.light;
-}
+const LoadingContainer = styled.div`
+  background-color: ${({ theme }) => theme.componentBg};
+  color: ${({ theme }) => theme.text};
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+`;
 
-const LoadingMessage: React.FC<LoadingMessageProps> = ({ currentTheme }) => (
-  <div
-    style={{
-      backgroundColor: currentTheme.componentBg,
-      color: currentTheme.text,
-      padding: "12px",
-      borderRadius: "8px",
-      marginBottom: "20px",
-    }}
-  >
-    로딩 중...
-  </div>
-);
+const LoadingMessage: React.FC = () => {
+  return <LoadingContainer>로딩 중...</LoadingContainer>;
+};
+
 export default LoadingMessage;

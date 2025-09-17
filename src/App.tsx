@@ -1,4 +1,8 @@
+// App.tsx
+import { ThemeProvider } from "styled-components";
+import { useThemeStore } from "./store/themeStore";
 import { themes } from "./styles/theme";
+
 import Header from "./components/Header";
 import MovieForm from "./components/movies/MovieForm";
 import SearchBar from "./components/movies/SearchBar";
@@ -6,57 +10,60 @@ import MovieList from "./components/movies/MovieList";
 import ErrorMessage from "./components/messages/ErrorMessage";
 import LoadingMessage from "./components/messages/LoadingMessage";
 import EmptyMessage from "./components/messages/EmptyMessage";
+
 import { useMovies } from "./hooks/useMovies";
 import { useMovieForm } from "./hooks/useMovieForm";
 import { useMovieSearch } from "./hooks/useMovieSearch";
-import { useThemeStore } from "./store/themeStore";
 import { useMovieStore } from "./store/movieStore";
+
+import styled from "styled-components";
+
+// 최상위 컨테이너
+const AppContainer = styled.div`
+  background: ${({ theme }) => theme.background};
+  color: ${({ theme }) => theme.text};
+  min-height: 100vh;
+  padding: 20px;
+  transition: all 0.2s ease;
+`;
+
+// 영화 목록 영역
+const MovieSection = styled.div`
+  padding: 20px;
+  border-radius: 12px;
+  background-color: ${({ theme }) => theme.componentBg};
+  border: 1px solid ${({ theme }) => theme.border};
+`;
 
 function App() {
   const { themeName, setThemeName } = useThemeStore();
   const currentTheme = themes[themeName];
+
   const { movies } = useMovieStore();
   const { searchTerm, setSearchTerm, filteredMovies } = useMovieSearch(movies);
   const { error, isLoading } = useMovies();
   const movieForm = useMovieForm();
 
   return (
-    <div
-      style={{
-        background: currentTheme.background,
-        color: currentTheme.text,
-        minHeight: "100vh",
-        padding: "20px",
-        transition: "all 0.2s ease",
-      }}
-    >
-      <Header themeName={themeName} setThemeName={setThemeName} />
-      {error && <ErrorMessage message={error} currentTheme={currentTheme} />}
+    <ThemeProvider theme={currentTheme}>
+      <AppContainer>
+        <Header themeName={themeName} setThemeName={setThemeName} />
+        {error && <ErrorMessage message={error} />}
+        <MovieForm {...movieForm} />
 
-      <MovieForm currentTheme={currentTheme} {...movieForm} />
-      <div
-        style={{
-          padding: "20px",
-          borderRadius: "12px",
-          backgroundColor: currentTheme.componentBg,
-          border: `1px solid ${currentTheme.border}`,
-        }}
-      >
-        <h2>영화 목록</h2>
-        <SearchBar
-          searchTerm={searchTerm}
-          setSearchTerm={setSearchTerm}
-          currentTheme={currentTheme}
-        />
-        {isLoading ? (
-          <LoadingMessage currentTheme={currentTheme} />
-        ) : filteredMovies.length === 0 ? (
-          <EmptyMessage currentTheme={currentTheme} />
-        ) : (
-          <MovieList movies={filteredMovies} currentTheme={currentTheme} />
-        )}
-      </div>
-    </div>
+        <MovieSection>
+          <h2>영화 목록</h2>
+          <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+          {isLoading ? (
+            <LoadingMessage />
+          ) : filteredMovies.length === 0 ? (
+            <EmptyMessage />
+          ) : (
+            <MovieList movies={filteredMovies} />
+          )}
+        </MovieSection>
+      </AppContainer>
+    </ThemeProvider>
   );
 }
 
