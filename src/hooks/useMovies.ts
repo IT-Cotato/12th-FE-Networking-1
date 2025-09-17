@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import type { Movie } from "../types/movie";
+import { useMovieStore } from "../store/movieStore";
 
 export function useMovies() {
-  const [movies, setMovies] = useState<Movie[]>([]);
+  const { setMovies } = useMovieStore();
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-
   const fetchMovies = async () => {
     setIsLoading(true);
     try {
@@ -23,9 +23,8 @@ export function useMovies() {
       setIsLoading(false);
     }
   };
-
   useEffect(() => {
     fetchMovies();
   }, []);
-  return { movies, setMovies, error, isLoading, refetch: fetchMovies };
+  return { error, isLoading, refetch: fetchMovies };
 }

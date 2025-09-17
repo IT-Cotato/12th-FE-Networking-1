@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import type { Movie } from "../types/movie";
+import { useMovieStore } from "../store/movieStore";
 
-export function useMovieForm(
-  setMovies: React.Dispatch<React.SetStateAction<Movie[]>>
-) {
+export function useMovieForm() {
+  const { addMovie } = useMovieStore();
   const [newTitle, setNewTitle] = useState<string>("");
   const [newDirector, setNewDirector] = useState<string>("");
   const [newYear, setNewYear] = useState<number | "">("");
@@ -38,7 +38,7 @@ export function useMovieForm(
       if (!res.ok) throw new Error("영화를 추가하지 못했습니다.");
 
       const savedMovie: Movie = await res.json();
-      setMovies((prev) => [...prev, savedMovie]);
+      addMovie(savedMovie);
       setNewTitle("");
       setNewDirector("");
       setNewYear("");

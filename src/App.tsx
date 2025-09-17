@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { themes, type ThemeName } from "./styles/theme";
+import { themes } from "./styles/theme";
 import Header from "./components/Header";
 import MovieForm from "./components/movies/MovieForm";
 import SearchBar from "./components/movies/SearchBar";
@@ -11,13 +10,15 @@ import { useMovies } from "./hooks/useMovies";
 import { useMovieForm } from "./hooks/useMovieForm";
 import { useMovieSearch } from "./hooks/useMovieSearch";
 import { useThemeStore } from "./store/themeStore";
+import { useMovieStore } from "./store/movieStore";
 
 function App() {
   const { themeName, setThemeName } = useThemeStore();
-  const { movies, setMovies, error, isLoading } = useMovies();
-  const movieForm = useMovieForm(setMovies);
-  const { searchTerm, setSearchTerm, filteredMovies } = useMovieSearch(movies);
   const currentTheme = themes[themeName];
+  const { movies } = useMovieStore();
+  const { searchTerm, setSearchTerm, filteredMovies } = useMovieSearch(movies);
+  const { error, isLoading } = useMovies();
+  const movieForm = useMovieForm();
 
   return (
     <div
