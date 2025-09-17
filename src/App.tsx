@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { themes, type ThemeName } from "./styles/theme";
 import type { Movie } from "./types/movie";
-
-
+import { useFilteredMovies } from "./hooks/useFilteredMovies";
 
 function App() {
   const [themeName, setThemeName] = useState<ThemeName>("light");
@@ -12,11 +11,11 @@ function App() {
   const [newYear, setNewYear] = useState<number | "">("");
   const [newGenre, setNewGenre] = useState<string>("");
   const [newRating, setNewRating] = useState<number | "">("");
-  const [searchTerm, setSearchTerm] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const currentTheme = themes[themeName];
+  const { searchTerm, setSearchTerm, filteredMovies } = useFilteredMovies(movies);
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -38,12 +37,6 @@ function App() {
     };
     fetchMovies();
   }, []);
-
-  const filteredMovies = useMemo(() => {
-    return movies.filter((movie) =>
-      movie.title.toLowerCase().includes(searchTerm.toLowerCase()),
-    );
-  }, [movies, searchTerm]);
 
   const handleAddMovie = async (e: React.FormEvent) => {
     e.preventDefault();
