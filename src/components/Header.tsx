@@ -3,7 +3,7 @@ import { themes, type ThemeName } from "../styles/theme";
 
 interface HeaderProps {
   themeName: ThemeName;
-  setThemeName: React.Dispatch<React.SetStateAction<ThemeName>>;
+  setThemeName: (name: ThemeName) => void;
 }
 
 const Header: React.FC<HeaderProps> = ({ themeName, setThemeName }) => {

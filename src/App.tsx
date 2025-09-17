@@ -10,9 +10,10 @@ import EmptyMessage from "./components/messages/EmptyMessage";
 import { useMovies } from "./hooks/useMovies";
 import { useMovieForm } from "./hooks/useMovieForm";
 import { useMovieSearch } from "./hooks/useMovieSearch";
+import { useThemeStore } from "./store/themeStore";
 
 function App() {
-  const [themeName, setThemeName] = useState<ThemeName>("light");
+  const { themeName, setThemeName } = useThemeStore();
   const { movies, setMovies, error, isLoading } = useMovies();
   const movieForm = useMovieForm(setMovies);
   const { searchTerm, setSearchTerm, filteredMovies } = useMovieSearch(movies);
