@@ -94,36 +94,54 @@ export default function MovieList({ theme, movies, isLoading, searchTerm }: Prop
         <Empty>영화가 없습니다</Empty>
       ) : (
         <Grid>
-          {filtered.map((m) => (
-            <Ticket key={m.id} $theme={theme}>
-              <Poster $theme={theme} aria-hidden>
-                <Badge $theme={theme}>⭐ {m.rating}</Badge>
-                <PosterTitle>{m.title}</PosterTitle>
-              </Poster>
+  {filtered.map((m) => {
+    // ✅ mocks 수정 없이: 제목 기반 placeholder 포스터
+    const posterSrc =
+      m.poster ?? `https://picsum.photos/seed/${encodeURIComponent(m.title)}/240/360`;
 
-              <Body>
-                <Title>{m.title}</Title>
-                <Meta>
-                  {m.year} · {m.director}
-                </Meta>
+    return (
+      <Ticket key={m.id} $theme={theme}>
+        <Poster $theme={theme} aria-hidden>
+          {/* ✅ 포스터 이미지 */}
+          <PosterImg
+            src={posterSrc}
+            alt={`${m.title} 포스터`}
+            loading="lazy"
+            onError={(e) => {
+              // 이미지 로드 실패 시 깔끔히 숨김 → 기존 그라디언트가 배경으로 보임
+              (e.currentTarget as HTMLImageElement).style.display = "none";
+            }}
+          />
 
-                <ChipRow>
-                  <Chip $theme={theme}>{m.genre}</Chip>
-                  <Status $theme={theme} $now={isNowShowing(m.year)}>
-                    {isNowShowing(m.year) ? "상영중" : "개봉 예정"}
-                  </Status>
-                </ChipRow>
+          <Badge $theme={theme}>⭐ {m.rating}</Badge>
+          <PosterTitle>{m.title}</PosterTitle>
+        </Poster>
 
-                <RatingRow>
-                  <small>평점</small>
-                  <Meter $theme={theme}>
-                    <Fill $value={m.rating} />
-                  </Meter>
-                </RatingRow>
-              </Body>
-            </Ticket>
-          ))}
-        </Grid>
+        <Body>
+          <Title>{m.title}</Title>
+          <Meta>
+            {m.year} · {m.director}
+          </Meta>
+
+          <ChipRow>
+            <Chip $theme={theme}>{m.genre}</Chip>
+            <Status $theme={theme} $now={isNowShowing(m.year)}>
+              {isNowShowing(m.year) ? "상영중" : "개봉 예정"}
+            </Status>
+          </ChipRow>
+
+          <RatingRow>
+            <small>평점</small>
+            <Meter $theme={theme}>
+              <Fill $value={m.rating} />
+            </Meter>
+          </RatingRow>
+        </Body>
+      </Ticket>
+    );
+  })}
+</Grid>
+
       )}
     </Section>
   );
@@ -186,6 +204,16 @@ const Ticket = styled.article<{ $theme: Theme }>`
   }
 `;
 
+const PosterImg = styled.img`
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(.95);
+`;
+
+
 const Poster = styled.div<{ $theme: Theme }>`
   aspect-ratio: 2 / 3;
   border-radius: 10px;
@@ -202,18 +230,21 @@ const Poster = styled.div<{ $theme: Theme }>`
 `;
 
 const PosterTitle = styled.div`
+  position: relative;  
+  z-index: 1;    
   font-weight: 700;
   font-size: 12px;
   opacity: 0.9;
   line-height: 1.2;
   display: -webkit-box;
-  -webkit-line-clamp: 2; /* 포스터 안 제목 2줄 말줄임 */
+  -webkit-line-clamp: 2; 
   -webkit-box-orient: vertical;
   overflow: hidden;
 `;
 
 const Badge = styled.span<{ $theme: Theme }>`
   position: absolute;
+  z-index: 2; 
   top: 8px;
   right: 8px;
   padding: 4px 8px;
