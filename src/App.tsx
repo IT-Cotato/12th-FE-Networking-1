@@ -111,6 +111,7 @@ function App() {
         background: currentTheme.background,
         color: currentTheme.text,
         minHeight: "100vh",
+        margin: "0px",
         padding: "20px",
         transition: "all 0.2s ease",
       }}
