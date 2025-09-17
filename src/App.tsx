@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { themes, type ThemeName } from "./styles/theme";
 import type { Movie } from "./types/Movie";
+import Header from "./components/Header";
 
 function App() {
   const [themeName, setThemeName] = useState<ThemeName>("light");
@@ -97,33 +98,7 @@ function App() {
         transition: "all 0.2s ease",
       }}
     >
-      <header
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginBottom: "24px",
-          padding: "16px",
-          backgroundColor: currentTheme.componentBg,
-          borderRadius: "12px",
-          border: `1px solid ${currentTheme.border}`,
-        }}
-      >
-        <h1 style={{ margin: 0 }}>코테이토 영화관</h1>
-        <button
-          onClick={() => setThemeName(themeName === "light" ? "dark" : "light")}
-          style={{
-            padding: "8px 16px",
-            cursor: "pointer",
-            background: currentTheme.buttonBg,
-            color: currentTheme.buttonText,
-            border: "none",
-            borderRadius: "8px",
-          }}
-        >
-          {themeName === "light" ? "🌙 다크모드" : "☀️ 라이트모드"}
-        </button>
-      </header>
+      <Header themeName={themeName} setThemeName={setThemeName} />
       {error && (
         <div
           style={{
