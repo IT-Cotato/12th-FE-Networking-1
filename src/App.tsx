@@ -1,7 +1,8 @@
-import React, { useState, useEffect, useMemo } from "react";
-import { themes, type ThemeName } from "./styles/theme";
+import React, { useState, useEffect, useMemo, useContext } from "react";
+import { themes } from "./styles/theme";
 import Header from "./components/Header";
 import ThemeButton from "./components/ThemeButton";
+import { useTheme } from "./hooks/useTheme";
 
 interface Movie {
   id: number;
@@ -22,8 +23,9 @@ function App() {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const { theme } = useTheme();
 
-  const currentTheme = themes["light"];
+  const currentTheme = themes[theme];
 
   useEffect(() => {
     const fetchMovies = async () => {

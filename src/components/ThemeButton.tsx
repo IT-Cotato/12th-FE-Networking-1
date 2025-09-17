@@ -1,5 +1,5 @@
-import { useState } from "react";
-import type { Theme, ThemeName } from "../styles/theme";
+import type { Theme } from "../styles/theme";
+import { useTheme } from "../hooks/useTheme";
 
 interface ThemeButtonState {
   currentTheme: Theme;
@@ -11,11 +11,11 @@ interface ThemeButtonState {
  * @returns ThemeButton 컴포넌트
  */
 const ThemeButton = ({ currentTheme }: ThemeButtonState) => {
-  const [themeName, setThemeName] = useState<ThemeName>("light");
+  const { theme, toggleTheme } = useTheme();
 
   return (
     <button
-      onClick={() => setThemeName(themeName === "light" ? "dark" : "light")}
+      onClick={() => toggleTheme(theme === "light" ? "dark" : "light")}
       style={{
         padding: "8px 16px",
         cursor: "pointer",
@@ -25,7 +25,7 @@ const ThemeButton = ({ currentTheme }: ThemeButtonState) => {
         borderRadius: "8px",
       }}
     >
-      {themeName === "light" ? "🌙 다크모드" : "☀️ 라이트모드"}
+      {theme === "light" ? "🌙 다크모드" : "☀️ 라이트모드"}
     </button>
   );
 };
