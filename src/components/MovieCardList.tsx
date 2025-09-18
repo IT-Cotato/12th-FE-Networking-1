@@ -5,17 +5,22 @@ import { useSearchStore } from "../stores/searchStore";
 import { useShallow } from "zustand/shallow";
 import MovieCard from "./MovieCard";
 import ErrorMessage from "./ErrorMessage";
+import { useRefreshStore } from "../stores/refreshStore";
 
 const MovieCardList = () => {
-  // todo : 영화 추가시 영화 리스트 업데이트 기능 구현
-  // const fetchedMovies = useFetch(getMovies, [refreshTrigger]);
-  const fetchedMovies = useFetch(getMovies);
-
   const { searchTerm } = useSearchStore(
     useShallow((state) => ({
       searchTerm: state.searchTerm,
     }))
   );
+
+  const { movieList } = useRefreshStore(
+    useShallow((state) => ({
+      movieList: state.movieList,
+    }))
+  );
+
+  const fetchedMovies = useFetch(getMovies, [movieList]);
 
   const filteredMovies = useMemo(() => {
     if (!fetchedMovies.data?.length) {

@@ -6,6 +6,8 @@ import { useState } from "react";
 import { useMutation } from "../hooks/useMutation";
 import { postMovie } from "../apis/movieApi";
 import ErrorMessage from "./ErrorMessage";
+import { useRefreshStore } from "../stores/refreshStore";
+import { useShallow } from "zustand/shallow";
 
 const AddMovieForm = () => {
   const { currentTheme } = useTheme();
@@ -19,6 +21,12 @@ const AddMovieForm = () => {
     rating: "",
   });
   const errorMessage = error || addingMovie.error;
+
+  const { updateMovieList } = useRefreshStore(
+    useShallow((state) => ({
+      updateMovieList: state.updateMovieList,
+    }))
+  );
 
   const handleChangeValues = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -49,8 +57,7 @@ const AddMovieForm = () => {
     const addedMovie = await addingMovie.mutate(newMovie);
 
     if (addedMovie) {
-      // todo : 영화 추가 성공시 업데이트 로직 구현하기
-      // setRefreshTrigger((prev) => prev + 1);
+      updateMovieList();
       setinputValues({
         title: "",
         director: "",
