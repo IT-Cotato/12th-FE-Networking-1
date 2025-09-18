@@ -4,6 +4,8 @@ import Header from "./components/Header";
 import ThemeButton from "./components/ThemeButton";
 import { useTheme } from "./hooks/useTheme";
 import InputField from "./components/InputField";
+import { useFetch } from "./hooks/useFetch";
+import { getMovies } from "./apis/movieApi";
 import type { Movie, newMovie } from "./types/movie";
 
 function App() {
@@ -17,33 +19,16 @@ function App() {
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { currentTheme } = useTheme();
-
-  useEffect(() => {
-    const fetchMovies = async () => {
-      setIsLoading(true);
-      try {
-        const res = await fetch("/api/movies");
-        if (!res.ok) throw new Error("영화 데이터를 불러오지 못했습니다.");
-        const data: Movie[] = await res.json();
-        setMovies(data);
-      } catch (err: unknown) {
-        if (err instanceof Error) {
-          setError(err.message);
-        } else {
-          setError(String(err));
-        }
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchMovies();
-  }, []);
+  const fetchedMovies = useFetch(getMovies);
 
   const filteredMovies = useMemo(() => {
-    return movies.filter((movie) =>
+    if (!fetchedMovies.data?.length) {
+      return [];
+    }
+    return fetchedMovies.data.filter((movie) =>
       movie.title.toLowerCase().includes(searchTerm.toLowerCase())
     );
-  }, [movies, searchTerm]);
+  }, [fetchedMovies, searchTerm]);
 
   const handleAddMovie = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -103,7 +88,7 @@ function App() {
         <ThemeButton />
       </Header>
 
-      {error && (
+      {fetchedMovies.error && (
         <div
           style={{
             backgroundColor: currentTheme.errorBg,
@@ -204,7 +189,7 @@ function App() {
             width: "100%",
           }}
         />
-        {isLoading ? (
+        {fetchedMovies.isLoading ? (
           <div>로딩 중...</div>
         ) : filteredMovies.length === 0 ? (
           <div>영화가 없습니다</div>
