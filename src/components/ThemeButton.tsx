@@ -1,4 +1,5 @@
 import { useTheme } from "../hooks/useTheme";
+import Button from "./Button";
 
 /**
  *
@@ -8,19 +9,10 @@ const ThemeButton = () => {
   const { currentTheme, theme, toggleTheme } = useTheme();
 
   return (
-    <button
+    <Button
+      text={theme === "light" ? "🌙 다크모드" : "☀️ 라이트모드"}
       onClick={() => toggleTheme(theme === "light" ? "dark" : "light")}
-      style={{
-        padding: "8px 16px",
-        cursor: "pointer",
-        background: currentTheme.buttonBg,
-        color: currentTheme.buttonText,
-        border: "none",
-        borderRadius: "8px",
-      }}
-    >
-      {theme === "light" ? "🌙 다크모드" : "☀️ 라이트모드"}
-    </button>
+    />
   );
 };
 

@@ -8,6 +8,7 @@ import { postMovie } from "../apis/movieApi";
 import ErrorMessage from "./ErrorMessage";
 import { useRefreshStore } from "../stores/refreshStore";
 import { useShallow } from "zustand/shallow";
+import Button from "./Button";
 
 const AddMovieForm = () => {
   const { currentTheme } = useTheme();
@@ -112,19 +113,7 @@ const AddMovieForm = () => {
           onChange={handleChangeValues}
           style={{ width: "100px" }}
         />
-        <button
-          type="submit"
-          style={{
-            padding: "8px 16px",
-            backgroundColor: currentTheme.buttonBg,
-            color: currentTheme.buttonText,
-            border: "none",
-            borderRadius: "8px",
-            cursor: "pointer",
-          }}
-        >
-          추가
-        </button>
+        <Button text="추가" buttonType="submit" />
       </form>
 
       {errorMessage && <ErrorMessage message={errorMessage} />}
