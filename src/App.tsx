@@ -6,7 +6,7 @@ import { useTheme } from "./hooks/useTheme";
 import InputField from "./components/InputField";
 import { useFetch } from "./hooks/useFetch";
 import { getMovies, postMovie } from "./apis/movieApi";
-import type { Movie, newMovie } from "./types/movie";
+import type { Movie, NewMovie } from "./types/movie";
 import { useMutation } from "./hooks/useMutation";
 import ErrorMessage from "./components/ErrorMessage";
 
@@ -41,7 +41,7 @@ function App() {
       return;
     }
 
-    const newMovie: newMovie = {
+    const newMovie: NewMovie = {
       title: newTitle,
       director: newDirector,
       year: Number(newYear),
