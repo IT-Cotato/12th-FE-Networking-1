@@ -14,12 +14,12 @@ const Title = styled.h1`
   font-size: 1.5rem;
 `;
 
-const Btn = styled.button<{ $mode: "light" | "dark" }>`
+const Btn = styled.button`
   padding: 6px 12px;
   border-radius: 8px;
-  border: 1px solid ${({ $mode }) => ($mode === "light" ? "#111" : "#111")};
-  background: ${({ $mode }) => ($mode === "light" ? "#111" : "#fff")};
-  color: ${({ $mode }) => ($mode === "light" ? "#fff" : "#111")};
+  border: 1px solid ${({ theme }) => theme.toggleBorder};
+  background: ${({ theme }) => theme.toggleBg};
+  color: ${({ theme }) => theme.toggleText};
 `;
 
 export default function Header() {
@@ -27,7 +27,7 @@ export default function Header() {
   return (
     <Bar>
       <Title>🍿Jeongbam&apos;s Theater🍿</Title>
-      <Btn $mode={mode} onClick={toggle}>
+      <Btn onClick={toggle}>
         {mode === "light" ? "🌙 다크 모드" : "☀️ 라이트 모드"}
       </Btn>
     </Bar>

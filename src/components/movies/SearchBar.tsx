@@ -9,8 +9,10 @@ const Wrap = styled.div`
 const Input = styled.input`
   flex: 1;
   padding: 10px 12px;
-  border: 1px solid #e5e7eb;
+  border: 1px solid ${({ theme }) => theme.border};
   border-radius: 10px;
+  background: ${({ theme }) => theme.inputBg};
+  color: ${({ theme }) => theme.text};
 `;
 
 type Props = {
@@ -25,7 +27,7 @@ export default function SearchBar({ value, onChange, placeholder }: Props) {
       <Input
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        placeholder={placeholder ?? "제목/연도/평점 검색…"}
+        placeholder={placeholder ?? "검색…"}
       />
     </Wrap>
   );

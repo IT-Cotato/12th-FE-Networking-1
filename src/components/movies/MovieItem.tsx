@@ -9,6 +9,21 @@ const Card = styled.div`
   flex-direction: column;
   gap: 4px;
 `;
+const DeleteBtn = styled.button`
+  margin-top: 6px;
+  align-self: flex-end;
+  padding: 4px 8px;
+  font-size: 0.8rem;
+  border: 1px solid ${({ theme }) => theme.border};
+  border-radius: 4px;
+  background: ${({ theme }) => theme.componentBg};
+  color: ${({ theme }) => theme.text};
+  cursor: pointer;
+
+  &:hover {
+    background: ${({ theme }) => theme.hoverBg};
+  }
+`;
 
 type Props = {
   movie: Movie;
@@ -26,21 +41,7 @@ export default function MovieItem({ movie, onRemove }: Props) {
         <span>⭐: {movie.rating}</span>
 
         {onRemove && (
-          <button
-            onClick={() => onRemove(movie.id)}
-            style={{
-              marginTop: 6,
-              alignSelf: "flex-end",
-              padding: "4px 8px",
-              fontSize: "0.8rem",
-              border: "1px solid #ccc",
-              borderRadius: 4,
-              background: "transparent",
-              cursor: "pointer",
-            }}
-          >
-            삭제
-          </button>
+          <DeleteBtn onClick={() => onRemove(movie.id)}>삭제</DeleteBtn>
         )}
       </Card>
     </li>

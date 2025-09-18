@@ -43,8 +43,8 @@ const Button = styled.button`
   padding: 8px 16px;
   border-radius: 8px;
   border: none;
-  background: ${({ theme }) => theme.buttonBg};
-  color: ${({ theme }) => theme.buttonText};
+  background: ${({ theme }) => theme.formButtonBg};
+  color: ${({ theme }) => theme.formButtonText};
   cursor: pointer;
   opacity: ${({ disabled }) => (disabled ? 0.6 : 1)};
 `;
