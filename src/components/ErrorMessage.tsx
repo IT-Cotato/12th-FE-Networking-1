@@ -1,12 +1,10 @@
 import React from "react";
 import { useThemeStore } from "../stores/themeStore";
+import { useMovieStore } from "../stores/movieStore";
 
-interface ErrorMessageProps {
-    error: string | null;
-}
-
-export const ErrorMessage: React.FC<ErrorMessageProps> = ({error}) => {
-    const {currentTheme } = useThemeStore();
+export const ErrorMessage: React.FC = () => {
+    const { currentTheme } = useThemeStore();
+    const { error } = useMovieStore();
 
     if (!error) return null;
     

@@ -1,21 +1,10 @@
 import React from "react";
 import { useThemeStore } from "../stores/themeStore";
-import {type Movie} from "../types/Movie";
+import { useMovieStore } from "../stores/movieStore";
 
-interface MovieListProps {
-    movies: Movie[];
-    searchTerm: string;
-    setSearchTerm: (value: string) => void;
-    isLoading: boolean;
-}
-
-export const MovieList: React.FC<MovieListProps> = ({
-    movies,
-    searchTerm,
-    setSearchTerm,
-    isLoading,
-}) => {
+export const MovieList: React.FC = () => {
     const { currentTheme } = useThemeStore();
+    const { filteredMovies, searchTerm, setSearchTerm, isLoading } = useMovieStore();
     return (
         <div
             style={{
@@ -43,11 +32,11 @@ export const MovieList: React.FC<MovieListProps> = ({
             />
             {isLoading ? (
                 <div>로딩 중...</div>
-            ) : movies.length === 0 ? (
+            ) : filteredMovies.length === 0 ? (
                 <div>영화가 없습니다</div>
             ) : (
                 <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-                    {movies.map((movie) => (
+                    {filteredMovies.map((movie) => (
                         <div
                         key={movie.id}
                         style={{

@@ -5,15 +5,24 @@ import { ErrorMessage } from "./components/ErrorMessage";
 import { MovieForm } from "./components/MovieForm";
 import { MovieList } from "./components/MovieList";
 import { type Movie } from "./types/Movie";
-import { useMovies } from "./hooks/useMovies";
+import { useMovieStore } from "./stores/movieStore";
 import { useThemeStore } from "./stores/themeStore";
 
 function App() {
-  // useTheme 훅 호출
+  // useThemeStore 사용
   const { themeName, currentTheme, toggleTheme } = useThemeStore();
 
-  // useMovies 훅 호출
-  const { movies, isLoading, error, searchTerm, setSearchTerm, addMovie, setError } = useMovies(); 
+  // useMovieStore 사용
+  const { 
+    filteredMovies, 
+    searchTerm, 
+    setSearchTerm, 
+    isLoading, 
+    error, 
+    setError, 
+    addNewMovie,
+    fetchMovies 
+  } = useMovieStore();
 
   // 폼 상태들
   const [newTitle, setNewTitle] = useState<string>("");
@@ -22,17 +31,20 @@ function App() {
   const [newGenre, setNewGenre] = useState<string>("");
   const [newRating, setNewRating] = useState<number | "">("");
 
-  // 영화 추가하기
+  // 1. 앱 시작 시 영화 목록 가져오기
+  useEffect(() => {
+    fetchMovies();
+  }, [fetchMovies]);
+
+  // 2. 영화 추가하기
   const handleAddMovie = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    // 1. 폼 검증
+    
     if (!newTitle || !newDirector || !newYear || !newGenre || !newRating) {
       setError("모든 필드를 입력해주세요.");
       return;
     }
 
-    // 2. 폼 데이터를 Movie 객체로 변환
     const newMovie = {
       title: newTitle,
       director: newDirector,
@@ -41,10 +53,9 @@ function App() {
       rating: Number(newRating),
     };
 
-    // 3. useMovies 훅의 addMovie 함수 호출
-    await addMovie(newMovie);
-
-    // 4. 폼 초기화
+    await addNewMovie(newMovie);
+    
+    // 3. 폼 초기화
     setNewTitle("");
     setNewDirector("");
     setNewYear("");
@@ -66,9 +77,7 @@ function App() {
       <Header/>
 
       {/* ErrorMessage 호출 */}
-      <ErrorMessage 
-        error={error}
-      />
+      <ErrorMessage />
 
       {/* MovieForm 호출 */}
       <MovieForm
@@ -86,12 +95,7 @@ function App() {
       />
 
       {/* MovieList 호출 */}
-      <MovieList
-        movies={movies} // useMovies에서 이미 필터링된 movies를 받음 
-        searchTerm={searchTerm}
-        setSearchTerm={setSearchTerm}
-        isLoading={isLoading}
-      />
+      <MovieList />
 
     </div>
   );
