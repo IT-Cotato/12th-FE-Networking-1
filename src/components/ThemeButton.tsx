@@ -1,4 +1,3 @@
-import type { Theme } from "../styles/theme";
 import { useTheme } from "../hooks/useTheme";
 
 /**
