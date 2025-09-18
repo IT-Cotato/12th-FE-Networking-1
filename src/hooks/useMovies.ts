@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import type { Movie } from "../types/movie";
 
 const STORAGE_KEY = "movies/v1";
@@ -11,6 +11,7 @@ const hydrate = (): Movie[] => {
     return [];
   }
 };
+
 const persist = (movies: Movie[]) => {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(movies));
 };
@@ -22,24 +23,17 @@ export const useMovies = () => {
     persist(movies);
   }, [movies]);
 
-  const addMovie = (m: Omit<Movie, "id" | "createdAt">) => {
+  const addMovie = (m: Omit<Movie, "id">) => {
     const newMovie: Movie = {
-      id: crypto.randomUUID(),
-      createdAt: new Date().toISOString(),
+      id: Date.now(),
       ...m,
     };
     setMovies((prev) => [newMovie, ...prev]);
   };
 
-  const removeMovie = (id: string) => {
+  const removeMovie = (id: number) => {
     setMovies((prev) => prev.filter((m) => m.id !== id));
   };
 
-  // 최신 작성순으로 정렬해서 반환
-  const sorted = useMemo(
-    () => [...movies].sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1)),
-    [movies]
-  );
-
-  return { movies: sorted, addMovie, removeMovie };
+  return { movies, addMovie, removeMovie };
 };
