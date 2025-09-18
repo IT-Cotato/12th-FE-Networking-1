@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import type { ThemeName } from "../styles/theme";
 import type { Movie } from "../types/movie";
 import { themes } from "../styles/theme";
+import { Input } from "./Style";
 
 interface MovieFormProps {
   onAddMovie: (movie: Omit<Movie, "id">) => void;
@@ -51,7 +52,7 @@ export default function MovieForm({
         padding: "20px",
         borderRadius: "12px",
         backgroundColor: theme.componentBg,
-        border: `1px solid ${theme.border}`,
+        border: `1px solid ${theme.border}`, // 기존 테두리 유지
       }}
     >
       <h2>영화 추가</h2>
@@ -72,60 +73,29 @@ export default function MovieForm({
         onSubmit={handleSubmit}
         style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}
       >
-        <input
-          type="text"
+        <Input
           placeholder="제목"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          style={{
-            padding: "8px",
-            borderRadius: "8px",
-            border: `1px solid ${theme.border}`,
-            backgroundColor: theme.inputBg,
-            color: theme.text,
-          }}
         />
-        <input
-          type="text"
+        <Input
           placeholder="감독"
           value={director}
           onChange={(e) => setDirector(e.target.value)}
-          style={{
-            padding: "8px",
-            borderRadius: "8px",
-            border: `1px solid ${theme.border}`,
-            backgroundColor: theme.inputBg,
-            color: theme.text,
-          }}
         />
-        <input
+        <Input
           type="number"
           placeholder="연도"
           value={year}
           onChange={(e) => setYear(Number(e.target.value))}
-          style={{
-            padding: "8px",
-            borderRadius: "8px",
-            border: `1px solid ${theme.border}`,
-            backgroundColor: theme.inputBg,
-            color: theme.text,
-            width: "80px",
-          }}
+          width="80px"
         />
-        <input
-          type="text"
+        <Input
           placeholder="장르"
           value={genre}
           onChange={(e) => setGenre(e.target.value)}
-          style={{
-            padding: "8px",
-            borderRadius: "8px",
-            border: `1px solid ${theme.border}`,
-            backgroundColor: theme.inputBg,
-            color: theme.text,
-          }}
         />
-        <input
+        <Input
           type="number"
           placeholder="평점"
           value={rating}
@@ -133,14 +103,7 @@ export default function MovieForm({
             const val = Number(e.target.value);
             if (val >= 0 && val <= 10) setRating(val);
           }}
-          style={{
-            padding: "8px",
-            borderRadius: "8px",
-            border: `1px solid ${theme.border}`,
-            backgroundColor: theme.inputBg,
-            color: theme.text,
-            width: "100px",
-          }}
+          width="100px"
         />
         <button
           type="submit"

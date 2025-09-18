@@ -6,6 +6,7 @@ import MovieList from "./components/MovieList";
 import { useMovies } from "./hooks/useMovies";
 import { useMovieSearch } from "./hooks/useMovieSearch";
 import { useTheme, ThemeProvider } from "./context/ThemeContext";
+import { Input } from "./components/Style";
 
 function AppContent() {
   const { state, dispatch } = useTheme();
@@ -41,17 +42,12 @@ function AppContent() {
         }}
       >
         <h2>영화 목록</h2>
-        <input
+        <Input
           type="text"
           placeholder="검색..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           style={{
-            padding: "8px",
-            borderRadius: "8px",
-            border: `1px solid ${currentTheme.border}`,
-            backgroundColor: currentTheme.inputBg,
-            color: currentTheme.text,
             marginBottom: "16px",
             width: "100%",
           }}
