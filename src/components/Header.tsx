@@ -1,9 +1,8 @@
 import React from "react";
-import type { ThemeName } from "../styles/theme";
 import { themes } from "../styles/theme";
 
 interface HeaderProps {
-  themeName: ThemeName;
+  themeName: "light" | "dark";
   onToggleTheme: () => void;
 }
 
@@ -29,7 +28,7 @@ export default function Header({ themeName, onToggleTheme }: HeaderProps) {
         style={{
           padding: "8px 16px",
           cursor: "pointer",
-          backgroundColor: theme.buttonBg,
+          background: theme.buttonBg,
           color: theme.buttonText,
           border: "none",
           borderRadius: "8px",

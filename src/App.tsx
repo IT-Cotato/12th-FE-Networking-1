@@ -1,16 +1,17 @@
-import React, { useState } from "react";
-import { themes, type ThemeName } from "./styles/theme";
+import React from "react";
+import { themes } from "./styles/theme";
 import Header from "./components/Header";
 import MovieForm from "./components/MovieForm";
 import MovieList from "./components/MovieList";
 import { useMovies } from "./hooks/useMovies";
 import { useMovieSearch } from "./hooks/useMovieSearch";
+import { useTheme, ThemeProvider } from "./context/ThemeContext";
 
-export default function App() {
-  const [themeName, setThemeName] = useState<ThemeName>("light");
+function AppContent() {
+  const { state, dispatch } = useTheme();
+  const { themeName } = state;
+
   const { movies, isLoading, error, addMovie } = useMovies();
-
-  // 검색 상태를 useMovieSearch 훅으로 관리
   const { searchTerm, setSearchTerm, filteredMovies } = useMovieSearch(movies);
 
   const currentTheme = themes[themeName];
@@ -26,9 +27,7 @@ export default function App() {
     >
       <Header
         themeName={themeName}
-        onToggleTheme={() =>
-          setThemeName(themeName === "light" ? "dark" : "light")
-        }
+        onToggleTheme={() => dispatch({ type: "TOGGLE_THEME" })}
       />
 
       <MovieForm onAddMovie={addMovie} themeName={themeName} />
@@ -57,13 +56,11 @@ export default function App() {
             width: "100%",
           }}
         />
-
         {isLoading ? (
           <div>로딩 중...</div>
         ) : (
           <MovieList movies={filteredMovies} themeName={themeName} />
         )}
-
         {error && (
           <div
             style={{
@@ -79,5 +76,13 @@ export default function App() {
         )}
       </div>
     </div>
+  );
+}
+
+export default function App() {
+  return (
+    <ThemeProvider>
+      <AppContent />
+    </ThemeProvider>
   );
 }
