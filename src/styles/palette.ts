@@ -1,3 +1,5 @@
+// src/styles/palette.ts
+
 export const palette = {
   white: "#ffffff",
   black: "#1a1a1a",
@@ -11,4 +13,6 @@ export const palette = {
   purple: "#8b5cf6",
   darkBackground: "#1a1a1a",
   lightBackground: "#fafafa",
+
+  gold: "gold",
 };
