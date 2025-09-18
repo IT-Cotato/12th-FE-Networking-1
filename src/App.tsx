@@ -1,16 +1,12 @@
-import React, { useState, useEffect, useMemo } from "react";
-import { themes, type ThemeName } from "./styles/theme";
-import type { Movie } from "./types/Movie";
 import Header from "./components/Header";
 import MovieForm from "./components/MovieForm";
 import MovieList from "./components/MovieList";
 import { useMovies } from "./hooks/useMovies";
+import { useTheme } from "./hooks/useTheme";
 
 function App() {
-  const [themeName, setThemeName] = useState<ThemeName>("light");
   const { movies, isLoading, error, addMovie } = useMovies();
-
-  const currentTheme = themes[themeName];
+  const { themeName, currentTheme, toggleTheme } = useTheme();
 
   return (
     <div
@@ -22,7 +18,7 @@ function App() {
         transition: "all 0.2s ease",
       }}
     >
-      <Header themeName={themeName} setThemeName={setThemeName} />
+      <Header themeName={themeName} onToggleTheme={toggleTheme} />
       {error && (
         <div
           style={{

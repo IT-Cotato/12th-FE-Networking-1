@@ -1,12 +1,13 @@
 import React from "react";
 import { type ThemeName, themes } from "../styles/theme";
+import ThemeToggleButton from "./ThemeToggleButton";
 
 interface HeaderProps {
   themeName: ThemeName;
-  setThemeName: React.Dispatch<React.SetStateAction<ThemeName>>;
+  onToggleTheme: () => void;
 }
 
-function Header({ themeName, setThemeName }: HeaderProps) {
+function Header({ themeName, onToggleTheme }: HeaderProps) {
   const currentTheme = themes[themeName];
 
   return (
@@ -23,19 +24,7 @@ function Header({ themeName, setThemeName }: HeaderProps) {
       }}
     >
       <h1 style={{ margin: 0 }}>코테이토 영화관</h1>
-      <button
-        onClick={() => setThemeName(themeName === "light" ? "dark" : "light")}
-        style={{
-          padding: "8px 16px",
-          cursor: "pointer",
-          background: currentTheme.buttonBg,
-          color: currentTheme.buttonText,
-          border: "none",
-          borderRadius: "8px",
-        }}
-      >
-        {themeName === "light" ? "🌙 다크모드" : "☀️ 라이트모드"}
-      </button>
+      <ThemeToggleButton themeName={themeName} onToggle={onToggleTheme} />
     </header>
   );
 }
