@@ -8,9 +8,10 @@ interface MovieListProps {
   movies: Movie[];
   isLoading: boolean;
   themeName: ThemeName;
+  onDeleteMovie: (movieId: number) => void;
 }
 
-function MovieList({ movies, isLoading, themeName }: MovieListProps) {
+function MovieList({ movies, isLoading, themeName, onDeleteMovie }: MovieListProps) {
   const currentTheme = themes[themeName];
   const { query, results, searchMovies } = useMovieSearch(movies);
 
@@ -44,15 +45,33 @@ function MovieList({ movies, isLoading, themeName }: MovieListProps) {
                 borderRadius: "8px",
                 backgroundColor: currentTheme.hoverBg,
                 display: "flex",
-                flexDirection: "column",
-                gap: "4px",
+                justifyContent: "space-between",
+                alignItems: "flex-start",
+                gap: "12px",
               }}
             >
-              <span>
-                {movie.title} ({movie.year}) - {movie.director}
-              </span>
-              <span>장르: {movie.genre}</span>
-              <span>⭐: {movie.rating}</span>
+              <div style={{ display: "flex", flexDirection: "column", gap: "4px", flex: 1 }}>
+                <span>
+                  {movie.title} ({movie.year}) - {movie.director}
+                </span>
+                <span>장르: {movie.genre}</span>
+                <span>⭐: {movie.rating}</span>
+              </div>
+              <button
+                onClick={() => onDeleteMovie(movie.id)}
+                style={{
+                  padding: "4px 8px",
+                  backgroundColor: "#ff4757",
+                  color: "white",
+                  border: "none",
+                  borderRadius: "4px",
+                  cursor: "pointer",
+                  fontSize: "12px",
+                  minWidth: "50px",
+                }}
+              >
+                삭제
+              </button>
             </div>
           ))}
         </div>

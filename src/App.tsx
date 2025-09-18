@@ -5,7 +5,7 @@ import { useMovies } from "./hooks/useMovies";
 import { useTheme } from "./hooks/useTheme";
 
 function App() {
-  const { movies, isLoading, error, addMovie } = useMovies();
+  const { movies, isLoading, error, addMovie, deleteMovie } = useMovies();
   const { themeName, currentTheme, toggleTheme } = useTheme();
 
   return (
@@ -33,7 +33,7 @@ function App() {
         </div>
       )}
       <MovieForm themeName={themeName} onAddMovie={addMovie} />
-      <MovieList movies={movies} isLoading={isLoading} themeName={themeName} />
+      <MovieList movies={movies} isLoading={isLoading} themeName={themeName} onDeleteMovie={deleteMovie} />
     </div>
   );
 }

@@ -50,6 +50,11 @@ export function useMovies() {
     }
   };
 
+  // 영화 삭제
+  const deleteMovie = (movieId: number) => {
+    setMovies((prev) => prev.filter((movie) => movie.id !== movieId));
+    setError(null);
+  };
 
-  return { movies, isLoading, error, addMovie };
+  return { movies, isLoading, error, addMovie, deleteMovie };
 }
