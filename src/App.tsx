@@ -11,6 +11,9 @@ import { useMutation } from "./hooks/useMutation";
 import ErrorMessage from "./components/ErrorMessage";
 import AddMovieForm from "./components/AddMovieForm";
 import MovieCard from "./components/MovieCard";
+import SearchBox from "./components/SearchBox";
+import { useSearchStore } from "./stores/searchStore";
+import { useShallow } from "zustand/shallow";
 
 function App() {
   const [movies, setMovies] = useState<Movie[]>([]);
@@ -22,13 +25,18 @@ function App() {
     rating: "",
   });
 
-  const [searchTerm, setSearchTerm] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [refreshTrigger, setRefreshTrigger] = useState<number>(0);
   const { currentTheme } = useTheme();
   const fetchedMovies = useFetch(getMovies, [refreshTrigger]);
   const addingMovie = useMutation(postMovie);
+
+  const { searchTerm } = useSearchStore(
+    useShallow((state) => ({
+      searchTerm: state.searchTerm,
+    }))
+  );
 
   const filteredMovies = useMemo(() => {
     if (!fetchedMovies.data?.length) {
@@ -123,14 +131,7 @@ function App() {
         }}
       >
         <h2>영화 목록</h2>
-        <InputField
-          inputType="text"
-          placeholder="검색..."
-          name="search"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          style={{ marginBottom: "16px", width: "100%" }}
-        />
+        <SearchBox />
         {fetchedMovies.isLoading ? (
           <div>로딩 중...</div>
         ) : filteredMovies.length === 0 ? (
