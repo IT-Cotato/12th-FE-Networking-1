@@ -5,8 +5,9 @@ import ThemeButton from "./components/ThemeButton";
 import { useTheme } from "./hooks/useTheme";
 import InputField from "./components/InputField";
 import { useFetch } from "./hooks/useFetch";
-import { getMovies } from "./apis/movieApi";
+import { getMovies, postMovie } from "./apis/movieApi";
 import type { Movie, newMovie } from "./types/movie";
+import { useMutation } from "./hooks/useMutation";
 
 function App() {
   const [movies, setMovies] = useState<Movie[]>([]);
@@ -21,6 +22,7 @@ function App() {
   const [refreshTrigger, setRefreshTrigger] = useState<number>(0);
   const { currentTheme } = useTheme();
   const fetchedMovies = useFetch(getMovies, [refreshTrigger]);
+  const addingMovie = useMutation(postMovie);
 
   const filteredMovies = useMemo(() => {
     if (!fetchedMovies.data?.length) {
@@ -46,33 +48,16 @@ function App() {
       rating: Number(newRating),
     };
 
-    try {
-      setIsLoading(true);
-      const res = await fetch("/api/movies", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(newMovie),
-      });
+    const addedMovie = await addingMovie.mutate(newMovie);
 
-      if (!res.ok) throw new Error("영화를 추가하지 못했습니다.");
-
-      const savedMovie: Movie = await res.json();
-      setMovies((prev) => [...prev, savedMovie]);
+    if (addedMovie) {
+      setMovies((prev) => [...prev, addedMovie]);
       setRefreshTrigger((prev) => prev + 1);
       setNewTitle("");
       setNewDirector("");
       setNewYear("");
       setNewGenre("");
       setNewRating("");
-      setError(null);
-    } catch (err: unknown) {
-      if (err instanceof Error) {
-        setError(err.message);
-      } else {
-        setError(String(err));
-      }
-    } finally {
-      setIsLoading(false);
     }
   };
 
