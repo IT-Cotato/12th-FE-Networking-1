@@ -1,44 +1,39 @@
-import React, { useState } from "react";
+import React from "react";
 import type { Movie } from "../types/Movie";
 import { type ThemeName, themes } from "../styles/theme";
+import { useMovieForm } from "../hooks/useMovieForm";
 
 interface MovieFormProps {
   themeName: ThemeName;
   onAddMovie: (movie: Omit<Movie, "id">) => void;
 }
 function MovieForm({ themeName, onAddMovie }: MovieFormProps) {
-  const [newTitle, setNewTitle] = useState<string>("");
-  const [newDirector, setNewDirector] = useState<string>("");
-  const [newYear, setNewYear] = useState<number | "">("");
-  const [newGenre, setNewGenre] = useState<string>("");
-  const [newRating, setNewRating] = useState<number | "">("");
-  const [error, setError] = useState<string | null>(null);
   const currentTheme = themes[themeName];
+  const {
+    formData: { newTitle, newDirector, newYear, newGenre, newRating },
+    error,
+    setNewTitle,
+    setNewDirector,
+    setNewYear,
+    setNewGenre,
+    setNewRating,
+    validateForm,
+    resetForm,
+    createMovieData,
+    setError,
+  } = useMovieForm();
 
   const handleAddMovie = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!newTitle || !newDirector || !newYear || !newGenre || !newRating) {
-      setError("모든 필드를 입력해주세요.");
+    
+    if (!validateForm()) {
       return;
     }
 
-    const newMovie = {
-      title: newTitle,
-      director: newDirector,
-      year: Number(newYear),
-      genre: newGenre,
-      rating: Number(newRating),
-    };
-
     try {
+      const newMovie = createMovieData();
       await onAddMovie(newMovie);
-      // 입력창 초기화
-      setNewTitle("");
-      setNewDirector("");
-      setNewYear("");
-      setNewGenre("");
-      setNewRating("");
-      setError(null);
+      resetForm();
     } catch (err) {
       setError("영화 추가에 실패했습니다.");
     }
@@ -55,6 +50,19 @@ function MovieForm({ themeName, onAddMovie }: MovieFormProps) {
       }}
     >
       <h2>영화 추가</h2>
+      {error && (
+        <div
+          style={{
+            backgroundColor: currentTheme.errorBg,
+            color: currentTheme.errorText,
+            padding: "8px",
+            borderRadius: "8px",
+            marginBottom: "12px",
+          }}
+        >
+          {error}
+        </div>
+      )}
       <form
         onSubmit={handleAddMovie}
         style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}
