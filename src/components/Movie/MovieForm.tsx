@@ -40,85 +40,64 @@ function MovieForm({ themeName, onAddMovie }: MovieFormProps) {
   };
 
   return (
-    <div
-      style={{
-        marginBottom: "24px",
-        padding: "20px",
-        borderRadius: "12px",
-        backgroundColor: currentTheme.componentBg,
-        border: `1px solid ${currentTheme.border}`,
-      }}
-    >
-      <h2>영화 추가</h2>
+    <div className={`mb-6 p-5 rounded-xl border ${
+      themeName === 'light' 
+        ? 'bg-gray-50 border-gray-200' 
+        : 'bg-gray-800 border-gray-700'
+    }`}>
+      <h2 className="text-xl font-semibold mb-4">영화 추가</h2>
       {error && (
-        <div
-          style={{
-            backgroundColor: currentTheme.errorBg,
-            color: currentTheme.errorText,
-            padding: "8px",
-            borderRadius: "8px",
-            marginBottom: "12px",
-          }}
-        >
+        <div className={`p-2 rounded-lg mb-3 ${
+          themeName === 'light' 
+            ? 'bg-red-100 text-red-800' 
+            : 'bg-red-900 text-red-200'
+        }`}>
           {error}
         </div>
       )}
       <form
         onSubmit={handleAddMovie}
-        style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}
+        className="flex gap-3 flex-wrap"
       >
         <input
           type="text"
           placeholder="제목"
           value={newTitle}
           onChange={(e) => setNewTitle(e.target.value)}
-          style={{
-            padding: "8px",
-            borderRadius: "8px",
-            border: `1px solid ${currentTheme.border}`,
-            backgroundColor: currentTheme.inputBg,
-            color: currentTheme.text,
-          }}
+          className={`p-2 rounded-lg border ${themeName === 'light' 
+            ? 'bg-white border-gray-300 text-gray-800' 
+            : 'bg-gray-700 border-gray-600 text-gray-200'
+          }`}
         />
         <input
           type="text"
           placeholder="감독"
           value={newDirector}
           onChange={(e) => setNewDirector(e.target.value)}
-          style={{
-            padding: "8px",
-            borderRadius: "8px",
-            border: `1px solid ${currentTheme.border}`,
-            backgroundColor: currentTheme.inputBg,
-            color: currentTheme.text,
-          }}
+          className={`p-2 rounded-lg border ${themeName === 'light' 
+            ? 'bg-white border-gray-300 text-gray-800' 
+            : 'bg-gray-700 border-gray-600 text-gray-200'
+          }`}
         />
         <input
           type="number"
           placeholder="연도"
           value={newYear}
           onChange={(e) => setNewYear(Number(e.target.value))}
-          style={{
-            padding: "8px",
-            borderRadius: "8px",
-            border: `1px solid ${currentTheme.border}`,
-            backgroundColor: currentTheme.inputBg,
-            color: currentTheme.text,
-            width: "80px",
-          }}
+          className={`p-2 rounded-lg border w-20 ${themeName === 'light' 
+            ? 'bg-white border-gray-300 text-gray-800' 
+            : 'bg-gray-700 border-gray-600 text-gray-200'
+          }`}
         />
         <input
           type="text"
           placeholder="장르"
           value={newGenre}
           onChange={(e) => setNewGenre(e.target.value)}
-          style={{
-            padding: "8px",
-            borderRadius: "8px",
-            border: `1px solid ${currentTheme.border}`,
-            backgroundColor: currentTheme.inputBg,
-            color: currentTheme.text,
-          }}
+          className={`p-2 rounded-lg border ${themeName === 'light' 
+            ? 'bg-white border-gray-300 text-gray-800' 
+            : 'bg-gray-700 border-gray-600 text-gray-200'
+          }`}
         />
         <input
           type="number"
@@ -128,25 +107,17 @@ function MovieForm({ themeName, onAddMovie }: MovieFormProps) {
             const val = Number(e.target.value);
             if (val >= 0 && val <= 10) setNewRating(val);
           }}
-          style={{
-            padding: "8px",
-            borderRadius: "8px",
-            border: `1px solid ${currentTheme.border}`,
-            backgroundColor: currentTheme.inputBg,
-            color: currentTheme.text,
-            width: "100px",
-          }}
+          className={`p-2 rounded-lg border w-24 ${themeName === 'light' 
+            ? 'bg-white border-gray-300 text-gray-800' 
+            : 'bg-gray-700 border-gray-600 text-gray-200'
+          }`}
         />
         <button
           type="submit"
-          style={{
-            padding: "8px 16px",
-            backgroundColor: currentTheme.buttonBg,
-            color: currentTheme.buttonText,
-            border: "none",
-            borderRadius: "8px",
-            cursor: "pointer",
-          }}
+          className={`px-4 py-2 rounded-lg border-none cursor-pointer transition-colors ${themeName === 'light' 
+            ? 'bg-blue-600 text-white hover:bg-blue-700' 
+            : 'bg-blue-500 text-white hover:bg-blue-600'
+          }`}
         >
           추가
         </button>

@@ -16,59 +16,43 @@ function MovieList({ movies, isLoading, themeName, onDeleteMovie }: MovieListPro
   const { query, results, searchMovies } = useMovieSearch(movies);
 
   return (
-    <div
-      style={{
-        padding: "20px",
-        borderRadius: "12px",
-        backgroundColor: currentTheme.componentBg,
-        border: `1px solid ${currentTheme.border}`,
-      }}
-    >
-      <h2>영화 목록</h2>
+    <div className={`p-5 rounded-xl border ${
+      themeName === 'light' 
+        ? 'bg-gray-50 border-gray-200' 
+        : 'bg-gray-800 border-gray-700'
+    }`}>
+      <h2 className="text-xl font-semibold mb-4">영화 목록</h2>
       <SearchBar
         searchTerm={query}
         setSearchTerm={searchMovies}
         themeName={themeName}
       />
 
-      {isLoading && <div>로딩 중...</div>}
+      {isLoading && <div className="text-center py-4">로딩 중...</div>}
 
       {!isLoading && results.length === 0 ? (
-        <div>등록된 영화가 없습니다.</div>
+        <div className="text-center py-8 text-gray-500">등록된 영화가 없습니다.</div>
       ) : (
-        <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+        <div className="flex flex-col gap-2">
           {results.map((movie) => (
             <div
               key={movie.id}
-              style={{
-                padding: "12px",
-                borderRadius: "8px",
-                backgroundColor: currentTheme.hoverBg,
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "flex-start",
-                gap: "12px",
-              }}
+              className={`p-3 rounded-lg flex justify-between items-start gap-3 ${
+                themeName === 'light' 
+                  ? 'bg-gray-100 hover:bg-gray-200' 
+                  : 'bg-gray-700 hover:bg-gray-600'
+              } transition-colors`}
             >
-              <div style={{ display: "flex", flexDirection: "column", gap: "4px", flex: 1 }}>
-                <span>
+              <div className="flex flex-col gap-1 flex-1">
+                <span className="font-medium">
                   {movie.title} ({movie.year}) - {movie.director}
                 </span>
-                <span>장르: {movie.genre}</span>
-                <span>⭐: {movie.rating}</span>
+                <span className="text-sm opacity-80">장르: {movie.genre}</span>
+                <span className="text-sm">⭐: {movie.rating}</span>
               </div>
               <button
                 onClick={() => onDeleteMovie(movie.id)}
-                style={{
-                  padding: "4px 8px",
-                  backgroundColor: "#ff4757",
-                  color: "white",
-                  border: "none",
-                  borderRadius: "4px",
-                  cursor: "pointer",
-                  fontSize: "12px",
-                  minWidth: "50px",
-                }}
+                className="px-2 py-1 bg-red-500 text-white border-none rounded cursor-pointer text-xs min-w-12 hover:bg-red-600 transition-colors"
               >
                 삭제
               </button>

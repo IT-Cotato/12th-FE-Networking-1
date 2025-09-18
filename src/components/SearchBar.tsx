@@ -15,15 +15,11 @@ function SearchBar({ searchTerm, setSearchTerm, themeName }: SearchBarProps) {
       placeholder="검색..."
       value={searchTerm}
       onChange={(e) => setSearchTerm(e.target.value)}
-      style={{
-        padding: "8px",
-        borderRadius: "8px",
-        border: `1px solid ${currentTheme.border}`,
-        backgroundColor: currentTheme.inputBg,
-        color: currentTheme.text,
-        marginBottom: "16px",
-        width: "100%",
-      }}
+      className={`p-2 rounded-lg border mb-4 w-full ${
+        themeName === 'light' 
+          ? 'bg-white border-gray-300 text-gray-800' 
+          : 'bg-gray-700 border-gray-600 text-gray-200'
+      }`}
     />
   );
 }

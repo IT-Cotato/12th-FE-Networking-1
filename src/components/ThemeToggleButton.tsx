@@ -12,14 +12,11 @@ function ThemeToggleButton({ themeName, onToggle }: ThemeToggleButtonProps) {
   return (
     <button
       onClick={onToggle}
-      style={{
-        padding: "8px 16px",
-        cursor: "pointer",
-        background: currentTheme.buttonBg,
-        color: currentTheme.buttonText,
-        border: "none",
-        borderRadius: "8px",
-      }}
+      className={`px-4 py-2 rounded-lg border-none cursor-pointer transition-colors ${
+        themeName === 'light' 
+          ? 'bg-blue-600 text-white hover:bg-blue-700' 
+          : 'bg-blue-500 text-white hover:bg-blue-600'
+      }`}
     >
       {themeName === "light" ? "🌙 다크모드" : "☀️ 라이트모드"}
     </button>
