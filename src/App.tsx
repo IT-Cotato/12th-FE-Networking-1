@@ -3,15 +3,15 @@ import { useEffect, useState } from 'react';
 import type { Movie } from '@/types/movie';
 import type { ThemeName } from '@/types/theme';
 
-import ThemeButton from '@/components/themeButton';
-import TitleSection from '@/components/titleSection';
+import ThemeButton from '@/components/Themebuttons';
+import TitleSection from '@/components/TitleSections';
 
 import { useAddMovie } from '@/hooks/useAddMovie';
 import { useFilteredMovies } from '@/hooks/useFilteredMovies';
 
 import { themes } from '@/styles/theme';
 
-import InputField from './components/inputField';
+import InputField from '@/components/InputFields';
 
 function App() {
   const [movies, setMovies] = useState<Movie[]>([]);
