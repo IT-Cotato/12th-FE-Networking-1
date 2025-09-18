@@ -1,7 +1,5 @@
 import { HttpResponse, delay, http } from 'msw';
 
-import { HttpResponse, delay, http } from 'msw';
-
 interface Movie {
   id: number;
   title: string;

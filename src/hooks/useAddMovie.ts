@@ -15,6 +15,7 @@ export function useAddMovie(onMovieAdded: (movie: Movie) => void) {
     e.preventDefault();
     if (!newTitle || !newDirector || !newYear || !newGenre || !newRating) {
       setError('모든 필드를 입력해주세요.');
+      console.log(error);
       return;
     }
 
