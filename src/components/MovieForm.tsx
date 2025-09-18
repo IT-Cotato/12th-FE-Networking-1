@@ -1,5 +1,13 @@
 import React, { useState, useEffect, useMemo, useActionState } from "react";
 import { themes, type ThemeName } from "../styles/theme";
+interface Movie {
+  id: number;
+  title: string;
+  director: string;
+  year: number;
+  genre: string;
+  rating: number;
+}
 
 export default function MovieForm() {
   /*일단 다 복사해 옴 */

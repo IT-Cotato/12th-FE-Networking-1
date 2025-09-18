@@ -1,8 +1,6 @@
-import React, { useState, useEffect, useMemo } from "react";
-import { themes, type ThemeName } from "./styles/theme";
-import MovieForm from "./components/MovieForm";
-import MovieList from "./components/MovieList";
-import Header from "./components/Header";
+import React, { useState, useEffect, useMemo, useActionState } from "react";
+import { themes, type ThemeName } from "../styles/theme";
+
 interface Movie {
   id: number;
   title: string;
@@ -12,7 +10,8 @@ interface Movie {
   rating: number;
 }
 
-function App() {
+export default function Header() {
+  /*일단 다 복사해 옴 */
   const [themeName, setThemeName] = useState<ThemeName>("light");
   const [movies, setMovies] = useState<Movie[]>([]);
   const [newTitle, setNewTitle] = useState<string>("");
@@ -25,7 +24,7 @@ function App() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const currentTheme = themes[themeName];
-
+  useActionState;
   useEffect(() => {
     const fetchMovies = async () => {
       setIsLoading(true);
@@ -96,35 +95,33 @@ function App() {
       setIsLoading(false);
     }
   };
-
   return (
-    <div
+    <header
       style={{
-        background: currentTheme.background,
-        color: currentTheme.text,
-        minHeight: "100vh",
-        padding: "20px",
-        transition: "all 0.2s ease",
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        marginBottom: "24px",
+        padding: "16px",
+        backgroundColor: currentTheme.componentBg,
+        borderRadius: "12px",
+        border: `1px solid ${currentTheme.border}`,
       }}
     >
-      <Header />
-      <MovieForm />
-      <MovieList />
-      {error && (
-        <div
-          style={{
-            backgroundColor: currentTheme.errorBg,
-            color: currentTheme.errorText,
-            padding: "12px",
-            borderRadius: "8px",
-            marginBottom: "20px",
-          }}
-        >
-          {error}
-        </div>
-      )}
-    </div>
+      <h1 style={{ margin: 0 }}>코테이토 영화관</h1>
+      <button
+        onClick={() => setThemeName(themeName === "light" ? "dark" : "light")}
+        style={{
+          padding: "8px 16px",
+          cursor: "pointer",
+          background: currentTheme.buttonBg,
+          color: currentTheme.buttonText,
+          border: "none",
+          borderRadius: "8px",
+        }}
+      >
+        {themeName === "light" ? "🌙 다크모드" : "☀️ 라이트모드"}
+      </button>
+    </header>
   );
 }
-
-export default App;
