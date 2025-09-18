@@ -1,6 +1,6 @@
-import { palette } from "./palette";
+import { palette } from './palette';
 
-export type ThemeName = "light" | "dark";
+export type ThemeName = 'light' | 'dark';
 
 export interface Theme {
   background: string;

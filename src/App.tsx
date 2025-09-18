@@ -5,7 +5,6 @@ import { useFilteredMovies } from './hooks/useFilteredMovies';
 import { type ThemeName, themes } from './styles/theme';
 import type { Movie } from './types/movie';
 
-
 function App() {
   const [themeName, setThemeName] = useState<ThemeName>('light');
   const [movies, setMovies] = useState<Movie[]>([]);
