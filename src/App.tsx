@@ -10,6 +10,7 @@ import type { Movie, NewMovie, NewMovieInputType } from "./types/movie";
 import { useMutation } from "./hooks/useMutation";
 import ErrorMessage from "./components/ErrorMessage";
 import AddMovieForm from "./components/AddMovieForm";
+import MovieCard from "./components/MovieCard";
 
 function App() {
   const [movies, setMovies] = useState<Movie[]>([]);
@@ -137,23 +138,7 @@ function App() {
         ) : (
           <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
             {filteredMovies.map((movie) => (
-              <div
-                key={movie.id}
-                style={{
-                  padding: "12px",
-                  borderRadius: "8px",
-                  backgroundColor: currentTheme.hoverBg,
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "4px",
-                }}
-              >
-                <span>
-                  {movie.title} ({movie.year}) - {movie.director}
-                </span>
-                <span>장르: {movie.genre}</span>
-                <span>⭐: {movie.rating}</span>
-              </div>
+              <MovieCard key={movie.id} movie={movie} />
             ))}
           </div>
         )}
