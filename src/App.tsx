@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { themes, type ThemeName } from "./styles/theme";
 import { Header } from "./components/Header";
+import { ErrorMessage } from "./components/ErrorMessage";
 
 interface Movie {
   id: number;
@@ -107,7 +108,17 @@ function App() {
       }}
     >
       {/* Header 호출 */}
-      <Header themeName={themeName} onThemeToggle={() => setThemeName(themeName === "light" ? "dark" : "light")} currentTheme={currentTheme} />
+      <Header 
+        themeName={themeName} 
+        onThemeToggle={() => setThemeName(themeName === "light" ? "dark" : "light")} 
+        currentTheme={currentTheme} 
+      />
+
+      {/* ErrorMessage 호출 */}
+      <ErrorMessage 
+        error={error}
+        currentTheme={currentTheme}
+      />
 
       {error && (
         <div
