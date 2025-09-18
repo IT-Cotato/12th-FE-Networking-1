@@ -28,9 +28,12 @@ export function useMovieForm(onSubmit: (d: MovieFormData) => void) {
 
   const [error, setError] = useState<string | null>(null);
 
-  const change = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const change = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     const { name, value } = e.target;
-    setForm((prev) => ({ ...prev, [name]: value }));
+    setForm((p) => ({ ...p, [name]: value }));
+    if (error) setError(null);
   };
 
   const validate = (): string | null => {
