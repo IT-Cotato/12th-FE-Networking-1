@@ -14,6 +14,7 @@ import MovieCard from "./components/MovieCard";
 import SearchBox from "./components/SearchBox";
 import { useSearchStore } from "./stores/searchStore";
 import { useShallow } from "zustand/shallow";
+import MovieCardList from "./components/MovieCardList";
 
 function App() {
   const [movies, setMovies] = useState<Movie[]>([]);
@@ -29,23 +30,7 @@ function App() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [refreshTrigger, setRefreshTrigger] = useState<number>(0);
   const { currentTheme } = useTheme();
-  const fetchedMovies = useFetch(getMovies, [refreshTrigger]);
   const addingMovie = useMutation(postMovie);
-
-  const { searchTerm } = useSearchStore(
-    useShallow((state) => ({
-      searchTerm: state.searchTerm,
-    }))
-  );
-
-  const filteredMovies = useMemo(() => {
-    if (!fetchedMovies.data?.length) {
-      return [];
-    }
-    return fetchedMovies.data.filter((movie) =>
-      movie.title.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-  }, [fetchedMovies, searchTerm]);
 
   const handleChangeValues = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -88,7 +73,7 @@ function App() {
     }
   };
 
-  const errorMessage = fetchedMovies.error || error || addingMovie.error;
+  const errorMessage = error || addingMovie.error;
 
   return (
     <div
@@ -132,17 +117,7 @@ function App() {
       >
         <h2>영화 목록</h2>
         <SearchBox />
-        {fetchedMovies.isLoading ? (
-          <div>로딩 중...</div>
-        ) : filteredMovies.length === 0 ? (
-          <div>영화가 없습니다</div>
-        ) : (
-          <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-            {filteredMovies.map((movie) => (
-              <MovieCard key={movie.id} movie={movie} />
-            ))}
-          </div>
-        )}
+        <MovieCardList />
       </div>
     </div>
   );
