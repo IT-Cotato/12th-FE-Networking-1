@@ -6,10 +6,11 @@ import { MovieForm } from "./components/MovieForm";
 import { MovieList } from "./components/MovieList";
 import { type Movie } from "./types/Movie";
 import { useMovies } from "./hooks/useMovies";
+import { useTheme } from "./hooks/useTheme";
 
 function App() {
-  const [themeName, setThemeName] = useState<ThemeName>("light");
-  const currentTheme = themes[themeName];
+  // useTheme 훅 호출
+  const { themeName, currentTheme, toggleTheme } = useTheme();
 
   // useMovies 훅 호출
   const { movies, isLoading, error, searchTerm, setSearchTerm, addMovie, setError } = useMovies(); 
@@ -64,7 +65,7 @@ function App() {
       {/* Header 호출 */}
       <Header 
         themeName={themeName} 
-        onThemeToggle={() => setThemeName(themeName === "light" ? "dark" : "light")} 
+        onThemeToggle={toggleTheme} 
         currentTheme={currentTheme} 
       />
 
