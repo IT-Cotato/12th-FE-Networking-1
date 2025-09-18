@@ -15,6 +15,7 @@ import SearchBox from "./components/SearchBox";
 import { useSearchStore } from "./stores/searchStore";
 import { useShallow } from "zustand/shallow";
 import MovieCardList from "./components/MovieCardList";
+import Container from "./components/Container";
 
 function App() {
   const [movies, setMovies] = useState<Movie[]>([]);
@@ -38,30 +39,14 @@ function App() {
         <ThemeButton />
       </Header>
 
-      <div
-        style={{
-          marginBottom: "24px",
-          padding: "20px",
-          borderRadius: "12px",
-          backgroundColor: currentTheme.componentBg,
-          border: `1px solid ${currentTheme.border}`,
-        }}
-      >
-        <h2>영화 추가</h2>
+      <Container title="영화 추가">
         <AddMovieForm />
-      </div>
-      <div
-        style={{
-          padding: "20px",
-          borderRadius: "12px",
-          backgroundColor: currentTheme.componentBg,
-          border: `1px solid ${currentTheme.border}`,
-        }}
-      >
-        <h2>영화 목록</h2>
+      </Container>
+
+      <Container title="영화 목록">
         <SearchBox />
         <MovieCardList />
-      </div>
+      </Container>
     </div>
   );
 }
