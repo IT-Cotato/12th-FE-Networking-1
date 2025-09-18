@@ -19,10 +19,30 @@ const MovieCard = ({ movie }: MovieCard) => {
         gap: "4px",
       }}
     >
-      <span>
+      <span
+        style={{
+          overflow: "hidden",
+          display: "-webkit-box",
+          WebkitBoxOrient: "vertical",
+          WebkitLineClamp: "1",
+          fontWeight: "500",
+          fontSize: "18px",
+        }}
+      >
         {movie.title} ({movie.year}) - {movie.director}
       </span>
-      <span>장르: {movie.genre}</span>
+      <span
+        style={{
+          overflow: "hidden",
+          display: "-webkit-box",
+          WebkitBoxOrient: "vertical",
+          WebkitLineClamp: "1",
+          fontWeight: "500",
+          fontSize: "14px",
+        }}
+      >
+        장르: {movie.genre}
+      </span>
       <span>⭐: {movie.rating}</span>
     </div>
   );

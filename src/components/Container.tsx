@@ -16,9 +16,19 @@ const Container = ({ title, children }: ContainerProps) => {
         borderRadius: "12px",
         backgroundColor: currentTheme.componentBg,
         border: `1px solid ${currentTheme.border}`,
+        display: "flex",
+        flexDirection: "column",
+        gap: "16px",
       }}
     >
-      <h2>{title}</h2>
+      <h2
+        style={{
+          fontWeight: "700",
+          fontSize: "24px",
+        }}
+      >
+        {title}
+      </h2>
       {children}
     </div>
   );

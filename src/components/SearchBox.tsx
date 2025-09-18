@@ -25,7 +25,6 @@ const SearchBox = () => {
       name="search"
       value={value}
       onChange={(e) => setValue(e.target.value)}
-      style={{ marginBottom: "16px", width: "100%" }}
     />
   );
 };

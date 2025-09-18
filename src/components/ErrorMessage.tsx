@@ -14,7 +14,6 @@ const ErrorMessage = ({ message }: ErrorMessageProps) => {
         color: currentTheme.errorText,
         padding: "12px",
         borderRadius: "8px",
-        marginBottom: "20px",
       }}
     >
       {message}

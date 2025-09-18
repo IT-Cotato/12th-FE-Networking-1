@@ -17,6 +17,9 @@ function App() {
         minHeight: "100vh",
         padding: "20px",
         transition: "all 0.2s ease",
+        display: "flex",
+        flexDirection: "column",
+        gap: "24px",
       }}
     >
       <Header flexRowJustifyContent="end" title="코테이토 영화관">

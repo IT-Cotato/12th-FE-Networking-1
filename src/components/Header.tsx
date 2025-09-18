@@ -26,14 +26,20 @@ const Header = ({
       style={{
         display: "flex",
         alignItems: "center",
-        marginBottom: "24px",
         padding: "16px",
         backgroundColor: currentTheme.componentBg,
         borderRadius: "12px",
         border: `1px solid ${currentTheme.border}`,
       }}
     >
-      <h1 style={{ margin: 0 }}>{title}</h1>
+      <h1
+        style={{
+          fontWeight: "700",
+          fontSize: "28px",
+        }}
+      >
+        {title}
+      </h1>
       <div
         style={{
           flex: 1,
