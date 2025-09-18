@@ -1,7 +1,8 @@
-import React, { useState, useMemo } from "react";
+import React from "react";
 import { themes, type ThemeName } from "../styles/theme";
 import type { Movie } from "../types/Movie";
 import SearchBar from "./SearchBar";
+import { useMovieSearch } from "../hooks/useMovieSearch";
 
 interface MovieListProps {
   movies: Movie[];
@@ -11,13 +12,7 @@ interface MovieListProps {
 
 function MovieList({ movies, isLoading, themeName }: MovieListProps) {
   const currentTheme = themes[themeName];
-  const [searchTerm, setSearchTerm] = useState<string>("");
-
-  const filteredMovies = useMemo(() => {
-    return movies.filter((movie) =>
-      movie.title.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-  }, [movies, searchTerm]);
+  const { query, results, searchMovies } = useMovieSearch(movies);
 
   return (
     <div
@@ -30,18 +25,18 @@ function MovieList({ movies, isLoading, themeName }: MovieListProps) {
     >
       <h2>영화 목록</h2>
       <SearchBar
-        searchTerm={searchTerm}
-        setSearchTerm={setSearchTerm}
+        searchTerm={query}
+        setSearchTerm={searchMovies}
         themeName={themeName}
       />
 
       {isLoading && <div>로딩 중...</div>}
 
-      {!isLoading && filteredMovies.length === 0 ? (
+      {!isLoading && results.length === 0 ? (
         <div>등록된 영화가 없습니다.</div>
       ) : (
         <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-          {filteredMovies.map((movie) => (
+          {results.map((movie) => (
             <div
               key={movie.id}
               style={{
