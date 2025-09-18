@@ -13,6 +13,11 @@ export interface Theme {
   hoverBg: string;
   errorBg: string;
   errorText: string;
+  toggleBg: string;
+  toggleText: string;
+  toggleBorder: string;
+  formButtonBg: string;
+  formButtonText: string;
 }
 
 export const themes: Record<ThemeName, Theme> = {
@@ -27,6 +32,11 @@ export const themes: Record<ThemeName, Theme> = {
     hoverBg: palette.lightGray,
     errorBg: palette.lightRed,
     errorText: palette.red,
+    toggleBg: palette.black,
+    toggleText: palette.white,
+    toggleBorder: palette.black,
+    formButtonBg: palette.black,
+    formButtonText: palette.white,
   },
   dark: {
     background: palette.darkBackground,
@@ -39,5 +49,10 @@ export const themes: Record<ThemeName, Theme> = {
     hoverBg: palette.darkGray,
     errorBg: palette.deepGray,
     errorText: palette.pink,
+    toggleBg: palette.white,
+    toggleText: palette.black,
+    toggleBorder: palette.black,
+    formButtonBg: palette.white,
+    formButtonText: palette.black,
   },
 };
