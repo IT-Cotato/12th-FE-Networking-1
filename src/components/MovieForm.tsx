@@ -1,5 +1,5 @@
 import React from "react";
-import {type Theme} from "../styles/theme";
+import { useThemeStore } from "../stores/themeStore";
 
 interface MovieFormProps {
     newTitle: string;
@@ -13,7 +13,6 @@ interface MovieFormProps {
     newRating: number | "";
     setNewRating: (value: number | "") => void;
     onSubmit: (e: React.FormEvent) => void;
-    currentTheme: Theme;
 }
 
 export const MovieForm: React.FC<MovieFormProps> = ({
@@ -23,8 +22,8 @@ export const MovieForm: React.FC<MovieFormProps> = ({
     newGenre, setNewGenre,
     newRating, setNewRating,
     onSubmit,
-    currentTheme
 }) => {
+    const { currentTheme } = useThemeStore();
     return (
         <div 
             style={{

@@ -1,13 +1,12 @@
 import React from "react";
-import {type Theme} from "../styles/theme";
+import { useThemeStore } from "../stores/themeStore";
 
 interface ErrorMessageProps {
     error: string | null;
-    currentTheme: Theme;
 }
 
-export const ErrorMessage: React.FC<ErrorMessageProps> = ({error, currentTheme}) => {
-    if (!error) return null;
+export const ErrorMessage: React.FC<ErrorMessageProps> = ({error}) => {
+    const {currentTheme } = useThemeStore();
     return (
         <div
             style={{

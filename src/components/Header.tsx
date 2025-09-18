@@ -1,13 +1,9 @@
 import React from "react";
-import { type Theme } from "../styles/theme";
+import { useThemeStore } from "../stores/themeStore";
 
-interface HeaderProps {
-  themeName: "light" | "dark";
-  onThemeToggle: () => void;
-  currentTheme: Theme;
-}
+export const Header: React.FC = () => {
+  const { themeName, currentTheme, toggleTheme } = useThemeStore();
 
-export const Header: React.FC<HeaderProps> = ({ themeName, onThemeToggle, currentTheme }) => {
   return (
     <header
       style={{
@@ -23,7 +19,7 @@ export const Header: React.FC<HeaderProps> = ({ themeName, onThemeToggle, curren
     >
       <h1 style={{ margin: 0 }}>코테이토 영화관</h1>
       <button
-        onClick={onThemeToggle}
+        onClick={toggleTheme}
         style={{
           padding: "8px 16px",
           cursor: "pointer",
@@ -33,7 +29,7 @@ export const Header: React.FC<HeaderProps> = ({ themeName, onThemeToggle, curren
           borderRadius: "8px",
         }}
       >
-        {themeName == "light" ? "🌙 다크모드" : "☀️ 라이트모드"}
+        {themeName === "light" ? "🌙 다크모드" : "☀️ 라이트모드"}
       </button>
     </header>
   );

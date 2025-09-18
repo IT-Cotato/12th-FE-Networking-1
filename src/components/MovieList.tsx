@@ -1,5 +1,5 @@
 import React from "react";
-import {type Theme} from "../styles/theme";
+import { useThemeStore } from "../stores/themeStore";
 import {type Movie} from "../types/Movie";
 
 interface MovieListProps {
@@ -7,7 +7,6 @@ interface MovieListProps {
     searchTerm: string;
     setSearchTerm: (value: string) => void;
     isLoading: boolean;
-    currentTheme: Theme;
 }
 
 export const MovieList: React.FC<MovieListProps> = ({
@@ -15,8 +14,8 @@ export const MovieList: React.FC<MovieListProps> = ({
     searchTerm,
     setSearchTerm,
     isLoading,
-    currentTheme
 }) => {
+    const { currentTheme } = useThemeStore();
     return (
         <div
             style={{

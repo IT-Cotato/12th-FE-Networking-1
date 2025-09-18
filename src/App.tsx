@@ -6,11 +6,11 @@ import { MovieForm } from "./components/MovieForm";
 import { MovieList } from "./components/MovieList";
 import { type Movie } from "./types/Movie";
 import { useMovies } from "./hooks/useMovies";
-import { useTheme } from "./hooks/useTheme";
+import { useThemeStore } from "./stores/themeStore";
 
 function App() {
   // useTheme 훅 호출
-  const { themeName, currentTheme, toggleTheme } = useTheme();
+  const { themeName, currentTheme, toggleTheme } = useThemeStore();
 
   // useMovies 훅 호출
   const { movies, isLoading, error, searchTerm, setSearchTerm, addMovie, setError } = useMovies(); 
@@ -63,16 +63,11 @@ function App() {
       }}
     >
       {/* Header 호출 */}
-      <Header 
-        themeName={themeName} 
-        onThemeToggle={toggleTheme} 
-        currentTheme={currentTheme} 
-      />
+      <Header/>
 
       {/* ErrorMessage 호출 */}
       <ErrorMessage 
         error={error}
-        currentTheme={currentTheme}
       />
 
       {/* MovieForm 호출 */}
@@ -88,7 +83,6 @@ function App() {
         newRating={newRating}
         setNewRating={setNewRating}
         onSubmit={handleAddMovie}
-        currentTheme={currentTheme}
       />
 
       {/* MovieList 호출 */}
@@ -97,7 +91,6 @@ function App() {
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
         isLoading={isLoading}
-        currentTheme={currentTheme}
       />
 
     </div>
