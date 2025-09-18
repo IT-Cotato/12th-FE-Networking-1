@@ -13,15 +13,12 @@ const HeaderContainer = styled.header<{ $theme: Theme }>`
   border: 1px solid ${props => props.$theme.border};
 `;
 
-const Title = styled.h1`
+const Title = styled.h1<{ $theme: Theme }>`
   margin: 0;
   font-weight: 700;
   font-size: 28px;
   letter-spacing: -0.02em;
-  background: black;
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: ${props => props.$theme.text};
 `;
 
 const ThemeButton = styled.button<{ $theme: Theme }>`
@@ -50,7 +47,7 @@ interface HeaderProps {
 export function Header({ themeName, currentTheme, onThemeToggle }: HeaderProps) {
   return (
     <HeaderContainer $theme={currentTheme}>
-      <Title>코테이토 영화관</Title>
+      <Title $theme={currentTheme}>코테이토 영화관</Title>
       <ThemeButton $theme={currentTheme} onClick={onThemeToggle}>
         {themeName === "light" ? "🌙 다크모드" : "☀️ 라이트모드"}
       </ThemeButton>
