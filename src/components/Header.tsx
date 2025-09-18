@@ -1,11 +1,9 @@
 import React from "react";
+import { useAppContext } from "../context/AppContext";
 
-interface HeaderProps {
-  isDark: boolean;
-  toggleDarkMode: () => void;
-}
+const Header: React.FC = () => {
+  const { isDark, toggleDarkMode } = useAppContext();
 
-const Header: React.FC<HeaderProps> = ({ isDark, toggleDarkMode }) => {
   return (
     <header className="flex justify-between items-center mb-6 p-6 bg-white dark:bg-deepGray rounded-lg border border-gray dark:border-darkGray">
       <h1 className="text-2xl font-bold text-black dark:text-white">코테이토 영화관 🥔</h1>

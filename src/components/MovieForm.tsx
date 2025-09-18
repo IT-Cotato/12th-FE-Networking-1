@@ -1,8 +1,8 @@
 import React from "react";
 import Button from "./common/Button";
+import { useAppContext } from "../context/AppContext";
 
 interface MovieFormProps {
-  isDark:boolean;
   newTitle: string;
   newDirector: string;
   newYear: number | "";
@@ -17,7 +17,6 @@ interface MovieFormProps {
 }
 
 const MovieForm: React.FC<MovieFormProps> = ({
-  isDark,
   newTitle,
   newDirector,
   newYear,
@@ -30,6 +29,8 @@ const MovieForm: React.FC<MovieFormProps> = ({
   onRatingChange,
   onSubmit,
 }) => {
+
+  const {isDark} = useAppContext();
 
   return (
     <div className="p-6 bg-lightBackground text-black dark:bg-darkBackground dark:text-white transition-all duration-200">

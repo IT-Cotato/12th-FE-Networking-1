@@ -1,16 +1,17 @@
 import React from "react";
 import type { Movie } from "../types/movie";
 import Button from "./common/Button";
+import { useAppContext } from "../context/AppContext"; 
 
 interface MovieListProps {
-  isDark:boolean;
   movies: Movie[];
   searchTerm: string;
   onSearch: (value: string) => void;
   isLoading: boolean;
 }
 
-const MovieList: React.FC<MovieListProps> = ({ isDark, movies, searchTerm, onSearch, isLoading }) => {
+const MovieList: React.FC<MovieListProps> = ({movies, searchTerm, onSearch, isLoading }) => {
+  const {isDark} = useAppContext();
   return (
     <div className="p-6 bg-lightBackground text-black dark:bg-darkBackground dark:text-white transition-all duration-200">
       <h2 className="text-xl font-bold mb-4 text-black dark:text-white">영화 목록</h2>

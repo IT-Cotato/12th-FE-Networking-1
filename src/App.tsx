@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useMemo } from "react";
 import type { Movie } from "./types/movie";
+import { AppProvider } from "./context/AppContext";
 
 import Header from "./components/Header";
 import MovieForm from "./components/MovieForm";
@@ -84,12 +85,10 @@ function App() {
 
 
   return (
+    <AppProvider>
 <div className={`${isDark ? "dark" : ""}`}>
   <div className=" p-6 bg-lightBackground text-black dark:bg-darkBackground dark:text-white transition-all duration-200">
-      <Header
-          isDark={isDark}
-          toggleDarkMode={() => setIsDark(!isDark)}
-      />
+      <Header/>
       </div>
 
       {error && (
@@ -99,7 +98,6 @@ function App() {
       )}
 
       <MovieForm
-        isDark={isDark}
         newTitle={newTitle}
         newDirector={newDirector}
         newYear={newYear}
@@ -114,19 +112,18 @@ function App() {
       />
 
       <SearchBar
-        isDark={isDark}
         searchTerm={searchTerm}
         onSearch={setSearchTerm}
       />
 
       <MovieList
-        isDark={isDark}
         movies={filteredMovies}
         isLoading={isLoading}
         searchTerm={searchTerm}
         onSearch={setSearchTerm}
       />
     </div>
+    </AppProvider>
   );
 }
 

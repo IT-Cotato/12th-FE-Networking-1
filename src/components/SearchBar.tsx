@@ -1,14 +1,14 @@
 import React from "react";
 import { themes, type ThemeName } from "../styles/theme";
+import { useAppContext } from "../context/AppContext";
 
 interface SearchBarProps {
-  isDark:boolean;
   searchTerm: string;
   onSearch: (v: string) => void;
 }
 
-const SearchBar: React.FC<SearchBarProps> = ({ isDark, searchTerm, onSearch }) => {
-
+const SearchBar: React.FC<SearchBarProps> = ({searchTerm, onSearch }) => {
+const { isDark, toggleDarkMode } = useAppContext();
 
   return (
     <div className="p-6 bg-lightBackground text-black dark:bg-darkBackground dark:text-white transition-all duration-200">
