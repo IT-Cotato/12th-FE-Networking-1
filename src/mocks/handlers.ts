@@ -35,6 +35,15 @@ const movies: Movie[] = [
     genre: "애니메이션",
     rating: 9,
   },
+  {
+    id: 4,
+    title:
+      "스마트폰을 떨어뜨렸을 뿐인데 세상에서 고양이가 사라진다면 벤자민 버튼의 시간은 거꾸로 간다",
+    director: "소토자키 하루오",
+    year: 2025,
+    genre: "애니메이션",
+    rating: 9,
+  },
 ];
 
 let nextMovieId = 5;
