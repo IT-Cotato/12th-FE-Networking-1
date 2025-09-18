@@ -4,15 +4,7 @@ import Header from "./components/Header";
 import ThemeButton from "./components/ThemeButton";
 import { useTheme } from "./hooks/useTheme";
 import InputField from "./components/InputField";
-
-interface Movie {
-  id: number;
-  title: string;
-  director: string;
-  year: number;
-  genre: string;
-  rating: number;
-}
+import type { Movie, newMovie } from "./types/movie";
 
 function App() {
   const [movies, setMovies] = useState<Movie[]>([]);
@@ -60,7 +52,7 @@ function App() {
       return;
     }
 
-    const newMovie = {
+    const newMovie: newMovie = {
       title: newTitle,
       director: newDirector,
       year: Number(newYear),
