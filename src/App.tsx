@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { themes, type ThemeName, type Theme } from "./styles/theme";
 import type { Movie } from "./types/movie";
 import { Header } from "./components/Header";
 import { MovieForm } from "./components/MovieForm";
 import { MovieList } from "./components/MovieList";
+import { useThemeStore } from "./store/themeStore";
 
-const AppContainer = styled.div<{ $theme: Theme }>`
+const AppContainer = styled.div<{ $theme: any }>`
   background: ${props => props.$theme.background};
   color: ${props => props.$theme.text};
   min-height: 100vh;
@@ -14,7 +14,7 @@ const AppContainer = styled.div<{ $theme: Theme }>`
   transition: all 0.2s ease;
 `;
 
-const ErrorMessage = styled.div<{ $theme: Theme }>`
+const ErrorMessage = styled.div<{ $theme: any }>`
   background-color: ${props => props.$theme.errorBg};
   color: ${props => props.$theme.errorText};
   padding: 12px;
@@ -23,12 +23,10 @@ const ErrorMessage = styled.div<{ $theme: Theme }>`
 `;
 
 function App() {
-  const [themeName, setThemeName] = useState<ThemeName>("light");
+  const { themeName, currentTheme, toggleTheme } = useThemeStore();
   const [movies, setMovies] = useState<Movie[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-
-  const currentTheme = themes[themeName];
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -80,24 +78,18 @@ function App() {
 
   return (
     <AppContainer $theme={currentTheme}>
-      <Header 
-        themeName={themeName}
-        currentTheme={currentTheme}
-        onThemeToggle={() => setThemeName(themeName === "light" ? "dark" : "light")}
-      />
+      <Header />
       {error && (
         <ErrorMessage $theme={currentTheme}>
           {error}
         </ErrorMessage>
       )}
       <MovieForm 
-        currentTheme={currentTheme}
         onAddMovie={handleAddMovie}
         isLoading={isLoading}
       />
       <MovieList 
         movies={movies}
-        currentTheme={currentTheme}
         isLoading={isLoading}
       />
     </AppContainer>

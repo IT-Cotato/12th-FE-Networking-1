@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import type { Theme } from "../styles/theme";
 import type { Movie } from "../types/movie";
+import { useThemeStore } from "../store/themeStore";
 
-const ItemContainer = styled.div<{ $theme: Theme }>`
+const ItemContainer = styled.div<{ $theme: any }>`
   padding: 12px;
   border-radius: 8px;
   background-color: ${props => props.$theme.hoverBg};
@@ -39,10 +39,10 @@ const Rating = styled.span`
 
 interface MovieItemProps {
   movie: Movie;
-  currentTheme: Theme;
 }
 
-export function MovieItem({ movie, currentTheme }: MovieItemProps) {
+export function MovieItem({ movie }: MovieItemProps) {
+  const { currentTheme } = useThemeStore();
   return (
     <ItemContainer $theme={currentTheme}>
       <MovieTitle>

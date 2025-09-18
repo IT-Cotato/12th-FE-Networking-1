@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import type { Theme } from "../styles/theme";
 import type { Movie } from "../types/movie";
+import { useThemeStore } from "../store/themeStore";
 
-const FormContainer = styled.div<{ $theme: Theme }>`
+const FormContainer = styled.div<{ $theme: any }>`
   margin-bottom: 24px;
   padding: 20px;
   border-radius: 12px;
@@ -25,7 +25,7 @@ const Form = styled.form`
   flex-wrap: wrap;
 `;
 
-const Input = styled.input<{ $theme: Theme; $width?: string }>`
+const Input = styled.input<{ $theme: any; $width?: string }>`
   padding: 8px;
   border-radius: 8px;
   border: 1px solid ${props => props.$theme.border};
@@ -46,7 +46,7 @@ const Input = styled.input<{ $theme: Theme; $width?: string }>`
   }
 `;
 
-const SubmitButton = styled.button<{ $theme: Theme; $disabled: boolean }>`
+const SubmitButton = styled.button<{ $theme: any; $disabled: boolean }>`
   padding: 8px 16px;
   background-color: ${props => props.$theme.buttonBg};
   color: ${props => props.$theme.buttonText};
@@ -65,12 +65,12 @@ const SubmitButton = styled.button<{ $theme: Theme; $disabled: boolean }>`
 `;
 
 interface MovieFormProps {
-  currentTheme: Theme;
   onAddMovie: (movie: Omit<Movie, "id">) => Promise<void>;
   isLoading: boolean;
 }
 
-export function MovieForm({ currentTheme, onAddMovie, isLoading }: MovieFormProps) {
+export function MovieForm({ onAddMovie, isLoading }: MovieFormProps) {
+  const { currentTheme } = useThemeStore();
   const [newTitle, setNewTitle] = useState<string>("");
   const [newDirector, setNewDirector] = useState<string>("");
   const [newYear, setNewYear] = useState<number | "">("");

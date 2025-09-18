@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import type { ThemeName, Theme } from "../styles/theme";
+import { useThemeStore } from "../store/themeStore";
 
 const HeaderContainer = styled.header<{ $theme: Theme }>`
   display: flex;
@@ -38,17 +39,13 @@ const ThemeButton = styled.button<{ $theme: Theme }>`
   }
 `;
 
-interface HeaderProps {
-  themeName: ThemeName;
-  currentTheme: Theme;
-  onThemeToggle: () => void;
-}
+export function Header() {
+  const { themeName, currentTheme, toggleTheme } = useThemeStore();
 
-export function Header({ themeName, currentTheme, onThemeToggle }: HeaderProps) {
   return (
     <HeaderContainer $theme={currentTheme}>
       <Title $theme={currentTheme}>코테이토 영화관</Title>
-      <ThemeButton $theme={currentTheme} onClick={onThemeToggle}>
+      <ThemeButton $theme={currentTheme} onClick={toggleTheme}>
         {themeName === "light" ? "🌙 다크모드" : "☀️ 라이트모드"}
       </ThemeButton>
     </HeaderContainer>

@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import type { Theme } from "../styles/theme";
+import { useThemeStore } from "../store/themeStore";
 
-const SearchInput = styled.input<{ $theme: Theme }>`
+const SearchInput = styled.input<{ $theme: any }>`
   padding: 8px;
   border-radius: 8px;
   border: 1px solid ${props => props.$theme.border};
@@ -27,16 +27,15 @@ const SearchInput = styled.input<{ $theme: Theme }>`
 interface SearchBarProps {
   searchTerm: string;
   onSearchChange: (value: string) => void;
-  currentTheme: Theme;
   placeholder?: string;
 }
 
 export function SearchBar({ 
   searchTerm, 
   onSearchChange, 
-  currentTheme, 
   placeholder = "검색..." 
 }: SearchBarProps) {
+  const { currentTheme } = useThemeStore();
   return (
     <SearchInput
       type="text"

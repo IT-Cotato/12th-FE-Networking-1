@@ -1,11 +1,11 @@
 import React, { useState, useMemo } from "react";
 import styled from "styled-components";
-import type { Theme } from "../styles/theme";
 import type { Movie } from "../types/movie";
 import { MovieItem } from "./MovieItem";
 import { SearchBar } from "./SearchBar";
+import { useThemeStore } from "../store/themeStore";
 
-const ListContainer = styled.div<{ $theme: Theme }>`
+const ListContainer = styled.div<{ $theme: any }>`
   padding: 20px;
   border-radius: 12px;
   background-color: ${props => props.$theme.componentBg};
@@ -40,11 +40,11 @@ const MoviesGrid = styled.div`
 
 interface MovieListProps {
   movies: Movie[];
-  currentTheme: Theme;
   isLoading: boolean;
 }
 
-export function MovieList({ movies, currentTheme, isLoading }: MovieListProps) {
+export function MovieList({ movies, isLoading }: MovieListProps) {
+  const { currentTheme } = useThemeStore();
   const [searchTerm, setSearchTerm] = useState<string>("");
 
   const filteredMovies = useMemo(() => {
@@ -59,7 +59,6 @@ export function MovieList({ movies, currentTheme, isLoading }: MovieListProps) {
       <SearchBar 
         searchTerm={searchTerm}
         onSearchChange={setSearchTerm}
-        currentTheme={currentTheme}
         placeholder="영화 제목으로 검색..."
       />
       {isLoading ? (
@@ -72,7 +71,6 @@ export function MovieList({ movies, currentTheme, isLoading }: MovieListProps) {
             <MovieItem 
               key={movie.id}
               movie={movie}
-              currentTheme={currentTheme}
             />
           ))}
         </MoviesGrid>
