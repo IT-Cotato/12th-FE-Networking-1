@@ -3,15 +3,14 @@ import { useEffect, useState } from 'react';
 import type { Movie } from '@/types/movie';
 import type { ThemeName } from '@/types/theme';
 
-import ThemeButton from '@/components/Themebuttons';
-import TitleSection from '@/components/TitleSections';
+import InputField from '@/components/InputField';
+import ThemeButton from '@/components/ThemeButton';
+import TitleSection from '@/components/TitleSection';
 
 import { useAddMovie } from '@/hooks/useAddMovie';
 import { useFilteredMovies } from '@/hooks/useFilteredMovies';
 
 import { themes } from '@/styles/theme';
-
-import InputField from '@/components/InputFields';
 
 function App() {
   const [movies, setMovies] = useState<Movie[]>([]);
@@ -44,7 +43,6 @@ function App() {
         if (!res.ok) throw new Error('영화 데이터를 불러오지 못했습니다.');
         const data: Movie[] = await res.json();
         setMovies(data);
-        console.log(error);
       } catch (err: unknown) {
         if (err instanceof Error) {
           setError(err.message);
@@ -77,9 +75,11 @@ function App() {
         <ThemeButton themeName={themeName} onThemeChange={setThemeName} />
       </header>
 
-      {error && (
-        <div className={`rounded-lg p-3 mb-5 ${themeName === 'light' ? 'bg-lightRed text-red' : 'bg-deepGray text-pink'}`}>
-          {error}
+      {addError && (
+        <div
+          className={`mb-5 rounded-lg p-3 ${themeName === 'light' ? 'bg-lightRed text-red' : 'bg-deepGray text-pink'}`}
+        >
+          {addError}
         </div>
       )}
 

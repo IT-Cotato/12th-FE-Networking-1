@@ -1,12 +1,6 @@
 import React from 'react';
 
-
-
 import type { ThemeName } from '@/types/theme';
-
-
-
-
 
 interface InputFieldProps {
   type?: string;
