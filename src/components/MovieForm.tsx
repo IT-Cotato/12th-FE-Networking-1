@@ -1,17 +1,8 @@
 import React, { useState, useEffect, useMemo } from "react";
-import { themes, type ThemeName } from "./styles/theme";
-import MovieForm from "./components/MovieForm";
+import { themes, type ThemeName } from "../styles/theme";
 
-interface Movie {
-  id: number;
-  title: string;
-  director: string;
-  year: number;
-  genre: string;
-  rating: number;
-}
-
-function App() {
+export default function MovieForm() {
+  /*일단 다 복사해 옴 */
   const [themeName, setThemeName] = useState<ThemeName>("light");
   const [movies, setMovies] = useState<Movie[]>([]);
   const [newTitle, setNewTitle] = useState<string>("");
@@ -95,114 +86,105 @@ function App() {
       setIsLoading(false);
     }
   };
-
   return (
     <div
       style={{
-        background: currentTheme.background,
-        color: currentTheme.text,
-        minHeight: "100vh",
+        marginBottom: "24px",
         padding: "20px",
-        transition: "all 0.2s ease",
+        borderRadius: "12px",
+        backgroundColor: currentTheme.componentBg,
+        border: `1px solid ${currentTheme.border}`,
       }}
     >
-      <header
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginBottom: "24px",
-          padding: "16px",
-          backgroundColor: currentTheme.componentBg,
-          borderRadius: "12px",
-          border: `1px solid ${currentTheme.border}`,
-        }}
+      <h2>영화 추가</h2>
+      <form
+        onSubmit={handleAddMovie}
+        style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}
       >
-        <h1 style={{ margin: 0 }}>코테이토 영화관</h1>
-        <button
-          onClick={() => setThemeName(themeName === "light" ? "dark" : "light")}
-          style={{
-            padding: "8px 16px",
-            cursor: "pointer",
-            background: currentTheme.buttonBg,
-            color: currentTheme.buttonText,
-            border: "none",
-            borderRadius: "8px",
-          }}
-        >
-          {themeName === "light" ? "🌙 다크모드" : "☀️ 라이트모드"}
-        </button>
-      </header>
-      {error && (
-        <div
-          style={{
-            backgroundColor: currentTheme.errorBg,
-            color: currentTheme.errorText,
-            padding: "12px",
-            borderRadius: "8px",
-            marginBottom: "20px",
-          }}
-        >
-          {error}
-        </div>
-      )}
-
-      <MovieForm />
-
-      <div
-        style={{
-          padding: "20px",
-          borderRadius: "12px",
-          backgroundColor: currentTheme.componentBg,
-          border: `1px solid ${currentTheme.border}`,
-        }}
-      >
-        <h2>영화 목록</h2>
         <input
           type="text"
-          placeholder="검색..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
+          placeholder="제목"
+          value={newTitle}
+          onChange={(e) => setNewTitle(e.target.value)}
           style={{
             padding: "8px",
             borderRadius: "8px",
             border: `1px solid ${currentTheme.border}`,
             backgroundColor: currentTheme.inputBg,
             color: currentTheme.text,
-            marginBottom: "16px",
-            width: "100%",
           }}
         />
-        {isLoading ? (
-          <div>로딩 중...</div>
-        ) : filteredMovies.length === 0 ? (
-          <div>영화가 없습니다</div>
-        ) : (
-          <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-            {filteredMovies.map((movie) => (
-              <div
-                key={movie.id}
-                style={{
-                  padding: "12px",
-                  borderRadius: "8px",
-                  backgroundColor: currentTheme.hoverBg,
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "4px",
-                }}
-              >
-                <span>
-                  {movie.title} ({movie.year}) - {movie.director}
-                </span>
-                <span>장르: {movie.genre}</span>
-                <span>⭐: {movie.rating}</span>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
+        <input
+          type="text"
+          placeholder="감독"
+          value={newDirector}
+          onChange={(e) => setNewDirector(e.target.value)}
+          style={{
+            padding: "8px",
+            borderRadius: "8px",
+            border: `1px solid ${currentTheme.border}`,
+            backgroundColor: currentTheme.inputBg,
+            color: currentTheme.text,
+          }}
+        />
+        <input
+          type="number"
+          placeholder="연도"
+          value={newYear}
+          onChange={(e) => setNewYear(Number(e.target.value))}
+          style={{
+            padding: "8px",
+            borderRadius: "8px",
+            border: `1px solid ${currentTheme.border}`,
+            backgroundColor: currentTheme.inputBg,
+            color: currentTheme.text,
+            width: "80px",
+          }}
+        />
+        <input
+          type="text"
+          placeholder="장르"
+          value={newGenre}
+          onChange={(e) => setNewGenre(e.target.value)}
+          style={{
+            padding: "8px",
+            borderRadius: "8px",
+            border: `1px solid ${currentTheme.border}`,
+            backgroundColor: currentTheme.inputBg,
+            color: currentTheme.text,
+          }}
+        />
+        <input
+          type="number"
+          placeholder="평점"
+          value={newRating}
+          onChange={(e) => {
+            const val = Number(e.target.value);
+            if (val >= 0 && val <= 10) setNewRating(val);
+          }}
+          style={{
+            padding: "8px",
+            borderRadius: "8px",
+            border: `1px solid ${currentTheme.border}`,
+            backgroundColor: currentTheme.inputBg,
+            color: currentTheme.text,
+            width: "100px",
+          }}
+        />
+        <button
+          type="submit"
+          style={{
+            padding: "8px 16px",
+            backgroundColor: currentTheme.buttonBg,
+            color: currentTheme.buttonText,
+            border: "none",
+            borderRadius: "8px",
+            cursor: "pointer",
+          }}
+        >
+          추가
+        </button>
+      </form>
     </div>
   );
 }
-
-export default App;
