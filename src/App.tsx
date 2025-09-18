@@ -75,7 +75,7 @@ function App() {
         <ThemeButton />
       </Header>
 
-      {(fetchedMovies.error || addingMovie.error) && (
+      {(fetchedMovies.error || addingMovie.error || error) && (
         <div
           style={{
             backgroundColor: currentTheme.errorBg,
@@ -85,7 +85,7 @@ function App() {
             marginBottom: "20px",
           }}
         >
-          {error}
+          {fetchedMovies.error || addingMovie.error || error}
         </div>
       )}
       <div
