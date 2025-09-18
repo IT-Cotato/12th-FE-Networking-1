@@ -1,6 +1,6 @@
 import Header from "./components/Header";
-import MovieForm from "./components/MovieForm";
-import MovieList from "./components/MovieList";
+import MovieForm from "./components/Movie/MovieForm";
+import MovieList from "./components/Movie/MovieList";
 import { useMovies } from "./hooks/useMovies";
 import { useTheme } from "./hooks/useTheme";
 

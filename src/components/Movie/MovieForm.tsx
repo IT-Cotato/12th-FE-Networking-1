@@ -1,7 +1,7 @@
 import React from "react";
-import type { Movie } from "../types/Movie";
-import { type ThemeName, themes } from "../styles/theme";
-import { useMovieForm } from "../hooks/useMovieForm";
+import type { Movie } from "../../types/Movie";
+import { type ThemeName, themes } from "../../styles/theme";
+import { useMovieForm } from "../../hooks/useMovieForm";
 
 interface MovieFormProps {
   themeName: ThemeName;
@@ -25,7 +25,7 @@ function MovieForm({ themeName, onAddMovie }: MovieFormProps) {
 
   const handleAddMovie = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
       return;
     }

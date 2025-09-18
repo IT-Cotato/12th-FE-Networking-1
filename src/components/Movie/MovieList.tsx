@@ -1,8 +1,8 @@
 import React from "react";
-import { themes, type ThemeName } from "../styles/theme";
-import type { Movie } from "../types/Movie";
-import SearchBar from "./SearchBar";
-import { useMovieSearch } from "../hooks/useMovieSearch";
+import { themes, type ThemeName } from "../../styles/theme";
+import type { Movie } from "../../types/Movie";
+import SearchBar from "../SearchBar";
+import { useMovieSearch } from "../../hooks/useMovieSearch";
 
 interface MovieListProps {
   movies: Movie[];
