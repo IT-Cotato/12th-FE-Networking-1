@@ -1,3 +1,4 @@
+// src/styles/theme.ts
 import { palette } from "./palette";
 
 export type ThemeName = "light" | "dark";
@@ -13,6 +14,7 @@ export interface Theme {
   hoverBg: string;
   errorBg: string;
   errorText: string;
+  cardhoverBg: string;
 }
 
 export const themes: Record<ThemeName, Theme> = {
@@ -27,17 +29,21 @@ export const themes: Record<ThemeName, Theme> = {
     hoverBg: palette.lightGray,
     errorBg: palette.lightRed,
     errorText: palette.red,
+
+    cardhoverBg: palette.white,
   },
   dark: {
     background: palette.darkBackground,
     text: palette.white,
     componentBg: palette.deepGray,
     border: palette.darkGray,
-    buttonBg: palette.purple,
-    buttonText: palette.white,
+    buttonBg: palette.gold,
+    buttonText: palette.black,
     inputBg: palette.darkGray,
     hoverBg: palette.darkGray,
     errorBg: palette.deepGray,
     errorText: palette.pink,
+
+    cardhoverBg: palette.deepGray,
   },
 };
