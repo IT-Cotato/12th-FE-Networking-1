@@ -1,3 +1,4 @@
+// src/hooks/useMovie.ts
 import { useState, useEffect } from "react";
 import type { Movie } from "../types/movie";
 import { useMovieStore } from "../store/movieStore";

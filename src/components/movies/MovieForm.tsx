@@ -16,7 +16,6 @@ interface MovieFormProps {
   handleAddMovie: (e: React.FormEvent) => void;
 }
 
-// 최상위 컨테이너
 const FormContainer = styled.div`
   margin-bottom: 24px;
   padding: 20px;
@@ -25,14 +24,12 @@ const FormContainer = styled.div`
   border: 1px solid ${({ theme }) => theme.border};
 `;
 
-// 폼 스타일
 const Form = styled.form`
   display: flex;
   gap: 12px;
   flex-wrap: wrap;
 `;
 
-// 입력 필드 스타일
 const Input = styled.input<{ width?: string }>`
   padding: 8px;
   border-radius: 8px;
@@ -42,7 +39,6 @@ const Input = styled.input<{ width?: string }>`
   width: ${({ width }) => width || "auto"};
 `;
 
-// 버튼 스타일
 const Button = styled.button`
   padding: 8px 16px;
   background-color: ${({ theme }) => theme.buttonBg};

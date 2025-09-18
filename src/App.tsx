@@ -1,4 +1,4 @@
-// App.tsx
+// src/App.tsx
 import { ThemeProvider } from "styled-components";
 import { useThemeStore } from "./store/themeStore";
 import { themes } from "./styles/theme";
@@ -18,7 +18,6 @@ import { useMovieStore } from "./store/movieStore";
 
 import styled from "styled-components";
 
-// 최상위 컨테이너
 const AppContainer = styled.div`
   background: ${({ theme }) => theme.background};
   color: ${({ theme }) => theme.text};
@@ -27,7 +26,6 @@ const AppContainer = styled.div`
   transition: all 0.2s ease;
 `;
 
-// 영화 목록 영역
 const MovieSection = styled.div`
   padding: 20px;
   border-radius: 12px;

@@ -1,3 +1,4 @@
+// src/store/movieStore.ts
 import { create } from "zustand";
 import type { Movie } from "../types/movie";
 

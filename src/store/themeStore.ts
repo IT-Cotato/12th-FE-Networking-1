@@ -1,3 +1,4 @@
+// src/store/themeStore.ts
 import { create } from "zustand";
 import type { ThemeName } from "../styles/theme";
 

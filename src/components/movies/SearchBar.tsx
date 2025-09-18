@@ -7,7 +7,6 @@ interface SearchBarProps {
   setSearchTerm: React.Dispatch<React.SetStateAction<string>>;
 }
 
-// 스타일드 인풋
 const Input = styled.input`
   padding: 8px;
   border-radius: 8px;

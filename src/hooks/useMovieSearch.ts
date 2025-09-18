@@ -1,3 +1,4 @@
+// src/hooks/useMovieSearch.ts
 import { useState, useMemo } from "react";
 import type { Movie } from "../types/movie";
 

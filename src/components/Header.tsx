@@ -8,7 +8,6 @@ interface HeaderProps {
   setThemeName: (name: ThemeName) => void;
 }
 
-// styled-components
 const HeaderContainer = styled.header`
   display: flex;
   justify-content: space-between;
