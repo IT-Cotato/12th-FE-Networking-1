@@ -9,6 +9,7 @@ import { getMovies, postMovie } from "./apis/movieApi";
 import type { Movie, NewMovie, NewMovieInputType } from "./types/movie";
 import { useMutation } from "./hooks/useMutation";
 import ErrorMessage from "./components/ErrorMessage";
+import AddMovieForm from "./components/AddMovieForm";
 
 function App() {
   const [movies, setMovies] = useState<Movie[]>([]);
@@ -106,61 +107,11 @@ function App() {
         }}
       >
         <h2>영화 추가</h2>
-        <form
+        <AddMovieForm
+          inputValues={newMovieValues}
+          onChange={handleChangeValues}
           onSubmit={handleAddMovie}
-          style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}
-        >
-          <InputField
-            inputType="text"
-            placeholder="제목"
-            name="title"
-            value={newMovieValues.title}
-            onChange={handleChangeValues}
-          />
-          <InputField
-            inputType="text"
-            placeholder="감독"
-            name="director"
-            value={newMovieValues.director}
-            onChange={handleChangeValues}
-          />
-          <InputField
-            inputType="number"
-            placeholder="연도"
-            name="year"
-            value={newMovieValues.year}
-            onChange={handleChangeValues}
-            style={{ width: "80px" }}
-          />
-          <InputField
-            inputType="text"
-            placeholder="장르"
-            name="genre"
-            value={newMovieValues.genre}
-            onChange={handleChangeValues}
-          />
-          <InputField
-            inputType="number"
-            placeholder="평점"
-            name="rating"
-            value={newMovieValues.rating}
-            onChange={handleChangeValues}
-            style={{ width: "100px" }}
-          />
-          <button
-            type="submit"
-            style={{
-              padding: "8px 16px",
-              backgroundColor: currentTheme.buttonBg,
-              color: currentTheme.buttonText,
-              border: "none",
-              borderRadius: "8px",
-              cursor: "pointer",
-            }}
-          >
-            추가
-          </button>
-        </form>
+        />
       </div>
       <div
         style={{
