@@ -4,7 +4,10 @@ import { Header } from "./components/Header";
 import { MovieForm } from "./components/MovieForm";
 import { MovieList } from "./components/MovieList";
 import { useThemeStore } from "./store/themeStore";
-import { useMovies } from "./hooks/useMovies";
+import { useMovieList } from "./hooks/useMovieList";
+import { useAddMovie } from "./hooks/useAddMovie";
+import { useMovieError } from "./hooks/useMovieError";
+import type { Movie } from "./types/movie";
 
 const AppContainer = styled.div<{ $theme: any }>`
   background: ${props => props.$theme.background};
@@ -24,7 +27,24 @@ const ErrorMessage = styled.div<{ $theme: any }>`
 
 function App() {
   const { currentTheme } = useThemeStore();
-  const { movies, error, isLoading, addMovie } = useMovies();
+  const { error, handleError, clearError } = useMovieError();
+  const { movies, isLoading: listLoading, refetch } = useMovieList({
+    onError: handleError,
+  });
+  const { addMovie, isLoading: addLoading } = useAddMovie();
+
+  const handleAddMovie = async (newMovie: Omit<Movie, "id">) => {
+    try {
+      clearError();
+      const savedMovie = await addMovie(newMovie);
+      await refetch(); // 영화 추가 후 목록 새로고침
+      return savedMovie;
+    } catch (err) {
+      handleError(err);
+      throw err;
+    }
+  };
+
 
   return (
     <AppContainer $theme={currentTheme}>
@@ -35,12 +55,12 @@ function App() {
         </ErrorMessage>
       )}
       <MovieForm 
-        onAddMovie={addMovie}
-        isLoading={isLoading}
+        onAddMovie={handleAddMovie}
+        isLoading={addLoading}
       />
       <MovieList 
         movies={movies}
-        isLoading={isLoading}
+        isLoading={listLoading}
       />
     </AppContainer>
   );
