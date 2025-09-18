@@ -32,6 +32,7 @@ const InputField = ({
         border: `1px solid ${currentTheme.border}`,
         backgroundColor: currentTheme.inputBg,
         color: currentTheme.text,
+        minWidth: "0px",
         ...style,
       }}
     />
