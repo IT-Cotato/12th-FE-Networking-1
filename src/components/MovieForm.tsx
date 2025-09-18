@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { type Theme } from "../styles/theme";
-import { useMovieStore } from "../stores/movieStore";
+import { useAddMovie } from "../hooks/useAddMovies";
 
 interface MovieFormProps {
   currentTheme: Theme;
 }
 
 const MovieForm: React.FC<MovieFormProps> = ({ currentTheme }) => {
-  const addMovie = useMovieStore((s) => s.addMovie);
+  const { addMovie } = useAddMovie();
 
   const [title, setTitle] = useState("");
   const [director, setDirector] = useState("");

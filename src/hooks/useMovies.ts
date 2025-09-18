@@ -1,26 +1,16 @@
 import { useEffect } from "react";
+import { useMovieStore } from "../stores/movieStore";
 
-interface Movie {
-  id: number;
-  title: string;
-  director: string;
-  year: number;
-  genre: string;
-  rating: number;
-}
+export function useMovies() {
+  const { movies, setMovies, setIsLoading, setError } = useMovieStore();
 
-export function useMovies(
-  setMovies: React.Dispatch<React.SetStateAction<Movie[]>>,
-  setError: React.Dispatch<React.SetStateAction<string | null>>,
-  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>
-) {
   useEffect(() => {
     const fetchMovies = async () => {
       setIsLoading(true);
       try {
         const res = await fetch("/api/movies");
         if (!res.ok) throw new Error("영화 데이터를 불러오지 못했습니다.");
-        const data: Movie[] = await res.json();
+        const data = await res.json();
         setMovies(data);
       } catch (err: unknown) {
         if (err instanceof Error) {
@@ -33,5 +23,7 @@ export function useMovies(
       }
     };
     fetchMovies();
-  }, [setMovies, setError, setIsLoading]);
+  }, [setMovies, setIsLoading, setError]);
+
+  return useMovieStore();
 }
