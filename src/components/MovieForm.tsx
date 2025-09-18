@@ -1,35 +1,38 @@
-import React from "react";
+import React, { useState } from "react";
 import { type Theme } from "../styles/theme";
+import { useMovieStore } from "../stores/movieStore";
 
 interface MovieFormProps {
-  newTitle: string;
-  newDirector: string;
-  newYear: number | "";
-  newGenre: string;
-  newRating: number | "";
-  setNewTitle: (value: string) => void;
-  setNewDirector: (value: string) => void;
-  setNewYear: (value: number | "") => void;
-  setNewGenre: (value: string) => void;
-  setNewRating: (value: number | "") => void;
-  onSubmit: (e: React.FormEvent) => void;
   currentTheme: Theme;
 }
 
-const MovieForm: React.FC<MovieFormProps> = ({
-  newTitle,
-  newDirector,
-  newYear,
-  newGenre,
-  newRating,
-  setNewTitle,
-  setNewDirector,
-  setNewYear,
-  setNewGenre,
-  setNewRating,
-  onSubmit,
-  currentTheme,
-}) => {
+const MovieForm: React.FC<MovieFormProps> = ({ currentTheme }) => {
+  const addMovie = useMovieStore((s) => s.addMovie);
+
+  const [title, setTitle] = useState("");
+  const [director, setDirector] = useState("");
+  const [year, setYear] = useState<number | "">("");
+  const [genre, setGenre] = useState("");
+  const [rating, setRating] = useState<number | "">("");
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!title || !director || !year || !genre || !rating) return;
+    await addMovie({
+      title,
+      director,
+      year: Number(year),
+      genre,
+      rating: Number(rating),
+    });
+    // 성공 후 폼 리셋
+    setTitle("");
+    setDirector("");
+    setYear("");
+    setGenre("");
+    setRating("");
+  };
+
   return (
     <div
       style={{
@@ -42,79 +45,46 @@ const MovieForm: React.FC<MovieFormProps> = ({
     >
       <h2>영화 추가</h2>
       <form
-        onSubmit={onSubmit}
+        onSubmit={handleSubmit}
         style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}
       >
-        {/* 영화를 추가하는 기능을 담당하는 부분 */}
         <input
           type="text"
           placeholder="제목"
-          value={newTitle}
-          onChange={(e) => setNewTitle(e.target.value)}
-          style={{
-            padding: "8px",
-            borderRadius: "8px",
-            border: `1px solid ${currentTheme.border}`,
-            backgroundColor: currentTheme.inputBg,
-            color: currentTheme.text,
-          }}
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          style={inputStyle(currentTheme)}
         />
         <input
           type="text"
           placeholder="감독"
-          value={newDirector}
-          onChange={(e) => setNewDirector(e.target.value)}
-          style={{
-            padding: "8px",
-            borderRadius: "8px",
-            border: `1px solid ${currentTheme.border}`,
-            backgroundColor: currentTheme.inputBg,
-            color: currentTheme.text,
-          }}
+          value={director}
+          onChange={(e) => setDirector(e.target.value)}
+          style={inputStyle(currentTheme)}
         />
         <input
           type="number"
           placeholder="연도"
-          value={newYear}
-          onChange={(e) => setNewYear(Number(e.target.value))}
-          style={{
-            padding: "8px",
-            borderRadius: "8px",
-            border: `1px solid ${currentTheme.border}`,
-            backgroundColor: currentTheme.inputBg,
-            color: currentTheme.text,
-            width: "80px",
-          }}
+          value={year}
+          onChange={(e) => setYear(Number(e.target.value))}
+          style={{ ...inputStyle(currentTheme), width: "80px" }}
         />
         <input
           type="text"
           placeholder="장르"
-          value={newGenre}
-          onChange={(e) => setNewGenre(e.target.value)}
-          style={{
-            padding: "8px",
-            borderRadius: "8px",
-            border: `1px solid ${currentTheme.border}`,
-            backgroundColor: currentTheme.inputBg,
-            color: currentTheme.text,
-          }}
+          value={genre}
+          onChange={(e) => setGenre(e.target.value)}
+          style={inputStyle(currentTheme)}
         />
         <input
           type="number"
           placeholder="평점"
-          value={newRating}
+          value={rating}
           onChange={(e) => {
             const val = Number(e.target.value);
-            if (val >= 0 && val <= 10) setNewRating(val);
+            if (val >= 0 && val <= 10) setRating(val);
           }}
-          style={{
-            padding: "8px",
-            borderRadius: "8px",
-            border: `1px solid ${currentTheme.border}`,
-            backgroundColor: currentTheme.inputBg,
-            color: currentTheme.text,
-            width: "100px",
-          }}
+          style={{ ...inputStyle(currentTheme), width: "100px" }}
         />
         <button
           type="submit"
@@ -133,5 +103,13 @@ const MovieForm: React.FC<MovieFormProps> = ({
     </div>
   );
 };
+
+const inputStyle = (theme: Theme): React.CSSProperties => ({
+  padding: "8px",
+  borderRadius: "8px",
+  border: `1px solid ${theme.border}`,
+  backgroundColor: theme.inputBg,
+  color: theme.text,
+});
 
 export default MovieForm;
