@@ -1,10 +1,10 @@
-import Header from "./components/Header";
 import ThemeButton from "./components/ThemeButton";
 import { useTheme } from "./hooks/useTheme";
 import AddMovieForm from "./components/AddMovieForm";
 import SearchBox from "./components/SearchBox";
 import MovieCardList from "./components/MovieCardList";
-import Container from "./components/Container";
+import Header from "./components/global/Header";
+import Container from "./components/global/Container";
 
 function App() {
   const { currentTheme } = useTheme();

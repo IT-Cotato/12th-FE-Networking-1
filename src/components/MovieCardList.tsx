@@ -4,8 +4,8 @@ import { useFetch } from "../hooks/useFetch";
 import { useSearchStore } from "../stores/searchStore";
 import { useShallow } from "zustand/shallow";
 import MovieCard from "./MovieCard";
-import ErrorMessage from "./ErrorMessage";
 import { useRefreshStore } from "../stores/refreshStore";
+import ErrorMessage from "./global/ErrorMessage";
 
 const MovieCardList = () => {
   const { searchTerm } = useSearchStore(

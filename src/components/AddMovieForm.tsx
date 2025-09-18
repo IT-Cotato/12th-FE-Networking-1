@@ -1,14 +1,14 @@
 import type React from "react";
 import { useTheme } from "../hooks/useTheme";
 import type { NewMovie, NewMovieInputType } from "../types/movie";
-import InputField from "./InputField";
 import { useState } from "react";
 import { useMutation } from "../hooks/useMutation";
 import { postMovie } from "../apis/movieApi";
-import ErrorMessage from "./ErrorMessage";
 import { useRefreshStore } from "../stores/refreshStore";
 import { useShallow } from "zustand/shallow";
-import Button from "./Button";
+import InputField from "./global/InputField";
+import Button from "./global/Button";
+import ErrorMessage from "./global/ErrorMessage";
 
 const AddMovieForm = () => {
   const { currentTheme } = useTheme();

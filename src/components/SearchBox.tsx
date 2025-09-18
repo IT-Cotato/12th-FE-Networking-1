@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import InputField from "./InputField";
 import { useDebounce } from "../hooks/useDebounce";
 import { useSearchStore } from "../stores/searchStore";
 import { useShallow } from "zustand/shallow";
+import InputField from "./global/InputField";
 
 const SearchBox = () => {
   const [value, setValue] = useState<string>("");
