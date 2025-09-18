@@ -1,6 +1,7 @@
 import MovieList from "./components/movies/MovieList";
 import SearchBar from "./components/movies/SearchBar";
 import MovieForm from "./components/movies/MovieForm";
+import Header from "./components/common/Header";
 import { useMovies } from "./hooks/useMovies";
 import { useMovieSearch } from "./hooks/useMovieSearch";
 
@@ -17,6 +18,8 @@ export default function App() {
       <SearchBar value={query} onChange={setQuery} />
 
       <MovieList movies={filtered} onRemove={removeMovie} />
+
+      <Header />
     </div>
   );
 }
