@@ -1,14 +1,6 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { themes, type ThemeName } from "./styles/theme";
-
-interface Movie {
-  id: number;
-  title: string;
-  director: string;
-  year: number;
-  genre: string;
-  rating: number;
-}
+import type { Movie } from "./types/movie";
 
 function App() {
   const [themeName, setThemeName] = useState<ThemeName>("light");
