@@ -6,13 +6,13 @@ import { useTheme } from "./hooks/useTheme";
 import InputField from "./components/InputField";
 import { useFetch } from "./hooks/useFetch";
 import { getMovies, postMovie } from "./apis/movieApi";
-import type { Movie, NewMovie } from "./types/movie";
+import type { Movie, NewMovie, NewMovieInputType } from "./types/movie";
 import { useMutation } from "./hooks/useMutation";
 import ErrorMessage from "./components/ErrorMessage";
 
 function App() {
   const [movies, setMovies] = useState<Movie[]>([]);
-  const [newMovieValues, setNewMovieValues] = useState({
+  const [newMovieValues, setNewMovieValues] = useState<NewMovieInputType>({
     title: "",
     director: "",
     year: "",

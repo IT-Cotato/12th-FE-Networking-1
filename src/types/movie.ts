@@ -14,3 +14,11 @@ export interface NewMovie {
   genre: string;
   rating: number;
 }
+
+export type NewMovieInputType = {
+  title: string;
+  director: string;
+  year: string;
+  genre: string;
+  rating: string;
+};
