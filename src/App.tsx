@@ -8,6 +8,7 @@ import { useFetch } from "./hooks/useFetch";
 import { getMovies, postMovie } from "./apis/movieApi";
 import type { Movie, newMovie } from "./types/movie";
 import { useMutation } from "./hooks/useMutation";
+import ErrorMessage from "./components/ErrorMessage";
 
 function App() {
   const [movies, setMovies] = useState<Movie[]>([]);
@@ -61,6 +62,8 @@ function App() {
     }
   };
 
+  const errorMessage = fetchedMovies.error || error || addingMovie.error;
+
   return (
     <div
       style={{
@@ -75,19 +78,8 @@ function App() {
         <ThemeButton />
       </Header>
 
-      {(fetchedMovies.error || addingMovie.error || error) && (
-        <div
-          style={{
-            backgroundColor: currentTheme.errorBg,
-            color: currentTheme.errorText,
-            padding: "12px",
-            borderRadius: "8px",
-            marginBottom: "20px",
-          }}
-        >
-          {fetchedMovies.error || addingMovie.error || error}
-        </div>
-      )}
+      {errorMessage && <ErrorMessage message={errorMessage} />}
+
       <div
         style={{
           marginBottom: "24px",
