@@ -1,20 +1,17 @@
-import React, { useState, useMemo } from "react";
+import React, { useState } from "react";
 import { themes, type ThemeName } from "./styles/theme";
 import Header from "./components/Header";
 import MovieForm from "./components/MovieForm";
 import MovieList from "./components/MovieList";
 import { useMovies } from "./hooks/useMovies";
+import { useMovieSearch } from "./hooks/useMovieSearch";
 
 export default function App() {
   const [themeName, setThemeName] = useState<ThemeName>("light");
   const { movies, isLoading, error, addMovie } = useMovies();
-  const [searchTerm, setSearchTerm] = useState("");
 
-  const filteredMovies = useMemo(() => {
-    const q = searchTerm.trim().toLowerCase();
-    if (!q) return movies;
-    return movies.filter((m) => m.title.toLowerCase().includes(q));
-  }, [movies, searchTerm]);
+  // 검색 상태를 useMovieSearch 훅으로 관리
+  const { searchTerm, setSearchTerm, filteredMovies } = useMovieSearch(movies);
 
   const currentTheme = themes[themeName];
 
@@ -60,11 +57,13 @@ export default function App() {
             width: "100%",
           }}
         />
+
         {isLoading ? (
           <div>로딩 중...</div>
         ) : (
           <MovieList movies={filteredMovies} themeName={themeName} />
         )}
+
         {error && (
           <div
             style={{
