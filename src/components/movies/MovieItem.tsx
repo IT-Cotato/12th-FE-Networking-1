@@ -1,35 +1,48 @@
+import styled from "styled-components";
 import type { Movie } from "../../types/movie";
 
-type Props = { movie: Movie; onRemove?: (id: string) => void };
+const Card = styled.div`
+  padding: 12px;
+  border-radius: 8px;
+  background: ${({ theme }) => theme.hoverBg};
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+`;
+
+type Props = {
+  movie: Movie;
+  onRemove?: (id: number) => void;
+};
 
 export default function MovieItem({ movie, onRemove }: Props) {
   return (
-    <li
-      style={{
-        listStyle: "none",
-        padding: "10px 12px",
-        border: "1px solid #e5e7eb",
-        borderRadius: 8,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
-      }}
-    >
-      <div>
-        <strong>{movie.title}</strong>
-        <span style={{ opacity: 0.7, marginLeft: 8 }}>
-          • {movie.year}
-          {movie.rating != null ? ` • ⭐ ${movie.rating}` : ""}
+    <li style={{ listStyle: "none" }}>
+      <Card>
+        <span>
+          {movie.title} ({movie.year}) - {movie.director}
         </span>
-      </div>
-      {onRemove && (
-        <button
-          onClick={() => onRemove(movie.id)}
-          style={{ padding: "6px 10px" }}
-        >
-          삭제
-        </button>
-      )}
+        <span>장르: {movie.genre}</span>
+        <span>⭐: {movie.rating}</span>
+
+        {onRemove && (
+          <button
+            onClick={() => onRemove(movie.id)}
+            style={{
+              marginTop: 6,
+              alignSelf: "flex-end",
+              padding: "4px 8px",
+              fontSize: "0.8rem",
+              border: "1px solid #ccc",
+              borderRadius: 4,
+              background: "transparent",
+              cursor: "pointer",
+            }}
+          >
+            삭제
+          </button>
+        )}
+      </Card>
     </li>
   );
 }
