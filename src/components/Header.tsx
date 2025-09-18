@@ -5,7 +5,7 @@ const Header: React.FC = () => {
   const { isDark, toggleDarkMode } = useAppContext();
 
   return (
-    <header className="flex justify-between items-center mb-6 p-6 bg-white dark:bg-deepGray rounded-lg border border-gray dark:border-darkGray">
+    <header className="p-6 flex justify-between items-center mb-6 bg-white dark:bg-deepGray rounded-lg border border-gray dark:border-darkGray">
       <h1 className="text-2xl font-bold text-black dark:text-white">코테이토 영화관 🥔</h1>
       <button
         onClick={toggleDarkMode}
