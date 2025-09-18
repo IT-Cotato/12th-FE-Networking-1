@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import type { Movie } from '@/types/movie';
 import type { ThemeName } from '@/types/theme';
@@ -33,7 +33,7 @@ function App() {
     isLoading: isAdding,
     handleAddMovie,
   } = useAddMovie((movie) => setMovies((prev) => [...prev, movie]));
-  const currentTheme = themes[themeName];
+  const currentTheme = useMemo(() => themes[themeName], [themeName]);
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -58,18 +58,10 @@ function App() {
 
   return (
     <div
-      className="font-display min-h-screen p-5 transition-all duration-200 ease-linear"
-      style={{
-        background: currentTheme.background,
-        color: currentTheme.text,
-      }}
+      className={`font-display min-h-screen p-5 transition-all duration-200 ease-linear ${themeName === 'light' ? 'bg-lightBackground text-black' : 'bg-darkBackground text-white'}`}
     >
       <header
-        className="mb-6 flex items-center justify-between rounded-xl border border-solid p-4"
-        style={{
-          backgroundColor: currentTheme.componentBg,
-          border: currentTheme.border,
-        }}
+        className={`mb-6 flex items-center justify-between rounded-xl border border-solid p-4 ${themeName === 'light' ? 'border-gray bg-white' : 'bg-deepGray border-darkGray'}`}
       >
         <TitleSection size="h1" text="코테이토 영화관" />
         <ThemeButton themeName={themeName} onThemeChange={setThemeName} />
@@ -84,11 +76,7 @@ function App() {
       )}
 
       <div
-        className="mb-6 rounded-xl border border-solid p-5"
-        style={{
-          backgroundColor: currentTheme.componentBg,
-          border: currentTheme.border,
-        }}
+        className={`mb-6 rounded-xl border border-solid p-5 ${themeName === 'light' ? 'border-gray bg-white' : 'bg-deepGray border-darkGray'}`}
       >
         <TitleSection size="h2" text="영화 추가" />
         <form onSubmit={handleAddMovie} className="flex flex-wrap gap-3 py-2">
@@ -134,11 +122,8 @@ function App() {
           />
           <button
             type="submit"
-            className="cursor-pointer rounded-lg border-none px-4 py-2"
-            style={{
-              backgroundColor: currentTheme.buttonBg,
-              color: currentTheme.buttonText,
-            }}
+            className="bg-purple cursor-pointer rounded-lg border-none px-4 py-2 text-white"
+            disabled={isAdding}
           >
             추가
           </button>
@@ -146,11 +131,7 @@ function App() {
       </div>
 
       <div
-        className="rounded-xl border border-solid p-5"
-        style={{
-          backgroundColor: currentTheme.componentBg,
-          border: currentTheme.border,
-        }}
+        className={`rounded-xl border border-solid p-5 ${themeName === 'light' ? 'border-gray bg-white' : 'bg-deepGray border-darkGray'}`}
       >
         <TitleSection size="h2" text="영화 목록" />
         <InputField

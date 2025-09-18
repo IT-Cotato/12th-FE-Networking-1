@@ -12,7 +12,7 @@ interface InputFieldProps {
 }
 
 const InputField = ({ type = 'text', className, themeName, placeholder, value, onChange }: InputFieldProps) => {
-  const baseClass = `text-lab1-med rounded-lg border border-solid p-2 focus:outline-none ${
+  const baseClass = `text-lab1-b rounded-lg border border-solid p-2 focus:outline-none ${
     themeName === 'light' ? 'border-gray bg-white text-black' : 'border-darkGray bg-darkGray text-white'
   }`;
 

@@ -16,38 +16,9 @@
   --text-heading2--letter-spacing: -0.02em;
   --text-heading2--line-height: 135%;
 
-  --text-body1-sb: 1rem;
-  --text-body1-sb--font-weight: 600;
-  --text-body1-sb--letter-spacing: -0.02em;
-  --text-body1-sb--line-height: 135%;
-
-  --text-body1-med: 1rem;
-  --text-body1-med--font-weight: 500;
-  --text-body1-med--letter-spacing: -0.02em;
-  --text-body1-med--line-height: 135%;
-
-  --text-body2-med: 0.875rem;
-  --text-body2-med--font-weight: 500;
-  --text-body2-med--letter-spacing: -0.02em;
-  --text-body2-med--line-height: 135%;
-
   --text-lab1-b: 0.875rem;
   --text-lab1-b--font-weight: 700;
   --text-lab1-b--letter-spacing: -0.02em;
   --text-lab1-b--line-height: 135%;
 
-  --text-lab1-sb: 0.875rem;
-  --text-lab1-sb--font-weight: 600;
-  --text-lab1-sb--letter-spacing: -0.02em;
-  --text-lab1-sb--line-height: 135%;
-
-  --text-cap1-b: 0.75rem;
-  --text-cap1-b--font-weight: 700;
-  --text-cap1-b--letter-spacing: -0.02em;
-  --text-cap1-b--line-height: 135%;
-
-  --text-cap1-med: 0.75rem;
-  --text-cap1-med--font-weight: 500;
-  --text-cap1-med--letter-spacing: -0.02em;
-  --text-cap1-med--line-height: 135%;
 }
