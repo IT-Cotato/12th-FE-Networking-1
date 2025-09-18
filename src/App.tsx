@@ -120,19 +120,6 @@ function App() {
         currentTheme={currentTheme}
       />
 
-      {error && (
-        <div
-          style={{
-            backgroundColor: currentTheme.errorBg,
-            color: currentTheme.errorText,
-            padding: "12px",
-            borderRadius: "8px",
-            marginBottom: "20px",
-          }}
-        >
-          {error}
-        </div>
-      )}
       <div
         style={{
           marginBottom: "24px",
