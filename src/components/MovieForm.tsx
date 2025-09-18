@@ -1,6 +1,62 @@
 import React, { useState } from "react";
+import styled from "styled-components";
 import type { Theme } from "../styles/theme";
 import type { Movie } from "../types/movie";
+
+const FormContainer = styled.div<{ $theme: Theme }>`
+  margin-bottom: 24px;
+  padding: 20px;
+  border-radius: 12px;
+  background-color: ${props => props.$theme.componentBg};
+  border: 1px solid ${props => props.$theme.border};
+`;
+
+const FormTitle = styled.h2`
+  margin-top: 0;
+  margin-bottom: 16px;
+`;
+
+const Form = styled.form`
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+`;
+
+const Input = styled.input<{ $theme: Theme; $width?: string }>`
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid ${props => props.$theme.border};
+  background-color: ${props => props.$theme.inputBg};
+  color: ${props => props.$theme.text};
+  font-size: 14px;
+  width: ${props => props.$width || 'auto'};
+  transition: border-color 0.2s ease;
+
+  &:focus {
+    outline: none;
+    border-color: ${props => props.$theme.buttonBg};
+  }
+
+  &::placeholder {
+    color: ${props => props.$theme.text};
+    opacity: 0.6;
+  }
+`;
+
+const SubmitButton = styled.button<{ $theme: Theme; $disabled: boolean }>`
+  padding: 8px 16px;
+  background-color: ${props => props.$theme.buttonBg};
+  color: ${props => props.$theme.buttonText};
+  border: none;
+  border-radius: 8px;
+  cursor: ${props => props.$disabled ? 'not-allowed' : 'pointer'};
+  opacity: ${props => props.$disabled ? 0.6 : 1};
+  transition: opacity 0.2s ease;
+
+  &:hover:not(:disabled) {
+    opacity: 0.8;
+  }
+`;
 
 interface MovieFormProps {
   currentTheme: Theme;
@@ -40,74 +96,39 @@ export function MovieForm({ currentTheme, onAddMovie, isLoading }: MovieFormProp
   };
 
   return (
-    <div
-      style={{
-        marginBottom: "24px",
-        padding: "20px",
-        borderRadius: "12px",
-        backgroundColor: currentTheme.componentBg,
-        border: `1px solid ${currentTheme.border}`,
-      }}
-    >
-      <h2>영화 추가</h2>
-      <form
-        onSubmit={handleSubmit}
-        style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}
-      >
-        <input
+    <FormContainer $theme={currentTheme}>
+      <FormTitle>영화 추가</FormTitle>
+      <Form onSubmit={handleSubmit}>
+        <Input
           type="text"
           placeholder="제목"
           value={newTitle}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => setNewTitle(e.target.value)}
-          style={{
-            padding: "8px",
-            borderRadius: "8px",
-            border: `1px solid ${currentTheme.border}`,
-            backgroundColor: currentTheme.inputBg,
-            color: currentTheme.text,
-          }}
+          $theme={currentTheme}
         />
-        <input
+        <Input
           type="text"
           placeholder="감독"
           value={newDirector}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => setNewDirector(e.target.value)}
-          style={{
-            padding: "8px",
-            borderRadius: "8px",
-            border: `1px solid ${currentTheme.border}`,
-            backgroundColor: currentTheme.inputBg,
-            color: currentTheme.text,
-          }}
+          $theme={currentTheme}
         />
-        <input
+        <Input
           type="number"
           placeholder="연도"
           value={newYear}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => setNewYear(Number(e.target.value))}
-          style={{
-            padding: "8px",
-            borderRadius: "8px",
-            border: `1px solid ${currentTheme.border}`,
-            backgroundColor: currentTheme.inputBg,
-            color: currentTheme.text,
-            width: "80px",
-          }}
+          $theme={currentTheme}
+          $width="80px"
         />
-        <input
+        <Input
           type="text"
           placeholder="장르"
           value={newGenre}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => setNewGenre(e.target.value)}
-          style={{
-            padding: "8px",
-            borderRadius: "8px",
-            border: `1px solid ${currentTheme.border}`,
-            backgroundColor: currentTheme.inputBg,
-            color: currentTheme.text,
-          }}
+          $theme={currentTheme}
         />
-        <input
+        <Input
           type="number"
           placeholder="평점"
           value={newRating}
@@ -115,31 +136,18 @@ export function MovieForm({ currentTheme, onAddMovie, isLoading }: MovieFormProp
             const val = Number(e.target.value);
             if (val >= 0 && val <= 10) setNewRating(val);
           }}
-          style={{
-            padding: "8px",
-            borderRadius: "8px",
-            border: `1px solid ${currentTheme.border}`,
-            backgroundColor: currentTheme.inputBg,
-            color: currentTheme.text,
-            width: "100px",
-          }}
+          $theme={currentTheme}
+          $width="100px"
         />
-        <button
+        <SubmitButton
           type="submit"
           disabled={isLoading}
-          style={{
-            padding: "8px 16px",
-            backgroundColor: currentTheme.buttonBg,
-            color: currentTheme.buttonText,
-            border: "none",
-            borderRadius: "8px",
-            cursor: isLoading ? "not-allowed" : "pointer",
-            opacity: isLoading ? 0.6 : 1,
-          }}
+          $theme={currentTheme}
+          $disabled={isLoading}
         >
           {isLoading ? "추가 중..." : "추가"}
-        </button>
-      </form>
-    </div>
+        </SubmitButton>
+      </Form>
+    </FormContainer>
   );
 }

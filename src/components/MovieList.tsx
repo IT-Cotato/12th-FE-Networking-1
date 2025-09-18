@@ -1,8 +1,39 @@
 import React, { useState, useMemo } from "react";
+import styled from "styled-components";
 import type { Theme } from "../styles/theme";
 import type { Movie } from "../types/movie";
 import { MovieItem } from "./MovieItem";
 import { SearchBar } from "./SearchBar";
+
+const ListContainer = styled.div<{ $theme: Theme }>`
+  padding: 20px;
+  border-radius: 12px;
+  background-color: ${props => props.$theme.componentBg};
+  border: 1px solid ${props => props.$theme.border};
+`;
+
+const ListTitle = styled.h2`
+  margin-top: 0;
+  margin-bottom: 16px;
+`;
+
+const LoadingMessage = styled.div`
+  text-align: center;
+  padding: 20px;
+  opacity: 0.7;
+`;
+
+const EmptyMessage = styled.div`
+  text-align: center;
+  padding: 20px;
+  opacity: 0.7;
+`;
+
+const MoviesGrid = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+`;
 
 interface MovieListProps {
   movies: Movie[];
@@ -20,15 +51,8 @@ export function MovieList({ movies, currentTheme, isLoading }: MovieListProps) {
   }, [movies, searchTerm]);
 
   return (
-    <div
-      style={{
-        padding: "20px",
-        borderRadius: "12px",
-        backgroundColor: currentTheme.componentBg,
-        border: `1px solid ${currentTheme.border}`,
-      }}
-    >
-      <h2>영화 목록</h2>
+    <ListContainer $theme={currentTheme}>
+      <ListTitle>영화 목록</ListTitle>
       <SearchBar 
         searchTerm={searchTerm}
         onSearchChange={setSearchTerm}
@@ -36,11 +60,11 @@ export function MovieList({ movies, currentTheme, isLoading }: MovieListProps) {
         placeholder="영화 제목으로 검색..."
       />
       {isLoading ? (
-        <div>로딩 중...</div>
+        <LoadingMessage>로딩 중...</LoadingMessage>
       ) : filteredMovies.length === 0 ? (
-        <div>영화가 없습니다</div>
+        <EmptyMessage>영화가 없습니다</EmptyMessage>
       ) : (
-        <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+        <MoviesGrid>
           {filteredMovies.map((movie: Movie) => (
             <MovieItem 
               key={movie.id}
@@ -48,8 +72,8 @@ export function MovieList({ movies, currentTheme, isLoading }: MovieListProps) {
               currentTheme={currentTheme}
             />
           ))}
-        </div>
+        </MoviesGrid>
       )}
-    </div>
+    </ListContainer>
   );
 }

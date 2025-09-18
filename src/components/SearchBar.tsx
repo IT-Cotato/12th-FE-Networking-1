@@ -1,5 +1,28 @@
 import React from "react";
+import styled from "styled-components";
 import type { Theme } from "../styles/theme";
+
+const SearchInput = styled.input<{ $theme: Theme }>`
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid ${props => props.$theme.border};
+  background-color: ${props => props.$theme.inputBg};
+  color: ${props => props.$theme.text};
+  margin-bottom: 16px;
+  width: 100%;
+  font-size: 14px;
+  transition: border-color 0.2s ease;
+
+  &:focus {
+    outline: none;
+    border-color: ${props => props.$theme.buttonBg};
+  }
+
+  &::placeholder {
+    color: ${props => props.$theme.text};
+    opacity: 0.6;
+  }
+`;
 
 interface SearchBarProps {
   searchTerm: string;
@@ -15,28 +38,12 @@ export function SearchBar({
   placeholder = "검색..." 
 }: SearchBarProps) {
   return (
-    <input
+    <SearchInput
       type="text"
       placeholder={placeholder}
       value={searchTerm}
       onChange={(e: React.ChangeEvent<HTMLInputElement>) => onSearchChange(e.target.value)}
-      style={{
-        padding: "8px",
-        borderRadius: "8px",
-        border: `1px solid ${currentTheme.border}`,
-        backgroundColor: currentTheme.inputBg,
-        color: currentTheme.text,
-        marginBottom: "16px",
-        width: "100%",
-        fontSize: "14px",
-        transition: "border-color 0.2s ease",
-      }}
-      onFocus={(e) => {
-        e.target.style.borderColor = currentTheme.buttonBg;
-      }}
-      onBlur={(e) => {
-        e.target.style.borderColor = currentTheme.border;
-      }}
+      $theme={currentTheme}
     />
   );
 }

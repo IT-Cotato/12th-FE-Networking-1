@@ -1,9 +1,26 @@
 import React, { useState, useEffect } from "react";
-import { themes, type ThemeName } from "./styles/theme";
+import styled from "styled-components";
+import { themes, type ThemeName, type Theme } from "./styles/theme";
 import type { Movie } from "./types/movie";
 import { Header } from "./components/Header";
 import { MovieForm } from "./components/MovieForm";
 import { MovieList } from "./components/MovieList";
+
+const AppContainer = styled.div<{ $theme: Theme }>`
+  background: ${props => props.$theme.background};
+  color: ${props => props.$theme.text};
+  min-height: 100vh;
+  padding: 20px;
+  transition: all 0.2s ease;
+`;
+
+const ErrorMessage = styled.div<{ $theme: Theme }>`
+  background-color: ${props => props.$theme.errorBg};
+  color: ${props => props.$theme.errorText};
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+`;
 
 function App() {
   const [themeName, setThemeName] = useState<ThemeName>("light");
@@ -62,32 +79,16 @@ function App() {
   };
 
   return (
-    <div
-      style={{
-        background: currentTheme.background,
-        color: currentTheme.text,
-        minHeight: "100vh",
-        padding: "20px",
-        transition: "all 0.2s ease",
-      }}
-    >
+    <AppContainer $theme={currentTheme}>
       <Header 
         themeName={themeName}
         currentTheme={currentTheme}
         onThemeToggle={() => setThemeName(themeName === "light" ? "dark" : "light")}
       />
       {error && (
-        <div
-          style={{
-            backgroundColor: currentTheme.errorBg,
-            color: currentTheme.errorText,
-            padding: "12px",
-            borderRadius: "8px",
-            marginBottom: "20px",
-          }}
-        >
+        <ErrorMessage $theme={currentTheme}>
           {error}
-        </div>
+        </ErrorMessage>
       )}
       <MovieForm 
         currentTheme={currentTheme}
@@ -99,7 +100,7 @@ function App() {
         currentTheme={currentTheme}
         isLoading={isLoading}
       />
-    </div>
+    </AppContainer>
   );
 }
 

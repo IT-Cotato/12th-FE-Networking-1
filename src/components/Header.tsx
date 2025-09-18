@@ -1,5 +1,35 @@
 import React from "react";
+import styled from "styled-components";
 import type { ThemeName, Theme } from "../styles/theme";
+
+const HeaderContainer = styled.header<{ $theme: Theme }>`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  padding: 16px;
+  background-color: ${props => props.$theme.componentBg};
+  border-radius: 12px;
+  border: 1px solid ${props => props.$theme.border};
+`;
+
+const Title = styled.h1`
+  margin: 0;
+`;
+
+const ThemeButton = styled.button<{ $theme: Theme }>`
+  padding: 8px 16px;
+  cursor: pointer;
+  background: ${props => props.$theme.buttonBg};
+  color: ${props => props.$theme.buttonText};
+  border: none;
+  border-radius: 8px;
+  transition: opacity 0.2s ease;
+
+  &:hover {
+    opacity: 0.8;
+  }
+`;
 
 interface HeaderProps {
   themeName: ThemeName;
@@ -9,32 +39,11 @@ interface HeaderProps {
 
 export function Header({ themeName, currentTheme, onThemeToggle }: HeaderProps) {
   return (
-    <header
-      style={{
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-        marginBottom: "24px",
-        padding: "16px",
-        backgroundColor: currentTheme.componentBg,
-        borderRadius: "12px",
-        border: `1px solid ${currentTheme.border}`,
-      }}
-    >
-      <h1 style={{ margin: 0 }}>코테이토 영화관</h1>
-      <button
-        onClick={onThemeToggle}
-        style={{
-          padding: "8px 16px",
-          cursor: "pointer",
-          background: currentTheme.buttonBg,
-          color: currentTheme.buttonText,
-          border: "none",
-          borderRadius: "8px",
-        }}
-      >
+    <HeaderContainer $theme={currentTheme}>
+      <Title>코테이토 영화관</Title>
+      <ThemeButton $theme={currentTheme} onClick={onThemeToggle}>
         {themeName === "light" ? "🌙 다크모드" : "☀️ 라이트모드"}
-      </button>
-    </header>
+      </ThemeButton>
+    </HeaderContainer>
   );
 }
