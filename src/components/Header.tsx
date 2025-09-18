@@ -15,6 +15,13 @@ const HeaderContainer = styled.header<{ $theme: Theme }>`
 
 const Title = styled.h1`
   margin: 0;
+  font-weight: 700;
+  font-size: 28px;
+  letter-spacing: -0.02em;
+  background: black;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 `;
 
 const ThemeButton = styled.button<{ $theme: Theme }>`
@@ -24,6 +31,9 @@ const ThemeButton = styled.button<{ $theme: Theme }>`
   color: ${props => props.$theme.buttonText};
   border: none;
   border-radius: 8px;
+  font-weight: 500;
+  font-size: 14px;
+  letter-spacing: -0.01em;
   transition: opacity 0.2s ease;
 
   &:hover {

@@ -14,6 +14,9 @@ const FormContainer = styled.div<{ $theme: Theme }>`
 const FormTitle = styled.h2`
   margin-top: 0;
   margin-bottom: 16px;
+  font-weight: 600;
+  font-size: 20px;
+  letter-spacing: -0.01em;
 `;
 
 const Form = styled.form`
@@ -49,6 +52,9 @@ const SubmitButton = styled.button<{ $theme: Theme; $disabled: boolean }>`
   color: ${props => props.$theme.buttonText};
   border: none;
   border-radius: 8px;
+  font-weight: 500;
+  font-size: 14px;
+  letter-spacing: -0.01em;
   cursor: ${props => props.$disabled ? 'not-allowed' : 'pointer'};
   opacity: ${props => props.$disabled ? 0.6 : 1};
   transition: opacity 0.2s ease;

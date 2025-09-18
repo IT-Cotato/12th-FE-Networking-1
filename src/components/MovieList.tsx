@@ -15,6 +15,9 @@ const ListContainer = styled.div<{ $theme: Theme }>`
 const ListTitle = styled.h2`
   margin-top: 0;
   margin-bottom: 16px;
+  font-weight: 600;
+  font-size: 20px;
+  letter-spacing: -0.01em;
 `;
 
 const LoadingMessage = styled.div`

@@ -18,16 +18,23 @@ const ItemContainer = styled.div<{ $theme: Theme }>`
 `;
 
 const MovieTitle = styled.span`
-  font-weight: 500;
+  font-weight: 600;
+  font-size: 16px;
+  letter-spacing: -0.01em;
+  line-height: 1.4;
 `;
 
 const MovieInfo = styled.span`
   font-size: 14px;
+  font-weight: 400;
   opacity: 0.8;
+  line-height: 1.4;
 `;
 
 const Rating = styled.span`
   font-weight: 600;
+  font-size: 14px;
+  color: #f59e0b;
 `;
 
 interface MovieItemProps {
