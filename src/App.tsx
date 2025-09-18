@@ -97,18 +97,21 @@ function App() {
           <InputField
             inputType="text"
             placeholder="제목"
+            name="title"
             value={newTitle}
             onChange={(e) => setNewTitle(e.target.value)}
           />
           <InputField
             inputType="text"
             placeholder="감독"
+            name="director"
             value={newDirector}
             onChange={(e) => setNewDirector(e.target.value)}
           />
           <InputField
             inputType="number"
             placeholder="연도"
+            name="year"
             value={newYear}
             onChange={(e) => setNewYear(Number(e.target.value))}
             style={{ width: "80px" }}
@@ -116,12 +119,14 @@ function App() {
           <InputField
             inputType="text"
             placeholder="장르"
+            name="genre"
             value={newGenre}
             onChange={(e) => setNewGenre(e.target.value)}
           />
           <InputField
             inputType="number"
             placeholder="평점"
+            name="rating"
             value={newRating}
             onChange={(e) => {
               const val = Number(e.target.value);
