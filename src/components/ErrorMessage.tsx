@@ -9,16 +9,22 @@ export const ErrorMessage: React.FC = () => {
     if (!error) return null;
     
     return (
-        <div
+        <div 
+            className="bg-red-50 border border-red-200 rounded-xl p-4 mb-6 flex items-center space-x-3 animate-pulse"
             style={{
                 backgroundColor: currentTheme.errorBg,
-                color: currentTheme.errorText,
-                padding: "12px",
-                borderRadius: "8px",
-                marginBottom: "20px"
+                border: `1px solid ${currentTheme.border}`,
+                borderRadius: '12px',
+                padding: '16px',
+                marginBottom: '24px',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '12px',
+                animation: 'pulse 2s infinite'
             }}
         >
-            {error}
+            <div style={{ fontSize: '20px' }}>⚠️</div>
+            <div style={{ color: currentTheme.errorText, fontWeight: '500', fontSize: '16px' }}>{error}</div>
         </div>
     )
 }

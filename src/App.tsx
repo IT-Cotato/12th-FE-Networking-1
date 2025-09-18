@@ -64,39 +64,40 @@ function App() {
   };
 
   return (
-    <div
-      style={{
-        background: currentTheme.background,
+    <div 
+      className="min-h-screen p-6 transition-all duration-300"
+      style={{ 
+        minHeight: '100vh', 
+        backgroundColor: currentTheme.background, 
         color: currentTheme.text,
-        minHeight: "100vh",
-        padding: "20px",
-        transition: "all 0.2s ease",
+        padding: '24px' 
       }}
     >
-      {/* Header 호출 */}
-      <Header/>
+      <div className="max-w-6xl mx-auto space-y-6" style={{ maxWidth: '1200px', margin: '0 auto' }}>
+        {/* Header 호출 */}
+        <Header/>
 
-      {/* ErrorMessage 호출 */}
-      <ErrorMessage />
+        {/* ErrorMessage 호출 */}
+        <ErrorMessage />
 
-      {/* MovieForm 호출 */}
-      <MovieForm
-        newTitle={newTitle}
-        setNewTitle={setNewTitle}
-        newDirector={newDirector}
-        setNewDirector={setNewDirector}
-        newYear={newYear}
-        setNewYear={setNewYear}
-        newGenre={newGenre}
-        setNewGenre={setNewGenre}
-        newRating={newRating}
-        setNewRating={setNewRating}
-        onSubmit={handleAddMovie}
-      />
+        {/* MovieForm 호출 */}
+        <MovieForm
+          newTitle={newTitle}
+          setNewTitle={setNewTitle}
+          newDirector={newDirector}
+          setNewDirector={setNewDirector}
+          newYear={newYear}
+          setNewYear={setNewYear}
+          newGenre={newGenre}
+          setNewGenre={setNewGenre}
+          newRating={newRating}
+          setNewRating={setNewRating}
+          onSubmit={handleAddMovie}
+        />
 
-      {/* MovieList 호출 */}
-      <MovieList />
-
+        {/* MovieList 호출 */}
+        <MovieList />
+      </div>
     </div>
   );
 }
