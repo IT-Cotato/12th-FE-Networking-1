@@ -18,62 +18,11 @@ import MovieCardList from "./components/MovieCardList";
 
 function App() {
   const [movies, setMovies] = useState<Movie[]>([]);
-  const [newMovieValues, setNewMovieValues] = useState<NewMovieInputType>({
-    title: "",
-    director: "",
-    year: "",
-    genre: "",
-    rating: "",
-  });
 
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [refreshTrigger, setRefreshTrigger] = useState<number>(0);
   const { currentTheme } = useTheme();
-  const addingMovie = useMutation(postMovie);
-
-  const handleChangeValues = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setNewMovieValues((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleAddMovie = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (
-      !newMovieValues.title ||
-      !newMovieValues.director ||
-      !newMovieValues.year ||
-      !newMovieValues.genre ||
-      !newMovieValues.rating
-    ) {
-      setError("모든 필드를 입력해주세요.");
-      return;
-    }
-
-    const newMovie: NewMovie = {
-      title: newMovieValues.title,
-      director: newMovieValues.director,
-      year: Number(newMovieValues.year),
-      genre: newMovieValues.genre,
-      rating: Number(newMovieValues.rating),
-    };
-
-    const addedMovie = await addingMovie.mutate(newMovie);
-
-    if (addedMovie) {
-      setMovies((prev) => [...prev, addedMovie]);
-      setRefreshTrigger((prev) => prev + 1);
-      setNewMovieValues({
-        title: "",
-        director: "",
-        year: "",
-        genre: "",
-        rating: "",
-      });
-    }
-  };
-
-  const errorMessage = error || addingMovie.error;
 
   return (
     <div
@@ -89,8 +38,6 @@ function App() {
         <ThemeButton />
       </Header>
 
-      {errorMessage && <ErrorMessage message={errorMessage} />}
-
       <div
         style={{
           marginBottom: "24px",
@@ -101,11 +48,7 @@ function App() {
         }}
       >
         <h2>영화 추가</h2>
-        <AddMovieForm
-          inputValues={newMovieValues}
-          onChange={handleChangeValues}
-          onSubmit={handleAddMovie}
-        />
+        <AddMovieForm />
       </div>
       <div
         style={{
