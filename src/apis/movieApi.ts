@@ -1,4 +1,4 @@
-import type { Movie, newMovie } from "../types/movie";
+import type { Movie, NewMovie } from "../types/movie";
 
 export const getMovies = async () => {
   const res = await fetch("/api/movies");
@@ -9,7 +9,7 @@ export const getMovies = async () => {
   return data;
 };
 
-export const postMovie = async (newMovie: newMovie) => {
+export const postMovie = async (newMovie: NewMovie) => {
   const res = await fetch("/api/movies", {
     method: "POST",
     headers: { "Content-Type": "application/json" },

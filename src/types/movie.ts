@@ -7,7 +7,7 @@ export interface Movie {
   rating: number;
 }
 
-export interface newMovie {
+export interface NewMovie {
   title: string;
   director: string;
   year: number;
