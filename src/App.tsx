@@ -5,55 +5,33 @@ import { ErrorMessage } from "./components/ErrorMessage";
 import { MovieForm } from "./components/MovieForm";
 import { MovieList } from "./components/MovieList";
 import { type Movie } from "./types/Movie";
+import { useMovies } from "./hooks/useMovies";
 
 function App() {
   const [themeName, setThemeName] = useState<ThemeName>("light");
-  const [movies, setMovies] = useState<Movie[]>([]);
+  const currentTheme = themes[themeName];
+
+  // useMovies 훅 호출
+  const { movies, isLoading, error, searchTerm, setSearchTerm, addMovie, setError } = useMovies(); 
+
+  // 폼 상태들
   const [newTitle, setNewTitle] = useState<string>("");
   const [newDirector, setNewDirector] = useState<string>("");
   const [newYear, setNewYear] = useState<number | "">("");
   const [newGenre, setNewGenre] = useState<string>("");
   const [newRating, setNewRating] = useState<number | "">("");
-  const [searchTerm, setSearchTerm] = useState<string>("");
-  const [error, setError] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const currentTheme = themes[themeName];
-
-  useEffect(() => {
-    const fetchMovies = async () => {
-      setIsLoading(true);
-      try {
-        const res = await fetch("/api/movies");
-        if (!res.ok) throw new Error("영화 데이터를 불러오지 못했습니다.");
-        const data: Movie[] = await res.json();
-        setMovies(data);
-      } catch (err: unknown) {
-        if (err instanceof Error) {
-          setError(err.message);
-        } else {
-          setError(String(err));
-        }
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    fetchMovies();
-  }, []);
-
-  const filteredMovies = useMemo(() => {
-    return movies.filter((movie) =>
-      movie.title.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-  }, [movies, searchTerm]);
-
+  // 영화 추가하기
   const handleAddMovie = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // 1. 폼 검증
     if (!newTitle || !newDirector || !newYear || !newGenre || !newRating) {
       setError("모든 필드를 입력해주세요.");
       return;
     }
 
+    // 2. 폼 데이터를 Movie 객체로 변환
     const newMovie = {
       title: newTitle,
       director: newDirector,
@@ -62,33 +40,15 @@ function App() {
       rating: Number(newRating),
     };
 
-    try {
-      setIsLoading(true);
-      const res = await fetch("/api/movies", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(newMovie),
-      });
+    // 3. useMovies 훅의 addMovie 함수 호출
+    await addMovie(newMovie);
 
-      if (!res.ok) throw new Error("영화를 추가하지 못했습니다.");
-
-      const savedMovie: Movie = await res.json();
-      setMovies((prev) => [...prev, savedMovie]);
-      setNewTitle("");
-      setNewDirector("");
-      setNewYear("");
-      setNewGenre("");
-      setNewRating("");
-      setError(null);
-    } catch (err: unknown) {
-      if (err instanceof Error) {
-        setError(err.message);
-      } else {
-        setError(String(err));
-      }
-    } finally {
-      setIsLoading(false);
-    }
+    // 4. 폼 초기화
+    setNewTitle("");
+    setNewDirector("");
+    setNewYear("");
+    setNewGenre("");
+    setNewRating("");
   };
 
   return (
@@ -132,7 +92,7 @@ function App() {
 
       {/* MovieList 호출 */}
       <MovieList
-        movies={filteredMovies}
+        movies={movies} // useMovies에서 이미 필터링된 movies를 받음 
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
         isLoading={isLoading}
