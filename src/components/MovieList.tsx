@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from "react";
 import { themes, type ThemeName } from "../styles/theme";
 import type { Movie } from "../types/Movie";
+import SearchBar from "./SearchBar";
 
 interface MovieListProps {
   movies: Movie[];
@@ -28,20 +29,10 @@ function MovieList({ movies, isLoading, themeName }: MovieListProps) {
       }}
     >
       <h2>영화 목록</h2>
-      <input
-        type="text"
-        placeholder="검색..."
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        style={{
-          padding: "8px",
-          borderRadius: "8px",
-          border: `1px solid ${currentTheme.border}`,
-          backgroundColor: currentTheme.inputBg,
-          color: currentTheme.text,
-          marginBottom: "16px",
-          width: "100%",
-        }}
+      <SearchBar
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+        themeName={themeName}
       />
 
       {isLoading && <div>로딩 중...</div>}
