@@ -110,7 +110,9 @@ const AddMovieForm = () => {
           placeholder="평점"
           name="rating"
           value={inputValues.rating}
-          onChange={handleChangeValues}
+          onChange={(e) => {
+            if (validRating(e.target.value)) handleChangeValues(e);
+          }}
           style={{ width: "100px" }}
         />
         <Button text="추가" buttonType="submit" />
@@ -122,3 +124,8 @@ const AddMovieForm = () => {
 };
 
 export default AddMovieForm;
+
+function validRating<T>(value: T): boolean {
+  const r = Number(value);
+  return r >= 0 && r <= 10;
+}
