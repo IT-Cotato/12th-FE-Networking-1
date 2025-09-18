@@ -18,8 +18,9 @@ function App() {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [refreshTrigger, setRefreshTrigger] = useState<number>(0);
   const { currentTheme } = useTheme();
-  const fetchedMovies = useFetch(getMovies);
+  const fetchedMovies = useFetch(getMovies, [refreshTrigger]);
 
   const filteredMovies = useMemo(() => {
     if (!fetchedMovies.data?.length) {
@@ -57,6 +58,7 @@ function App() {
 
       const savedMovie: Movie = await res.json();
       setMovies((prev) => [...prev, savedMovie]);
+      setRefreshTrigger((prev) => prev + 1);
       setNewTitle("");
       setNewDirector("");
       setNewYear("");
