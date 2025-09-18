@@ -12,11 +12,14 @@ import ErrorMessage from "./components/ErrorMessage";
 
 function App() {
   const [movies, setMovies] = useState<Movie[]>([]);
-  const [newTitle, setNewTitle] = useState<string>("");
-  const [newDirector, setNewDirector] = useState<string>("");
-  const [newYear, setNewYear] = useState<number | "">("");
-  const [newGenre, setNewGenre] = useState<string>("");
-  const [newRating, setNewRating] = useState<number | "">("");
+  const [newMovieValues, setNewMovieValues] = useState({
+    title: "",
+    director: "",
+    year: "",
+    genre: "",
+    rating: "",
+  });
+
   const [searchTerm, setSearchTerm] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -34,19 +37,30 @@ function App() {
     );
   }, [fetchedMovies, searchTerm]);
 
+  const handleChangeValues = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setNewMovieValues((prev) => ({ ...prev, [name]: value }));
+  };
+
   const handleAddMovie = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!newTitle || !newDirector || !newYear || !newGenre || !newRating) {
+    if (
+      !newMovieValues.title ||
+      !newMovieValues.director ||
+      !newMovieValues.year ||
+      !newMovieValues.genre ||
+      !newMovieValues.rating
+    ) {
       setError("모든 필드를 입력해주세요.");
       return;
     }
 
     const newMovie: NewMovie = {
-      title: newTitle,
-      director: newDirector,
-      year: Number(newYear),
-      genre: newGenre,
-      rating: Number(newRating),
+      title: newMovieValues.title,
+      director: newMovieValues.director,
+      year: Number(newMovieValues.year),
+      genre: newMovieValues.genre,
+      rating: Number(newMovieValues.rating),
     };
 
     const addedMovie = await addingMovie.mutate(newMovie);
@@ -54,11 +68,13 @@ function App() {
     if (addedMovie) {
       setMovies((prev) => [...prev, addedMovie]);
       setRefreshTrigger((prev) => prev + 1);
-      setNewTitle("");
-      setNewDirector("");
-      setNewYear("");
-      setNewGenre("");
-      setNewRating("");
+      setNewMovieValues({
+        title: "",
+        director: "",
+        year: "",
+        genre: "",
+        rating: "",
+      });
     }
   };
 
@@ -98,40 +114,37 @@ function App() {
             inputType="text"
             placeholder="제목"
             name="title"
-            value={newTitle}
-            onChange={(e) => setNewTitle(e.target.value)}
+            value={newMovieValues.title}
+            onChange={handleChangeValues}
           />
           <InputField
             inputType="text"
             placeholder="감독"
             name="director"
-            value={newDirector}
-            onChange={(e) => setNewDirector(e.target.value)}
+            value={newMovieValues.director}
+            onChange={handleChangeValues}
           />
           <InputField
             inputType="number"
             placeholder="연도"
             name="year"
-            value={newYear}
-            onChange={(e) => setNewYear(Number(e.target.value))}
+            value={newMovieValues.year}
+            onChange={handleChangeValues}
             style={{ width: "80px" }}
           />
           <InputField
             inputType="text"
             placeholder="장르"
             name="genre"
-            value={newGenre}
-            onChange={(e) => setNewGenre(e.target.value)}
+            value={newMovieValues.genre}
+            onChange={handleChangeValues}
           />
           <InputField
             inputType="number"
             placeholder="평점"
             name="rating"
-            value={newRating}
-            onChange={(e) => {
-              const val = Number(e.target.value);
-              if (val >= 0 && val <= 10) setNewRating(val);
-            }}
+            value={newMovieValues.rating}
+            onChange={handleChangeValues}
             style={{ width: "100px" }}
           />
           <button
