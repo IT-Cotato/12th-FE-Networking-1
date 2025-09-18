@@ -14,7 +14,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ isDark, searchTerm, onSearch }) =
     <div className="p-6 bg-lightBackground text-black dark:bg-darkBackground dark:text-white transition-all duration-200">
     <input
       type="text"
-      placeholder="검색..."
+      placeholder="검색하기 🔍"
       value={searchTerm}
       onChange={(e) => onSearch(e.target.value)}
   className={`

@@ -82,6 +82,7 @@ function App() {
     }
   };
 
+
   return (
 <div className={`${isDark ? "dark" : ""}`}>
   <div className=" p-6 bg-lightBackground text-black dark:bg-darkBackground dark:text-white transition-all duration-200">
