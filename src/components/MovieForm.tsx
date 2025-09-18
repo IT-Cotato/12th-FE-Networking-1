@@ -65,7 +65,7 @@ const SubmitButton = styled.button<{ $theme: any; $disabled: boolean }>`
 `;
 
 interface MovieFormProps {
-  onAddMovie: (movie: Omit<Movie, "id">) => Promise<void>;
+  onAddMovie: (movie: Omit<Movie, "id">) => Promise<Movie | void>;
   isLoading: boolean;
 }
 
