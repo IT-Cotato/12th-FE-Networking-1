@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import type { Movie } from '../types/movie';
+import type { Movie } from '@/types/movie';
 
 export function useAddMovie(onMovieAdded: (movie: Movie) => void) {
   const [newTitle, setNewTitle] = useState<string>('');

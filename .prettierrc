@@ -9,23 +9,22 @@
   "trailingComma": "all",
   "useTabs": false,
 
-  "plugins": [
-    "@trivago/prettier-plugin-sort-imports",
-    "prettier-plugin-tailwindcss"
-  ],
+  "plugins": ["@trivago/prettier-plugin-sort-imports", "prettier-plugin-tailwindcss"],
 
   "importOrder": [
-    "^react(.*)$",               
-    "<THIRD_PARTY_MODULES>",     
+    "^react(.*)$",
+    "<THIRD_PARTY_MODULES>",
     "",
-    "^@/components/(.*)$",       
-    "^@/hooks/(.*)$",            
-    "^@/lib/(.*)$",             
-    "^@/styles/(.*)$",           
-    "^@/(.*)$",                 
+    "^@/components/(.*)$",
+    "^@/hooks/(.*)$",
+    "^@/lib/(.*)$",
+    "^@/types/(.*)$",
+    "^@/styles/(.*)$",
+    "^@/(.*)$",
     "",
-    "^[./]"                     
+    "^[./]"
   ],
   "importOrderSeparation": true,
-  "importOrderSortSpecifiers": true
+  "importOrderSortSpecifiers": true,
+  "importOrderCombineTypeAndValueImports": true
 }

@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 
-import type { Movie } from '../types/movie';
+import type { Movie } from '@/types/movie';
 
 export function useFilteredMovies(movies: Movie[]) {
   const [searchTerm, setSearchTerm] = useState('');
