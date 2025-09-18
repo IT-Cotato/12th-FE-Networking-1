@@ -7,6 +7,9 @@ interface ErrorMessageProps {
 
 export const ErrorMessage: React.FC<ErrorMessageProps> = ({error}) => {
     const {currentTheme } = useThemeStore();
+
+    if (!error) return null;
+    
     return (
         <div
             style={{
