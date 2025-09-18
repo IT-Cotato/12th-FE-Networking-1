@@ -75,7 +75,7 @@ function App() {
         <ThemeButton />
       </Header>
 
-      {fetchedMovies.error && (
+      {(fetchedMovies.error || addingMovie.error) && (
         <div
           style={{
             backgroundColor: currentTheme.errorBg,
