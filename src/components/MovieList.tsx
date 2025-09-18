@@ -1,5 +1,6 @@
 import React from "react";
 import { type Theme } from "../styles/theme";
+import SearchBar from "./SearchBar";
 
 interface Movie {
   id: number;
@@ -34,22 +35,11 @@ const MovieList: React.FC<MovieListProps> = ({
         border: `1px solid ${currentTheme.border}`,
       }}
     >
-      {/* 영화 추가한 부분에 대해서 목록으로 나타내는 부분*/}
       <h2>영화 목록</h2>
-      <input
-        type="text"
-        placeholder="검색..."
+      <SearchBar
         value={searchTerm}
-        onChange={(e) => onSearchChange(e.target.value)}
-        style={{
-          padding: "8px",
-          borderRadius: "8px",
-          border: `1px solid ${currentTheme.border}`,
-          backgroundColor: currentTheme.inputBg,
-          color: currentTheme.text,
-          marginBottom: "16px",
-          width: "100%",
-        }}
+        onChange={onSearchChange}
+        currentTheme={currentTheme}
       />
       {isLoading ? (
         <div>로딩 중...</div>
