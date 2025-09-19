@@ -11,6 +11,7 @@ import { useAddMovie } from '@/hooks/useAddMovie';
 import { useFilteredMovies } from '@/hooks/useFilteredMovies';
 
 import { themes } from '@/styles/theme';
+import CommonModal from '@/components/CommonModal';
 
 function App() {
   const [movies, setMovies] = useState<Movie[]>([]);
@@ -58,78 +59,76 @@ function App() {
 
   return (
     <div
-      className={`font-display min-h-screen p-5 transition-all duration-200 ease-linear ${themeName === 'light' ? 'bg-lightBackground text-black' : 'bg-darkBackground text-white'}`}
+      className={`min-h-screen p-5 transition-all duration-200 ease-linear ${themeName === 'light' ? 'bg-lightBackground text-black' : 'bg-darkBackground text-white'}`}
     >
-      <header
-        className={`mb-6 flex items-center justify-between rounded-xl border border-solid p-4 ${themeName === 'light' ? 'border-gray bg-white' : 'bg-deepGray border-darkGray'}`}
-      >
-        <TitleSection size="h1" text="코테이토 영화관" />
-        <ThemeButton themeName={themeName} onThemeChange={setThemeName} />
-      </header>
-
-      {addError && (
-        <div
-          className={`mb-5 rounded-lg p-3 ${themeName === 'light' ? 'bg-lightRed text-red' : 'bg-deepGray text-pink'}`}
+      <div>
+        <header
+          className={`mb-6 flex items-center justify-between rounded-xl border border-solid p-4 ${themeName === 'light' ? 'border-gray bg-white' : 'bg-deepGray border-darkGray'}`}
         >
-          {addError}
+          <TitleSection size="h1" text="코테이토 영화관" />
+          <ThemeButton themeName={themeName} onThemeChange={setThemeName} />
+        </header>
+
+        {addError && (
+          <CommonModal message={addError} onClose={() => {}} themeName={themeName} />
+        )}
+
+        <div
+          className={`mb-6 rounded-xl border border-solid p-5 ${themeName === 'light' ? 'border-gray bg-white' : 'bg-deepGray border-darkGray'}`}
+        >
+          <TitleSection size="h2" text="영화 추가" />
+          <form onSubmit={handleAddMovie} className="flex flex-wrap gap-3 py-2">
+            <InputField
+              themeName={themeName}
+              type="text"
+              placeholder="제목"
+              value={newTitle}
+              onChange={(e) => setNewTitle(e.target.value)}
+            />
+            <InputField
+              themeName={themeName}
+              type="text"
+              placeholder="감독"
+              value={newDirector}
+              onChange={(e) => setNewDirector(e.target.value)}
+            />
+            <InputField
+              themeName={themeName}
+              type="number"
+              placeholder="연도"
+              value={newYear}
+              onChange={(e) => setNewYear(Number(e.target.value))}
+              className="w-20"
+            />
+            <InputField
+              themeName={themeName}
+              type="text"
+              placeholder="장르"
+              value={newGenre}
+              onChange={(e) => setNewGenre(e.target.value)}
+            />
+            <InputField
+              themeName={themeName}
+              type="number"
+              placeholder="평점"
+              value={newRating}
+              onChange={(e) => {
+                const val = Number(e.target.value);
+                if (val >= 0 && val <= 10) setNewRating(val);
+              }}
+              className="w-25"
+            />
+            <button
+              type="submit"
+              className="bg-purple cursor-pointer rounded-lg border-none px-4 py-2 text-white"
+              disabled={isAdding}
+            >
+              추가
+            </button>
+          </form>
         </div>
-      )}
-
-      <div
-        className={`mb-6 rounded-xl border border-solid p-5 ${themeName === 'light' ? 'border-gray bg-white' : 'bg-deepGray border-darkGray'}`}
-      >
-        <TitleSection size="h2" text="영화 추가" />
-        <form onSubmit={handleAddMovie} className="flex flex-wrap gap-3 py-2">
-          <InputField
-            themeName={themeName}
-            type="text"
-            placeholder="제목"
-            value={newTitle}
-            onChange={(e) => setNewTitle(e.target.value)}
-          />
-          <InputField
-            themeName={themeName}
-            type="text"
-            placeholder="감독"
-            value={newDirector}
-            onChange={(e) => setNewDirector(e.target.value)}
-          />
-          <InputField
-            themeName={themeName}
-            type="number"
-            placeholder="연도"
-            value={newYear}
-            onChange={(e) => setNewYear(Number(e.target.value))}
-            className="w-20"
-          />
-          <InputField
-            themeName={themeName}
-            type="text"
-            placeholder="장르"
-            value={newGenre}
-            onChange={(e) => setNewGenre(e.target.value)}
-          />
-          <InputField
-            themeName={themeName}
-            type="number"
-            placeholder="평점"
-            value={newRating}
-            onChange={(e) => {
-              const val = Number(e.target.value);
-              if (val >= 0 && val <= 10) setNewRating(val);
-            }}
-            className="w-25"
-          />
-          <button
-            type="submit"
-            className="bg-purple cursor-pointer rounded-lg border-none px-4 py-2 text-white"
-            disabled={isAdding}
-          >
-            추가
-          </button>
-        </form>
       </div>
-
+      
       <div
         className={`rounded-xl border border-solid p-5 ${themeName === 'light' ? 'border-gray bg-white' : 'bg-deepGray border-darkGray'}`}
       >

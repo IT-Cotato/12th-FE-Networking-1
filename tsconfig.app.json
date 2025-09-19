@@ -24,9 +24,10 @@
     "noUncheckedSideEffectImports": true,
 
     /* 절대경로 설정 */
-    "baseUrl": "./src",
+    "baseUrl": ".",
     "paths": {
-      "@/*": ["*"]
+      "@/*": ["src/*"],
+      "@public/*": ["public/*"]
     }
   },
   "include": ["src"]
