@@ -1,7 +1,7 @@
 import type { ThemeName } from '@/types/theme';
 
-import InputField from '@/components/common/InputField';
 import TitleSection from '@/components/common/TitleSection';
+import InputField from '@/components/common/InputField';
 
 interface MovieAddFormProps {
   themeName: ThemeName;
@@ -35,7 +35,7 @@ const MovieAddForm = ({
 }: MovieAddFormProps) => {
   return (
     <div
-      className={`mb-6 rounded-xl border border-solid p-5 ${themeName === 'light' ? 'border-gray bg-white' : 'bg-deepGray border-darkGray'}`}
+      className={`rounded-xl border border-solid p-5 ${themeName === 'light' ? 'border-gray bg-white' : 'bg-deepGray border-darkGray'}`}
     >
       <TitleSection size="h2" text="영화 추가" />
       <form onSubmit={handleAddMovie} className="flex flex-wrap gap-3 py-2">
