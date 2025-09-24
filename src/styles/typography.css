@@ -1,0 +1,28 @@
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css');
+@import 'tailwindcss';
+
+@theme {
+  --font-display:
+    'Pretendard Variable', -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Segoe UI',
+    'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+
+  --text-heading1: 2rem;
+  --text-heading1--font-weight: 700;
+  --text-heading1--letter-spacing: -0.02em;
+  --text-heading1--line-height: 135%;
+
+  --text-heading2: 1.75rem;
+  --text-heading2--font-weight: 600;
+  --text-heading2--letter-spacing: -0.02em;
+  --text-heading2--line-height: 135%;
+
+  --text-cap1-b: 1.125rem;
+  --text-cap1-b--font-weight: 500;
+  --text-cap1-b--letter-spacing: -0.02em;
+  --text-cap1-b--line-height: 135%;
+
+  --text-lab1-b: 0.875rem;
+  --text-lab1-b--font-weight: 500;
+  --text-lab1-b--letter-spacing: -0.02em;
+  --text-lab1-b--line-height: 135%;
+}

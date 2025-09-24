@@ -1,19 +1,6 @@
-import { palette } from "./palette";
+import type { Theme, ThemeName } from '@/types/theme';
 
-export type ThemeName = "light" | "dark";
-
-export interface Theme {
-  background: string;
-  text: string;
-  componentBg: string;
-  border: string;
-  buttonBg: string;
-  buttonText: string;
-  inputBg: string;
-  hoverBg: string;
-  errorBg: string;
-  errorText: string;
-}
+import { palette } from './palette';
 
 export const themes: Record<ThemeName, Theme> = {
   light: {

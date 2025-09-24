@@ -1,0 +1,17 @@
+@import './typography.css';
+@import 'tailwindcss';
+
+@theme {
+  --color-white: #ffffff;
+  --color-black: #1a1a1a;
+  --color-lightGray: #f3f4f6;
+  --color-gray: #e5e7eb;
+  --color-darkGray: #3a3a3a;
+  --color-deepGray: #2a2a2a;
+  --color-red: #dc2626;
+  --color-lightRed: #fef2f2;
+  --color-pink: #fca5a5;
+  --color-purple: #8b5cf6;
+  --color-darkBackground: #1a1a1a;
+  --color-lightBackground: #fafafa;
+}
