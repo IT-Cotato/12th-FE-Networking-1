@@ -1,24 +1,39 @@
 import { useEffect, useMemo, useState } from 'react';
 
+
+
 import type { Movie } from '@/types/movie';
 import type { ThemeName } from '@/types/theme';
 
+
+
+import CommonModal from '@/components/CommonModal';
 import InputField from '@/components/InputField';
 import ThemeButton from '@/components/ThemeButton';
-import TitleSection from '@/components/TitleSection';
+import TitleSection from '@/components/header/TitleSection';
+
+
 
 import { useAddMovie } from '@/hooks/useAddMovie';
 import { useFilteredMovies } from '@/hooks/useFilteredMovies';
 
+
+
 import { themes } from '@/styles/theme';
-import CommonModal from '@/components/CommonModal';
+
+
+
+
 
 function App() {
   const [movies, setMovies] = useState<Movie[]>([]);
-  const [error, setError] = useState<string | null>(null);
+
   const [isLoading, setIsLoading] = useState(false);
-  const [themeName, setThemeName] = useState<ThemeName>('light'); // 추가
+  const [themeName, setThemeName] = useState<ThemeName>('light');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const { searchTerm, setSearchTerm, filteredMovies } = useFilteredMovies(movies);
+
   const {
     newTitle,
     setNewTitle,
@@ -33,6 +48,7 @@ function App() {
     error: addError,
     isLoading: isAdding,
     handleAddMovie,
+    handleClearAddError,
   } = useAddMovie((movie) => setMovies((prev) => [...prev, movie]));
   const currentTheme = useMemo(() => themes[themeName], [themeName]);
 
@@ -57,6 +73,12 @@ function App() {
     fetchMovies();
   }, []);
 
+  useEffect(() => {
+    if (addError) {
+      setIsModalOpen(true);
+    }
+  }, [addError]);
+
   return (
     <div
       className={`min-h-screen p-5 transition-all duration-200 ease-linear ${themeName === 'light' ? 'bg-lightBackground text-black' : 'bg-darkBackground text-white'}`}
@@ -70,7 +92,14 @@ function App() {
         </header>
 
         {addError && (
-          <CommonModal message={addError} onClose={() => {}} themeName={themeName} />
+          <CommonModal
+            message={addError}
+            onClose={() => {
+              setIsModalOpen(false);
+              handleClearAddError();
+            }}
+            themeName={themeName}
+          />
         )}
 
         <div
@@ -128,7 +157,7 @@ function App() {
           </form>
         </div>
       </div>
-      
+
       <div
         className={`rounded-xl border border-solid p-5 ${themeName === 'light' ? 'border-gray bg-white' : 'bg-deepGray border-darkGray'}`}
       >

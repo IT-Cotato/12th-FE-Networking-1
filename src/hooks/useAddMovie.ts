@@ -57,6 +57,8 @@ export function useAddMovie(onMovieAdded: (movie: Movie) => void) {
     }
   };
 
+  const handleClearAddError = () => setError(null);
+
   return {
     newTitle,
     setNewTitle,
@@ -71,5 +73,6 @@ export function useAddMovie(onMovieAdded: (movie: Movie) => void) {
     error,
     isLoading,
     handleAddMovie,
+    handleClearAddError,
   };
 }
